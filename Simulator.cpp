@@ -15,11 +15,10 @@ Simulator::Simulator(int col,int row) {
     last_turn = 0;
 
     Reserve starterReserve = Reserve(col,row);
-    Simulator::showReserve(starterReserve,col,row);
 
 
     do{
-
+       Simulator::showReserve(starterReserve,col,row);
        Simulator::showSimulatorMenu();
        readCommand(command);
 
