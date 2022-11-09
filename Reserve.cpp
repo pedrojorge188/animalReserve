@@ -14,17 +14,25 @@ Reserve::Reserve(int columns, int lines) {
 
     try{
         reserve_posx_posy = new char*[n_lines];
+
         for(int i=0;i<n_lines;i++){
             reserve_posx_posy[i] = new char[n_columns];
             for(int k=0;k<n_columns;k++)
                 reserve_posx_posy[i][k] = ' ';
         }
-    }catch (const exception& memory_allocation_error){
-        cout << memory_allocation_error.what() << endl;
-        throw memory_allocation_error;
+
+        if(n_lines < 16 || n_lines > 500 || n_columns < 16 || n_columns > 500){
+           throw 1;
+        }
+    }catch (int error){
+        if(error == 1) {
+            cout << "ERROR: Reserve dimensions out of bounds!" << endl;
+            exit(0);
+        }
+        else
+            cout << "ERROR: Problem in constructor 'RESERVE'" << endl;
     }
 
-    reserve_posx_posy[2][3] = 'A';
     cout << " !!! Reserva !!!" << endl;
 
     cout << ' ' ;
@@ -39,9 +47,5 @@ Reserve::Reserve(int columns, int lines) {
     cout  << ' '  << endl;
     for(int l=0;l<n_columns;l++)
         cout << '_' ;
-
-
-
-
 
 }

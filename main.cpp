@@ -2,6 +2,6 @@
 #include "Reserve.h"
 int main() {
 
-    Reserve(60,25);
+    Reserve(50,16);
     return 0;
 }
