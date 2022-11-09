@@ -1,4 +1,4 @@
-//
+
 // Created by pedro on 09/11/2022.
 //
 
@@ -9,8 +9,6 @@ Reserve::Reserve(int columns, int lines) {
 
     n_columns = columns;
     n_lines = lines;
-    count_animal = 0;
-    count_food = 0;
 
     try{
         reserve_posx_posy = new char*[n_lines];
@@ -33,19 +31,21 @@ Reserve::Reserve(int columns, int lines) {
             cout << "ERROR: Problem in constructor 'RESERVE'" << endl;
     }
 
-    cout << " !!! Reserva !!!" << endl;
+}
 
-    cout << ' ' ;
-    for(int c=0;c<n_columns;c++)
-        cout << '_' ;
-    for(int i=0;i<n_lines;i++){
-        cout << endl << '|';
-        for(int k=0;k<n_columns;k++)
-            cout << reserve_posx_posy[i][k];
-        cout << "|";
+Reserve::Reserve(Reserve &aux) {
+
+    n_columns = aux.n_columns;
+    n_lines = aux.n_lines;
+
+    reserve_posx_posy = new char *[n_lines];
+
+    for (int i = 0; i < n_lines; i++) {
+        for (int k = 0; k < n_columns; k++)
+            reserve_posx_posy[i][k] = aux.reserve_posx_posy[i][k];
     }
-    cout  << ' '  << endl;
-    for(int l=0;l<n_columns;l++)
-        cout << '_' ;
 
 }
+
+
+

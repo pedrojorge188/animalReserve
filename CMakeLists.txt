@@ -3,4 +3,4 @@ project(animalReserve)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(animalReserve main.cpp Reserve.cpp Reserve.h utils.h)
+add_executable(animalReserve main.cpp Reserve.cpp Reserve.h utils.h Simulator.cpp Simulator.h)
