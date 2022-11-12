@@ -1,7 +1,3 @@
-//
-// Created by pedro on 09/11/2022.
-//
-
 #include "Reserve.h"
 
 
@@ -24,6 +20,7 @@ Reserve::Reserve(int columns, int lines) {
         if(n_lines < 16 || n_lines > 500 || n_columns < 16 || n_columns > 500){
            throw 1;
         }
+
     }catch (int error){
         if(error == 1) {
             cout << "ERROR: Reserve dimensions out of bounds!" << endl;
@@ -47,5 +44,11 @@ Reserve::Reserve(int columns, int lines) {
     cout  << ' '  << endl;
     for(int l=0;l<n_columns;l++)
         cout << '_' ;
+
+}
+
+int Reserve::CreateAnimal(char type, int columns , int lines ){
+    Animal type;
+    reserve_posx_posy[columns][lines]=a;
 
 }

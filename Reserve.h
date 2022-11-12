@@ -1,6 +1,7 @@
 #ifndef ANIMALRESERVE_RESERVE_H
 #define ANIMALRESERVE_RESERVE_H
 #include "utils.h"
+#include "Animal.h"
 
 class Reserve {
 private:;
@@ -9,9 +10,13 @@ private:;
     int count_food;
     int count_animal;
     char **reserve_posx_posy;
+
+    Animal oieh;
 public:
     Reserve(int columns = 0, int lines = 0);
     ~Reserve(){delete[]reserve_posx_posy;};
+
+    int CreateAnimal(char type, int columns = 0, int lines = 0); //alterar para random a posição mais tarde
 
     char**getReserve() const {return reserve_posx_posy;}
     int getLines() const {return n_lines;};
