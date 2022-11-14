@@ -15,12 +15,15 @@ Simulator::Simulator(int col,int row) {
     last_turn = 0;
 
     Reserve starterReserve = Reserve(col,row);
-
+    char **poSx_poSy =  starterReserve.getReserve();
 
     do{
        Simulator::showReserve(starterReserve,col,row);
        Simulator::showSimulatorMenu();
        readCommand(command);
+
+       //preview animal spawn
+       poSx_poSy[2][16] = 'A';
 
        turn_instance++;
     }while(command.compare("exit"));

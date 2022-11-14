@@ -5,6 +5,6 @@ int main() {
 
     //Window size bellow
 
-    Simulator(35,16);
+    Simulator(25,25);
     return 0;
 }
