@@ -1,7 +1,3 @@
-//
-// Created by pedro on 09/11/2022.
-//
-
 #ifndef ANIMALRESERVE_UTILS_H
 #define ANIMALRESERVE_UTILS_H
 
