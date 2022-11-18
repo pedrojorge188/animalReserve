@@ -27,17 +27,20 @@ Simulator::Simulator(int col,int row) {
     }
 
     {
-        Window title = Window(15,2,20,1,false);
-        Window wReserve = Window(0,4,range_x,range_y,true);
-        Window wMenu = Window(range_x+2,6,30,8,false);
+        do{
+            Window title = Window(15,2,20,1,false);
+            Window wReserve = Window(0,4,range_x,range_y,true);
+            Window wMenu = Window(range_x+2,6,30,8,false);
 
-        title << "ANIMAL RESERVE" << set_color(10);
+            title << "ANIMAL RESERVE" << set_color(10);
 
-        showReserve(wReserve,reserve);
-        showSimulatorMenu(wMenu,col,row);
-        readCommand(command);
+            showReserve(wReserve,reserve);
+            showSimulatorMenu(wMenu,col,row);
+            readCommand(command,wMenu);
 
-        t.getchar();
+            turn_instance++;
+        }while(command.compare("exit") != 0);
+
     }
 }
 
@@ -65,7 +68,9 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) {
     window << "TOTAL ANIMALS - " << total_animals << '\n';
 }
 
-string Simulator::readCommand(string &cmd) {
-    cout << "\n COMMAND: ";
-    cin >> command ;
+string Simulator::readCommand(string &cmd,Window &window) {
+
+    window << "COMMAND: ";
+    window >> cmd ;
+
 }

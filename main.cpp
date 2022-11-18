@@ -5,8 +5,6 @@
 #include "Terminal.h"
 
 
-
-
 int main() {
 
     Simulator(40,16);
