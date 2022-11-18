@@ -39,13 +39,14 @@ Simulator::Simulator(int col,int row) {
             showReserve(wReserve,reserve);
             showSimulatorMenu(wMenu,col,row);
 
+
+            //code bellow only to test command logs... (need to be removed in future)!!
             if(readCommand(command,wMenu) == false)
                 notification_str = "COMMAND NOT FOUND";
-            else
+            else{
                 notification_str = " ";
-
-
-            turn_instance++;
+                turn_instance++;
+            }
 
         }while(command.compare("exit") != 0);
 
@@ -67,13 +68,15 @@ void Simulator::showReserve(Window &window,Reserve &reserve) {
 }
 
 void Simulator::showSimulatorMenu(Window &window,int col,int row) {
+
     window << set_color(6);
-    window << "SIMULATION MENU \n\n" << set_color(10);
+    window << "SIMULATION DETAILS \n\n" << set_color(10);
     window << "TURN - " << turn_instance << '\n';
     window << "VIEW LIMIT (" << range_x-2<< ',' << range_y-2 << ')' << '\n';
     window << "RESERVE_SIZE (" << col << ',' << row << ")\n";
     window << "TOTAL FOOD - " << total_food << '\n';
     window << "TOTAL ANIMALS - " << total_animals << '\n';
+
 }
 
 bool Simulator::readCommand(string &cmd,Window &window) {
@@ -81,7 +84,7 @@ bool Simulator::readCommand(string &cmd,Window &window) {
     window << "COMMAND: ";
     window >> cmd ;
 
-    if(cmd.compare("teste") == 0)
+    if(cmd.compare("n") == 0)
         return true;
     else
         return false;
