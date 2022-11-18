@@ -13,12 +13,12 @@ private:
     int range_y;
     int turn_instance;
     string command;
-    int last_turn;
+    string notification_str;
 public:
     Simulator(int col,int row);
     void showReserve(Window &window,Reserve &reserve);
     void showSimulatorMenu(Window &window,int col,int row);
-    string readCommand(string &cmd,Window &window);
+    bool readCommand(string &cmd,Window &window);
 };
 
 #endif //ANIMALRESERVE_SIMULATOR_H

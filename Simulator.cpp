@@ -11,7 +11,7 @@ Simulator::Simulator(int col,int row) {
     range_y = row+2;
     total_food = 0;
     turn_instance = 0;
-    last_turn = 0;
+    notification_str = " ";
 
     if(col > 40 || row > 20){
         range_x = 22;
@@ -31,14 +31,22 @@ Simulator::Simulator(int col,int row) {
             Window title = Window(15,2,20,1,false);
             Window wReserve = Window(0,4,range_x,range_y,true);
             Window wMenu = Window(range_x+2,6,30,8,false);
+            Window notification = Window(2,range_y+5,40,3,false);
 
-            title << "ANIMAL RESERVE" << set_color(10);
+            notification << notification_str  << set_color(1);
+            title << "ANIMAL RESERVE" ;
 
             showReserve(wReserve,reserve);
             showSimulatorMenu(wMenu,col,row);
-            readCommand(command,wMenu);
+
+            if(readCommand(command,wMenu) == false)
+                notification_str = "COMMAND NOT FOUND";
+            else
+                notification_str = " ";
+
 
             turn_instance++;
+
         }while(command.compare("exit") != 0);
 
     }
@@ -68,9 +76,13 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) {
     window << "TOTAL ANIMALS - " << total_animals << '\n';
 }
 
-string Simulator::readCommand(string &cmd,Window &window) {
+bool Simulator::readCommand(string &cmd,Window &window) {
 
     window << "COMMAND: ";
     window >> cmd ;
 
+    if(cmd.compare("teste") == 0)
+        return true;
+    else
+        return false;
 }
