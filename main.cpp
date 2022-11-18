@@ -4,7 +4,11 @@
 #include "curses.h"
 #include "Terminal.h"
 
+
+
+
 int main() {
-    Simulator(25,25);
+
+    Simulator(70,20);
     return 0;
 }

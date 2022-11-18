@@ -16,7 +16,7 @@ Reserve::Reserve(int columns, int lines) {
         for(int i=0;i<n_lines;i++){
             reserve_posx_posy[i] = new char[n_columns];
             for(int k=0;k<n_columns;k++)
-                reserve_posx_posy[i][k] = ' ';
+                reserve_posx_posy[i][k] = 'T';
         }
 
         if(n_lines < 16 || n_lines > 500 || n_columns < 16 || n_columns > 500){

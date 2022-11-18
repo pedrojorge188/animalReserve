@@ -1,6 +1,7 @@
 
 #ifndef ANIMALRESERVE_SIMULATOR_H
 #define ANIMALRESERVE_SIMULATOR_H
+#include "utils.h"
 #include "Reserve.h"
 
 class Simulator {
@@ -14,9 +15,9 @@ private:
     string command;
     int last_turn;
 public:
-    Simulator(int col = 16, int row = 16);
-    void showReserve(Reserve &reserve,int col,int row);
-    void showSimulatorMenu();
+    Simulator(int col,int row);
+    void showReserve(Window &window,Reserve &reserve,int col,int row);
+    void showSimulatorMenu(Window &window,int col,int row);
     string readCommand(string &cmd);
 };
 
