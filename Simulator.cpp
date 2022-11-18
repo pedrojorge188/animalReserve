@@ -13,7 +13,12 @@ Simulator::Simulator(int col,int row) {
     turn_instance = 0;
     last_turn = 0;
 
-    Reserve reserve = Reserve(range_x, range_y);
+    if(col > 40 || row > 20){
+        range_x = 22;
+        range_y = 22;
+    }
+
+    Reserve reserve = Reserve(col, row);
 
     Terminal &t = Terminal::instance();
 
@@ -24,12 +29,11 @@ Simulator::Simulator(int col,int row) {
     {
         Window title = Window(15,2,20,1,false);
         Window wReserve = Window(0,4,range_x,range_y,true);
-        Window wMenu = Window(range_x+2,6,20,8,false);
+        Window wMenu = Window(range_x+2,6,30,8,false);
 
-        title << "ANIMAL RESERVE" ;
-        char **poSx_poSy = reserve.getReserve();
-        poSx_poSy[0][0] = 'A';
-        showReserve(wReserve,reserve,col,row);
+        title << "ANIMAL RESERVE" << set_color(10);
+
+        showReserve(wReserve,reserve);
         showSimulatorMenu(wMenu,col,row);
         readCommand(command);
 
@@ -37,9 +41,13 @@ Simulator::Simulator(int col,int row) {
     }
 }
 
-void Simulator::showReserve(Window &window,Reserve &reserve,int col,int row) {
+void Simulator::showReserve(Window &window,Reserve &reserve) {
 
     char **poSx_poSy = reserve.getReserve();
+    int col,row;
+
+    col = range_x - 2;
+    row = range_y - 2;
 
     for(int i=0;i<col;i++){
         for(int k=0;k<row;k++)
@@ -52,7 +60,7 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) {
     window << "SIMULATION MENU \n\n" << set_color(10);
     window << "TURN - " << turn_instance << '\n';
     window << "VIEW LIMIT (" << range_x-2<< ',' << range_y-2 << ')' << '\n';
-    window << "RESERVE_SIZE (" << col << ',' << row << ')';
+    window << "RESERVE_SIZE (" << col << ',' << row << ")\n";
     window << "TOTAL FOOD - " << total_food << '\n';
     window << "TOTAL ANIMALS - " << total_animals << '\n';
 }

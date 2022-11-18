@@ -16,7 +16,7 @@ private:
     int last_turn;
 public:
     Simulator(int col,int row);
-    void showReserve(Window &window,Reserve &reserve,int col,int row);
+    void showReserve(Window &window,Reserve &reserve);
     void showSimulatorMenu(Window &window,int col,int row);
     string readCommand(string &cmd);
 };
