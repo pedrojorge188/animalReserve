@@ -7,7 +7,6 @@
 
 int main() {
 
-    Simulator(40,16);
-
+    Simulator(40,20);
     return 0;
 }

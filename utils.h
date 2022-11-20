@@ -8,6 +8,7 @@
 #include <random>
 #include <cstdlib>
 #include "Terminal.h"
+#include <cctype>
 
 using namespace std;
 using namespace term;

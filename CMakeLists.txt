@@ -3,6 +3,7 @@ project(animalReserve)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(animalReserve main.cpp Reserve.cpp Reserve.h utils.h Simulator.cpp Simulator.h curses.h Terminal.cpp Terminal.h )
+add_executable(animalReserve main.cpp Reserve.cpp Reserve.h utils.h Simulator.cpp Simulator.h curses.h Terminal.cpp Terminal.h Food.cpp Food.h Animal.cpp Animal.h)
 
 target_link_libraries(animalReserve C:/Users/pedro/Desktop/ISEC/POO/TrabalhoPratico/TerminalLibrary/wincon/pdcurses.a)
+
