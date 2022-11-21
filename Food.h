@@ -12,19 +12,22 @@ protected:
     string smell_1, smell_2;
 public:
     Food(char t, int i, int d=0, int n=0, int to=0, string s1="nothing", string s2="nothing" ): type(t), id(i), duration(d), nutriValue(n), toxicity(to), smell_1(s1), smell_2(s2){}
-    virtual ~Food() = default; //Não sei explicar isto, trabalho hugo
+    virtual ~Food() = default;
 
-    char getType() const{return type;}
-    int getId() const{return id;}
-    int getDuration() const{return duration;}
-    int getNutriValue() const{return nutriValue;}
-    int getToxicity() const{return toxicity;}
-    string getSmell1() const{return smell_1;}
-    string getSmell2() const{return smell_2;}
-/*    void durationInfinity();
-    void decrNutri();
-    void incrToxy();
-    void spawnMore();*/
+    char getType() const {return type;}
+    int getId() const {return id;}
+    int getDuration() const {return duration;}
+    int getNutriValue() const {return nutriValue;}
+    int getToxicity() const {return toxicity;}
+    string getSmell1()  {return smell_1;}
+    string getSmell2() const {return smell_2;}
+
+
+    /*    void durationInfinity();
+        void decrNutri();
+        void incrToxy();
+        void spawnMore();
+    */
 };
 
 class Relva: public Food{
@@ -54,10 +57,5 @@ public:
     //void decrNutri();
 };
 
-/*class Alimento_misterio: public Food{
-public:
-    Alimento_misterio(char type, int id): Food(type, id, 20, 3, 0, "erva", "verdura"){};
-    //void decrNutri();
-};*/
 
 #endif //TERMINAL_CPP_FOOD_H

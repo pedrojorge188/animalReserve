@@ -1,0 +1,9 @@
+SCoelho 20
+VCoelho 30
+SOvelha 30
+VOvelha 35
+SLobo 25
+VLobo 40
+SCanguru 20
+VCanguru 70
+VRelva 20

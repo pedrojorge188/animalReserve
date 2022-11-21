@@ -80,7 +80,7 @@ bool Simulator::readCommand(Window &window) {
 
     stringstream cmd;
     string command_start,c2,c3,c4,c5;
-    int words = 0;
+    int words = 0,d3,d4,d5,d6;
 
     window << set_color(COLOR_BLUE)<< '\n' << "COMMAND:" ;
     window >> command;
@@ -93,21 +93,55 @@ bool Simulator::readCommand(Window &window) {
             words ++;
     }
 
+    if(command_start.compare(" ") == 0)
+        return false;
+
     if(command_start.compare("animal") == 0){
 
         if(words == 3){
 
             cmd >> c2; //species
-            cmd >> c3; //row
-            cmd >> c4; //col
+            cmd >> d3; //row
+            cmd >> d4; //col
+
+            c3 = to_string(d3);
+            c4 = to_string(d4);
+
+            if( c3 != "0" || c4 != "0"){
+                if(d3 == 0 || d4 == 0){
+
+                    log_color = COLOR_RED;
+                    notification_str = "ANIMAL ROW/LINE INVALID!";
+                    return false;
+
+                }
+            }
+
+            if(c2 != "c" && c2 != "o" && c2 != "l" && c2 != "g" && c2 != "m"){
+
+                log_color = COLOR_RED;
+                notification_str = "ANIMAL SPECIES INVALID!";
+                return false;
+
+            }
 
             log_color = COLOR_GREEN;
             notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+c3+"|col-"+c4+")";
 
 
+
         }else if(words == 1){
 
             cmd >> c2; //species;
+
+            if(c2 != "c" && c2 != "o" && c2 != "l" && c2 != "g" && c2 != "m"){
+
+                log_color = COLOR_RED;
+                notification_str = "ANIMAL SPECIES INVALID!";
+                return false;
+
+            }
+
             log_color = COLOR_GREEN;
             notification_str = "ANIMAL SPAWNER (species-"+c2+")";
 
@@ -126,15 +160,39 @@ bool Simulator::readCommand(Window &window) {
 
         if(words == 2){
 
-            cmd >> c2; //row
-            cmd >> c3; //col
+            cmd >> d3; //row
+            cmd >> d4; //col
+
+            c2 = to_string(d3);
+            c3 = to_string(d4);
+
+            if( c2 != "0" || c3 != "0"){
+
+                if(d3 == 0 || d4 == 0){
+                    log_color = COLOR_RED;
+                    notification_str = "KILL COMMAND INVALID!";
+                    return false;
+                }
+
+            }
+
             log_color = COLOR_GREEN;
             notification_str = "KILL ANIMAL (row-"+c2+"|col-"+c3+")";
 
 
-        }else if(words == 1){
+        }else if(words == 1 && command_start == "killid"){
 
-            cmd >> c2; //id
+            cmd >> d3; //id
+            c2 = to_string(d3);
+
+            if(c2 == "0"){
+                if(d3 == 0){
+                    log_color = COLOR_RED;
+                    notification_str = "KILL WITH ID COMMAND INVALID!";
+                    return false;
+                }
+            }
+
             log_color = COLOR_GREEN;
             notification_str = "KILL ANIMAL (id-"+c2+")";
 
@@ -152,15 +210,46 @@ bool Simulator::readCommand(Window &window) {
         if(words == 3){
 
             cmd >> c2; //type
-            cmd >> c3; //row
-            cmd >> c4; //col
+            cmd >> d3; //row
+            cmd >> d4; //col
+
+            c3 = to_string(d3);
+            c4 = to_string(d4);
+
+            if( c3 != "0" || c4 != "0"){
+
+                if(d3 == 0 || d4 == 0){
+                    log_color = COLOR_RED;
+                    notification_str = "FOOD ROW/COL COMMAND INVALID!";
+                    return false;
+                }
+
+            }
+
+            if(c2 != "r" && c2 != "t" && c2 != "b" && c2 != "a"){
+
+                log_color = COLOR_RED;
+                notification_str = "FOOD TYPE INVALID!";
+                return false;
+
+            }
+
             log_color = COLOR_GREEN;
             notification_str = "SPAWN FOOD (type-"+c2+"|row-"+c3+"|col-"+c4+")";
 
 
         }else if(words == 1){
 
-            cmd >> c2; //id
+            cmd >> c2; //type
+
+            if(c2 != "r" && c2 != "t" && c2 != "b" && c2 != "a"){
+
+                log_color = COLOR_RED;
+                notification_str = "FOOD TYPE INVALID!";
+                return false;
+
+            }
+
             log_color = COLOR_GREEN;
             notification_str = "SPAWN FOOD (type-"+c2+")";
 
@@ -178,13 +267,30 @@ bool Simulator::readCommand(Window &window) {
         if(command_start == "feed"){
 
                 if(words == 4){
-                    cmd >> c2; //row
-                    cmd >> c3; //col
-                    cmd >> c4; //n.points
-                    cmd >> c5; // tox.points
+
+                    cmd >> d3; //row
+                    cmd >> d4; //col
+                    cmd >> d5; //n.points
+                    cmd >> d6; // tox.points
+
+                    c2 = to_string(d3);
+                    c3 = to_string(d4);
+                    c4 = to_string(d5);
+                    c5 = to_string(d6);
+
+                    if( c2 != "0" || c3 != "0" || c4 != "0" || c5 != "0"){
+                        if(d3 == 0 || d4 == 0 || d5 == 0 || d6 == 0){
+
+                            log_color = COLOR_RED;
+                            notification_str = "FEED INVALID!";
+                            return false;
+
+                        }
+                    }
 
                     log_color = COLOR_GREEN;
                     notification_str = "ANIMAL FEEDED (row-"+c2+"|col-"+c3+"|nutritiveP-"+c4+"|toxicP-"+c5+")";
+
                 }else {
 
                     log_color = COLOR_RED;
@@ -196,12 +302,28 @@ bool Simulator::readCommand(Window &window) {
         }else if(command_start == "feedid"){
 
                 if (words == 3){
-                    cmd >> c2; //id
-                    cmd >> c3; //n.points
-                    cmd >> c4; //tox.points
+
+                    cmd >> d3; //id
+                    cmd >> d4; //n.points
+                    cmd >> d5; //tox.points
+
+                    c2 = to_string(d3);
+                    c3 = to_string(d4);
+                    c4 = to_string(d5);
+
+                    if( c2 != "0" || c3 != "0" || c4 != "0"){
+                        if(d3 == 0 || d4 == 0 || d5 == 0){
+
+                            log_color = COLOR_RED;
+                            notification_str = "FEED INVALID!";
+                            return false;
+
+                        }
+                    }
 
                     log_color = COLOR_GREEN;
                     notification_str = "ANIMAL FEEDED (id-"+c2+"|nutritiveP-"+c3+"|toxicP-"+c4+")";
+
                 }else{
                     log_color = COLOR_RED;
                     notification_str = "FEEDID COMMAND INVALID";
@@ -220,23 +342,187 @@ bool Simulator::readCommand(Window &window) {
 
     }else if(command_start.compare("nofood") == 0){
 
-        notification_str = "remove food";
+        if(words == 2){
+
+            cmd >> d3; //row
+            cmd >> d4; //col
+
+            c2 = to_string(d3);
+            c3 = to_string(d4);
+
+            if( c2 != "0" || c3 != "0"){
+
+                if(d3 == 0 || d4 == 0){
+                    log_color = COLOR_RED;
+                    notification_str = "NOFOOD COMMAND (ROW/COL) INVALID!";
+                    return false;
+                }
+
+            }
+
+            log_color = COLOR_GREEN;
+            notification_str = "FOOD REMOVED (row-"+c2+"|col-"+c3+")";
+
+
+        }else if(words == 1){
+
+            cmd >> d3; //id
+            c2 = to_string(d3);
+
+            if(c2 == "0"){
+                if(d3 == 0){
+                    log_color = COLOR_RED;
+                    notification_str = "NOFOOD WITH ID COMMAND INVALID!";
+                    return false;
+                }
+            }
+
+            log_color = COLOR_GREEN;
+            notification_str = "FOOD REMOVED (id-"+c2+")";
+
+        }else{
+
+            log_color = COLOR_RED;
+            notification_str = "NOFOOD COMMAND INVALID";
+            return false;
+        }
 
     }else if(command_start.compare("empty") == 0){
 
-        notification_str = "clean reserve position";
+        if(words == 2){
+
+            cmd >> d3; //row
+            cmd >> d4; //col
+
+            c2 = to_string(d3);
+            c3 = to_string(d4);
+
+            if( c2 != "0" || c3 != "0"){
+
+                if(d3 == 0 || d4 == 0){
+                    log_color = COLOR_RED;
+                    notification_str = "EMPTY COMMAND INVALID!";
+                    return false;
+                }
+
+            }
+
+            log_color = COLOR_GREEN;
+            notification_str = "CLEAN POSITION (row-"+c2+"|col-"+c3+")";
+
+
+        }else{
+
+            log_color = COLOR_RED;
+            notification_str = "EMPTY COMMAND INVALID";
+            return false;
+        }
 
     }else if(command_start.compare("see") == 0){
 
-        notification_str = "see position stuff";
+        if(words == 2){
+
+            cmd >> d3; //row
+            cmd >> d4; //col
+
+            c2 = to_string(d3);
+            c3 = to_string(d4);
+
+            if( c2 != "0" || c3 != "0"){
+
+                if(d3 == 0 || d4 == 0){
+                    log_color = COLOR_RED;
+                    notification_str = "SEE (COL/ROW) COMMAND INVALID!";
+                    return false;
+                }
+
+            }
+
+            log_color = COLOR_GREEN;
+            notification_str = "SEE POSITION (row-"+c2+"|col-"+c3+")";
+
+
+        }else{
+
+            log_color = COLOR_RED;
+            notification_str = "SEE COMMAND INVALID";
+            return false;
+        }
 
     }else if(command_start.compare("info") == 0){
 
-        notification_str = "show info";
+        if(words == 1){
+
+            cmd >> d3; //id
+            c2 = to_string(d3);
+
+            if( c2 != " " && c2 != "0" ){
+
+                if(d3 == 0){
+                    log_color = COLOR_RED;
+                    notification_str = "INFO COMMAND INVALID!";
+                    return false;
+                }
+
+            }
+
+            log_color = COLOR_GREEN;
+            notification_str = "INFO OF (id-"+c2+")";
+
+        }else{
+            log_color = COLOR_RED;
+            notification_str = "INFO COMMAND INVALID!";
+            return false;
+        }
 
     }else if(command_start.compare("n") == 0){
 
-        notification_str = "advance simulation";
+        if(words == 2){
+
+            cmd >> d3; //instants
+            cmd >> d4; //pauses
+
+            c3 = to_string(d3);
+            c4 = to_string(d4);
+
+            if( c3 != "0" || c4 != "0"){
+
+                if(d3 == 0 || d4 == 0){
+
+                    log_color = COLOR_RED;
+                    notification_str = "Next Turn (N) COMMAND INVALID!";
+
+                    return false;
+                }
+
+            }
+
+            log_color = COLOR_GREEN;
+            notification_str = "ADVANCING..";
+
+        }else if(words == 1){
+
+            cmd >> d3; //turns
+            c2 = to_string(d3);
+
+            log_color = COLOR_GREEN;
+            notification_str = "ADVANCE'"+c2+"'TURNS";
+            turn_instance+=d3;
+
+        }else if (words == 0){
+
+            log_color = COLOR_GREEN;
+            notification_str = "ADVANCE TURN";
+            turn_instance++;
+
+        }else{
+
+            log_color = COLOR_RED;
+            notification_str = "N COMMAND INVALID";
+            turn_instance++;
+
+            return false;
+        }
 
     }else if(command_start.compare("anim") == 0){
 
@@ -248,24 +534,60 @@ bool Simulator::readCommand(Window &window) {
 
     }else if(command_start.compare("store") == 0){
 
-        notification_str = "save reserve in memory";
+        cmd >> c2;
+        log_color = COLOR_GREEN;
+        notification_str = "SAVE RESERVE IN FILE ("+c2+")";
 
     }else if(command_start.compare("restore") == 0){
 
-        notification_str = "reload saved reserve";
+        cmd >> c2;
+        log_color = COLOR_GREEN;
+        notification_str = "RESTORE RESERVE IN FILE ("+c2+")";
 
     }else if(command_start.compare("load") == 0){
 
-        notification_str = "load command from file";
+        cmd >> c2;
+
+        log_color = COLOR_GREEN;
+        notification_str = "LOAD COMMAND FROM FILE ("+c2+")";
 
     }else if(command_start.compare("slide") == 0){
 
-        notification_str = "slide reserve area";
+        if (words == 3){
+
+            cmd >> c2; //direction
+            cmd >> d4; //row
+            cmd >> d5; //col
+
+            c3 = to_string(d4);
+            c4 = to_string(d5);
+
+            if(c3 != "0" || c4 != "0"){
+
+                if(d4 == 0 || d5 == 0){
+
+                    log_color = COLOR_RED;
+                    notification_str = "SLIDE COMMAND (ROWS/COLS) INVALID!";
+                    return false;
+                }
+
+            }
+
+            log_color = COLOR_GREEN;
+            notification_str = "SLIDE (DIRECTION-"+c2+"|ROWS-"+c3+"|COLS-"+c4+")";
+
+        }else{
+            log_color = COLOR_RED;
+            notification_str = "SLIDE COMMAND INVALID";
+            return false;
+        }
 
     }else{
+
         notification_str = "COMMAND NOT FOUND";
         log_color = COLOR_RED ;
         return false;
+
     }
 
     log_color = COLOR_GREEN;

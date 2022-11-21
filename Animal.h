@@ -20,7 +20,7 @@ protected:
 
 public:
     Animal(char t, int i, int in1=0, int in2=0, int p=0, int w=0, int we=0, int tD=0, int h=0, string ps="nothing", int iw=0, int tb=0, int db=0): type(t), id(i), iniHealthMin(in1), iniHealthMax(in2), perception(p), walkDistance(w), weight(we), timeDeath(tD), hunger(h), preferedSmell(ps), interactWeight(iw), timeBorn(tb), deadBodyValue(db){}
-    virtual ~Animal() = default; //Não sei explicar isto, trabalho hugo
+    virtual ~Animal() = default;
 
     char getType() const{return type;}
     int getId() const{return id;}
