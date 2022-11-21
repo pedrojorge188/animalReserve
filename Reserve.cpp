@@ -19,6 +19,7 @@ Reserve::Reserve(int columns, int lines) {
                 reserve_posx_posy[i][k] = ' ';
         }
 
+
         if(n_lines < 16 || n_lines > 500 || n_columns < 16 || n_columns > 500){
            throw 1;
         }

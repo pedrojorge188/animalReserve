@@ -3,25 +3,35 @@
 //
 
 #include "Simulator.h"
-#include <cstdlib>
 
-Simulator::Simulator(int col,int row) {
+Simulator::Simulator(int row,int col) {
 
     total_animals = 0;
+
+    row_MinLimit = 2;
+    col_MinLimit = 2;
+    row_Maxlimit = row;
+    col_Maxlimit = col;
     range_x = col+2;
     range_y = row+2;
+
+    window_range_x = range_x;
+    window_range_y = range_y;
+
     total_food = 0;
     turn_instance = 0;
+
     notification_str = " ";
     log_color = COLOR_GREEN;
 
-    if(col > 40 || row > 20){
-        range_x = 22;
+    if(col > 40 || row > 25){
+        range_x = 42;
         range_y = 22;
+        window_range_x = range_x;
+        window_range_y = range_y;
     }
 
     Reserve reserve = Reserve(col, row);
-
     Terminal &t = Terminal::instance();
 
     for(int i=1; i<20; i++) {
@@ -32,9 +42,9 @@ Simulator::Simulator(int col,int row) {
         do{
 
             Window title = Window(15,2,20,1,false);
-            Window wReserve = Window(0,4,range_x,range_y,true);
-            Window wMenu = Window(range_x+2,6,60,8,false);
-            Window notification = Window(2,range_y+5,45,3,false);
+            Window wReserve = Window(0,4,window_range_x,window_range_y,true);
+            Window wMenu = Window(window_range_x+2,6,60,16,false);
+            Window notification = Window(2,window_range_y+5,45,3,false);
 
             notification << set_color(log_color) << notification_str ;
             title << set_color(COLOR_YELLOW) << "ANIMAL RESERVE" ;
@@ -42,7 +52,7 @@ Simulator::Simulator(int col,int row) {
             showReserve(wReserve,reserve);
             showSimulatorMenu(wMenu,col,row);
 
-            readCommand(wMenu);
+            readCommand(wMenu,reserve);
 
 
         }while(command != "exit");
@@ -53,14 +63,17 @@ Simulator::Simulator(int col,int row) {
 void Simulator::showReserve(Window &window,Reserve &reserve) const {
 
     char **poSx_poSy = reserve.getReserve();
-    int col,row;
+    int col,row,col_start,row_start;
+
+    col_start = col_MinLimit - 2;
+    row_start = row_MinLimit - 2;
 
     col = range_x - 2;
     row = range_y - 2;
 
-    for(int i=0;i<col;i++){
-        for(int k=0;k<row;k++)
-            window << poSx_poSy[k][i];
+    for(int i=row_start;i<row;i++){
+        for(int k=col_start;k<col;k++)
+            window << poSx_poSy[i][k];
     }
 }
 
@@ -68,16 +81,18 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) const {
 
     window << set_color(COLOR_YELLOW);
     window << "SIMULATION DETAILS \n\n" << set_color(COLOR_GREEN);
-    window << "TURN - " << turn_instance << '\n';
-    window << "VIEW LIMIT (" << range_x-2<< ',' << range_y-2 << ')' << '\n';
-    window << "RESERVE_SIZE (" << col << ',' << row << ")\n";
+    window << "TURN - " << turn_instance << "\n\n";
+    window << "ROW VIEW AREA (" << row_MinLimit-2 << "->" << range_y-2 << ") pixels" << '\n';
+    window << "COLUMN VIEW AREA (" << col_MinLimit-2 << "->" << range_x-2 << ") pixels" << "\n\n";
+    window << "RESERVE_SIZE (" << row << ',' << col << ")\n";
     window << "TOTAL FOOD - " << total_food << '\n';
     window << "TOTAL ANIMALS - " << total_animals << '\n';
 
 }
 
-bool Simulator::readCommand(Window &window) {
+bool Simulator::readCommand(Window &window,Reserve &r) {
 
+    char **pos = r.getReserve();
     stringstream cmd;
     string command_start,c2,c3,c4,c5;
     int words = 0,d3,d4,d5,d6;
@@ -124,6 +139,8 @@ bool Simulator::readCommand(Window &window) {
                 return false;
 
             }
+
+            pos[d3-1][d4-1] = c2[0]; //spawn caracter in reserve position; (only for test)
 
             log_color = COLOR_GREEN;
             notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+c3+"|col-"+c4+")";
@@ -233,6 +250,7 @@ bool Simulator::readCommand(Window &window) {
                 return false;
 
             }
+
 
             log_color = COLOR_GREEN;
             notification_str = "SPAWN FOOD (type-"+c2+"|row-"+c3+"|col-"+c4+")";
@@ -553,18 +571,16 @@ bool Simulator::readCommand(Window &window) {
 
     }else if(command_start.compare("slide") == 0){
 
-        if (words == 3){
+        if (words == 2){
 
             cmd >> c2; //direction
-            cmd >> d4; //row
-            cmd >> d5; //col
+            cmd >> d4; //pixels
 
             c3 = to_string(d4);
-            c4 = to_string(d5);
 
-            if(c3 != "0" || c4 != "0"){
+            if(c3 != "0"){
 
-                if(d4 == 0 || d5 == 0){
+                if(d4 == 0){
 
                     log_color = COLOR_RED;
                     notification_str = "SLIDE COMMAND (ROWS/COLS) INVALID!";
@@ -573,8 +589,35 @@ bool Simulator::readCommand(Window &window) {
 
             }
 
+            if(c2 != "up" && c2 != "right" && c2 != "left" && c2 != "down"){
+
+                log_color = COLOR_RED;
+                notification_str = "SLIDE COMMAND (DIRECTION) INVALID!";
+                return false;
+            }
+
+            //for future scope function
+
+            int aux_limiter = 0;
+
+            if(c2 == "right"){
+
+                aux_limiter = range_x+d4;
+
+                if(aux_limiter < row_Maxlimit){
+
+                    col_MinLimit =  col_MinLimit + d4;
+                    range_x = range_x + d4;
+
+                }else{
+                    log_color = COLOR_RED;
+                    notification_str = "SLIDE COMMAND (INCREMENT VALUE TO LONG)! ";
+                    return false;
+                }
+            }
+
             log_color = COLOR_GREEN;
-            notification_str = "SLIDE (DIRECTION-"+c2+"|ROWS-"+c3+"|COLS-"+c4+")";
+            notification_str = "SLIDE (STATUS SUCCESS)! ";
 
         }else{
             log_color = COLOR_RED;

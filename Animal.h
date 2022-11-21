@@ -39,7 +39,7 @@ public:
 
 class Coelho: public Animal{
 public:
-    Coelho(char type, int id): Animal(type, id, 20, 4, 1, ){};
+    Coelho(char type, int id): Animal(type, id, 20, 4, 1 ){};
     //void chanceWalk();
     //void decrNutri();
 };
