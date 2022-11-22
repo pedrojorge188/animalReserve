@@ -4,11 +4,13 @@
 #include "utils.h"
 #include <cctype>
 #include "Reserve.h"
-
+#include "Animal.h"
 
 class Simulator {
 
 private:
+    int randCol, randRow;
+    Animal *animal;
     int total_animals;
     int total_food;
     int max_range_x;
@@ -30,6 +32,7 @@ public:
     void showSimulatorMenu(Window &window,int col,int row) const;
     bool readCommand(Window &window,Reserve &r);
     bool keyboard_detection(Window &window);
+    bool AnimalSpawner(Reserve &r, char type, int col, int row);
 };
 
 #endif //ANIMALRESERVE_SIMULATOR_H

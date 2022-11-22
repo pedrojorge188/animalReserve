@@ -3,13 +3,20 @@
 //
 
 #include "Simulator.h"
+#include "Food.h"
+#include "Animal.h"
 
 Simulator::Simulator(int row,int col) {
 
-    total_animals = 0;
+    //ConstValues();
+    srand (time(NULL));
+    randCol = rand() % col - 1;
+    randRow = rand() % row - 1;
 
+    total_animals = 1;
+
+    min_range_x = 2;  //trocar nome variaveis
     min_range_y = 2;
-    min_range_x = 2;
     row_Maxlimit = row;
     col_Maxlimit = col;
     max_range_x = col+2;
@@ -174,7 +181,7 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) const {
 
 }
 
-bool Simulator::readCommand(Window &window,Reserve &r) {
+bool Simulator::readCommand(Window &window, Reserve &r) {
 
     char **pos = r.getReserve();
     stringstream cmd;
@@ -223,12 +230,14 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
             }
 
-            pos[d3-1][d4-1] = c2[0]; //spawn caracter in reserve position; (only for test)
 
-            log_color = COLOR_GREEN;
-            notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+c3+"|col-"+c4+")";
-
-
+            if(AnimalSpawner(r,c2[0],d4,d3)){
+                log_color = COLOR_GREEN;
+                notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+c3+"|col-"+c4+")";
+            }else{
+                log_color = COLOR_RED;
+                notification_str = "ANIMAL SPAWNER FAILED";
+            }
 
         }else if(words == 1){
 
@@ -242,8 +251,13 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
             }
 
-            log_color = COLOR_GREEN;
-            notification_str = "ANIMAL SPAWNER (species-"+c2+")";
+            if(AnimalSpawner(r,c2[0],randCol,randRow)){
+                log_color = COLOR_GREEN;
+                notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+c3+"|col-"+c4+")";
+            }else{
+                log_color = COLOR_RED;
+                notification_str = "ANIMAL SPAWNER FAILED";
+            }
 
         }else{
 
@@ -794,5 +808,37 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
     }
 
     log_color = COLOR_GREEN;
+    return true;
+}
+
+bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
+
+    char **pos = r.getReserve();
+    switch (type) {
+        case 'c':
+
+            animal = new Coelho(total_animals, 0, 0);
+            pos[row][col] = animal->getType();
+
+            total_animals++;
+            break;
+
+        case 'o':
+            break;
+
+        case 'l':
+            break;
+
+        case 'g':
+            break;
+
+        case 'm':
+            break;
+
+        default:
+            return false;
+
+    }
+
     return true;
 }

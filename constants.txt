@@ -6,3 +6,5 @@ SLobo 25
 VLobo 40
 SCanguru 20
 VCanguru 70
+SMistério 0
+VMistério 0

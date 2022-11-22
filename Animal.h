@@ -35,11 +35,11 @@ public:
     int getInteractWeight() const{return interactWeight;}
     int getTimeBorn() const{return timeBorn;}
     int getDeadBodyValue() const{return deadBodyValue;}
-    int FileValues();
 };
+
 class Coelho: public Animal{
 public:
-    Coelho(int id, int health, int vitality): Animal('c', id, health, 4, 1, 1, 4, vitality, 1, "verdura", ){};
+    Coelho(int id, int health, int vitality): Animal('c', id, health, 4, 1, 1, 4, vitality, 1, "verdura"){};
     //void chanceWalk();
     //void decrNutri();
 };
@@ -71,4 +71,5 @@ public:
     Alimento_misterio(char type, int id): Food(type, id, 20, 3, 0, "erva", "verdura"){};
     //void decrNutri();
 };*/
+
 #endif //TERMINAL_CPP_ANIMAL_H
