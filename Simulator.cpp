@@ -173,7 +173,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
         return true;
 
 
-    }else if(command_start.compare("kill") == 0 || command_start.compare("killid") == 0){
+    }
+    else if(command_start.compare("kill") == 0 || command_start.compare("killid") == 0){
 
         if(words == 2){
 
@@ -222,7 +223,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
         return true;
 
-    }else if(command_start.compare("food") == 0){
+    }
+    else if(command_start.compare("food") == 0){
 
         if(words == 3){
 
@@ -280,7 +282,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
         return true;
 
-    }else if(command_start.compare("feed") == 0 || command_start.compare("feedid") == 0){
+    }
+    else if(command_start.compare("feed") == 0 || command_start.compare("feedid") == 0){
 
         if(command_start == "feed"){
 
@@ -358,7 +361,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
         return false;
 
-    }else if(command_start.compare("nofood") == 0){
+    }
+    else if(command_start.compare("nofood") == 0){
 
         if(words == 2){
 
@@ -405,7 +409,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
             return false;
         }
 
-    }else if(command_start.compare("empty") == 0){
+    }
+    else if(command_start.compare("empty") == 0){
 
         if(words == 2){
 
@@ -436,7 +441,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
             return false;
         }
 
-    }else if(command_start.compare("see") == 0){
+    }
+    else if(command_start.compare("see") == 0){
 
         if(words == 2){
 
@@ -467,7 +473,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
             return false;
         }
 
-    }else if(command_start.compare("info") == 0){
+    }
+    else if(command_start.compare("info") == 0){
 
         if(words == 1){
 
@@ -493,7 +500,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
             return false;
         }
 
-    }else if(command_start.compare("n") == 0){
+    }
+    else if(command_start.compare("n") == 0){
 
         if(words == 2){
 
@@ -542,34 +550,40 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
             return false;
         }
 
-    }else if(command_start.compare("anim") == 0){
+    }
+    else if(command_start.compare("anim") == 0){
 
         notification_str = "List animals id";
 
-    }else if(command_start.compare("visanim") == 0){
+    }
+    else if(command_start.compare("visanim") == 0){
 
         notification_str = "List animals idd";
 
-    }else if(command_start.compare("store") == 0){
+    }
+    else if(command_start.compare("store") == 0){
 
         cmd >> c2;
         log_color = COLOR_GREEN;
         notification_str = "SAVE RESERVE IN FILE ("+c2+")";
 
-    }else if(command_start.compare("restore") == 0){
+    }
+    else if(command_start.compare("restore") == 0){
 
         cmd >> c2;
         log_color = COLOR_GREEN;
         notification_str = "RESTORE RESERVE IN FILE ("+c2+")";
 
-    }else if(command_start.compare("load") == 0){
+    }
+    else if(command_start.compare("load") == 0){
 
         cmd >> c2;
 
         log_color = COLOR_GREEN;
         notification_str = "LOAD COMMAND FROM FILE ("+c2+")";
 
-    }else if(command_start.compare("slide") == 0){
+    }
+    else if(command_start.compare("slide") == 0){
 
         if (words == 2){
 
@@ -619,7 +633,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
             log_color = COLOR_GREEN;
             notification_str = "SLIDE (STATUS SUCCESS)! ";
 
-        }else{
+        }
+        else{
             log_color = COLOR_RED;
             notification_str = "SLIDE COMMAND INVALID";
             return false;

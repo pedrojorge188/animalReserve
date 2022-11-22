@@ -35,6 +35,7 @@ public:
     int getInteractWeight() const{return interactWeight;}
     int getTimeBorn() const{return timeBorn;}
     int getDeadBodyValue() const{return deadBodyValue;}
+    int
 };
 
 class Coelho: public Animal{
@@ -44,6 +45,7 @@ public:
     //void decrNutri();
 };
 
+/*
 class Cenoura: public Food{
 public:
     Cenoura(char type, int id): Food(type, id, 999, 4, 1, "verdura", "nothing"){};
