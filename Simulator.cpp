@@ -52,12 +52,94 @@ Simulator::Simulator(int row,int col) {
             showReserve(wReserve,reserve);
             showSimulatorMenu(wMenu,col,row);
 
-            readCommand(wMenu,reserve);
-
+            if(!keyboard_detection(wMenu)){
+                readCommand(wMenu,reserve);
+            }
 
         }while(command != "exit");
 
     }
+}
+
+bool Simulator::keyboard_detection(Window &window) {
+
+    std::string s;
+    s.resize(200);
+    window >> s;
+    int aux_limiter;
+
+    if (s == "KEY_UP") {
+
+        int aux_range1,aux_range2;
+
+        aux_range1 = row_MinLimit - 1;
+        aux_range2 = range_y - 1;
+
+        if(aux_range1 < 0){
+
+            log_color = COLOR_RED;
+            notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
+            return false;
+        }else{
+
+            row_MinLimit = row_MinLimit - 1;
+            range_y = range_y - 1;
+        }
+
+    }else if (s == "KEY_DOWN") {
+
+        aux_limiter = range_y+1;
+
+        if(aux_limiter < row_Maxlimit){
+
+            row_MinLimit =  row_MinLimit + 1;
+            range_y = range_y + 1;
+
+        }else{
+            log_color = COLOR_RED;
+            notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
+            return false;
+        }
+
+    }else if (s == "KEY_LEFT") {
+
+        int aux_range1,aux_range2;
+        aux_range1 = col_MinLimit - 1;
+        aux_range2 = range_x - 1;
+
+        if(aux_range1 < 0){
+
+            log_color = COLOR_RED;
+            notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
+            return false;
+
+        }else{
+
+            col_MinLimit = col_MinLimit - 1;
+            range_x = range_x - 1;
+
+        }
+
+    }else if (s == "KEY_RIGHT") {
+
+        aux_limiter = range_x+1;
+
+        if(aux_limiter < row_Maxlimit){
+
+            col_MinLimit =  col_MinLimit + 1;
+            range_x = range_x + 1;
+
+        }else{
+            log_color = COLOR_RED;
+            notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
+            return false;
+        }
+
+    }else{
+        return false;
+    }
+
+    return true;
 }
 
 void Simulator::showReserve(Window &window,Reserve &reserve) const {
@@ -87,6 +169,7 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) const {
     window << "RESERVE_SIZE (" << row << ',' << col << ")\n";
     window << "TOTAL FOOD - " << total_food << '\n';
     window << "TOTAL ANIMALS - " << total_animals << '\n';
+    window << '\n' <<"(PRESS ENTER TO WRITE COMMAND)" << '\n';
 
 }
 
@@ -99,7 +182,6 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
     window << set_color(COLOR_BLUE)<< '\n' << "COMMAND:" ;
     window >> command;
-
     cmd << command;
     cmd >> command_start;
 

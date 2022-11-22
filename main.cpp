@@ -12,7 +12,7 @@ int main() {
     cout << "INSERT RESERVE AREA!" << endl;
     cout << "ROWS:";
     cin >> rows;
-    cout <<  "COLUMNS:";
+    cout << "COLUMNS:";
     cin >> cols;
 
     Simulator(rows,cols);

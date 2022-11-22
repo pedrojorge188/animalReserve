@@ -29,6 +29,7 @@ public:
     void showReserve(Window &window,Reserve &reserve) const;
     void showSimulatorMenu(Window &window,int col,int row) const;
     bool readCommand(Window &window,Reserve &r);
+    bool keyboard_detection(Window &window);
 };
 
 #endif //ANIMALRESERVE_SIMULATOR_H
