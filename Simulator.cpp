@@ -819,26 +819,40 @@ bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
 
             animal = new Coelho(total_animals, 0, 0);
             pos[row][col] = animal->getType();
-            total_animals++;
 
-            break;
+            vector_animals.push_back(animal[total_animals]);
 
-        case 'o':
-            break;
+            /*  TRY TO DO WITH VECTOR
+                        Animal animal = Coelho(total_animals, 0, 0);
+                        vector_animals.push_back(animal);
 
-        case 'l':
-            break;
+                        //para ler ---
+                        while (i != this->vector_animals.end()) {
+                            if (i->getId() == total_animals) {
+                                pos[row][col] = i->getType();
+                            } else
+                                ++i;
+                        }
+            */
+                    total_animals++;
+                break;
 
-        case 'g':
-            break;
+            case 'o':
+                break;
 
-        case 'm':
-            break;
+            case 'l':
+                break;
 
-        default:
-            return false;
+            case 'g':
+                break;
 
-    }
+            case 'm':
+                break;
 
-    return true;
-}
+            default:
+                return false;
+
+        }
+
+            return true;
+        }

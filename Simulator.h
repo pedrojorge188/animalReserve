@@ -5,12 +5,14 @@
 #include <cctype>
 #include "Reserve.h"
 #include "Animal.h"
+#include <vector>
 
 class Simulator {
 
 private:
     int randCol, randRow;
     Animal *animal;
+    vector <Animal> vector_animals;
     int total_animals;
     int total_food;
     int max_range_x;
