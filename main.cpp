@@ -7,6 +7,14 @@
 
 int main() {
 
-    Simulator(500,500);
+    int rows,cols;
+
+    cout << "INSERT RESERVE AREA!" << endl;
+    cout << "ROWS:";
+    cin >> rows;
+    cout <<  "COLUMNS:";
+    cin >> cols;
+
+    Simulator(rows,cols);
     return 0;
 }
