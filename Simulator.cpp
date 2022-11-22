@@ -611,9 +611,71 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
                 }else{
                     log_color = COLOR_RED;
-                    notification_str = "SLIDE COMMAND (INCREMENT VALUE TO LONG)! ";
+                    notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
                     return false;
                 }
+
+            }else if(c2 == "left"){
+
+                int aux_range1,aux_range2;
+
+                if(d4 > 0){
+
+                    aux_range1 = col_MinLimit - d4;
+                    aux_range2 = range_x - d4;
+
+                    if(aux_range1 < 0){
+
+                        log_color = COLOR_RED;
+                        notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
+                        return false;
+
+                    }else{
+
+                        col_MinLimit = col_MinLimit - d4;
+                        range_x = range_x - d4;
+
+                    }
+                }
+
+            }else if(c2 == "down"){
+
+                aux_limiter = range_y+d4;
+
+                if(aux_limiter < row_Maxlimit){
+
+                    row_MinLimit =  row_MinLimit + d4;
+                    range_y = range_y + d4;
+
+                }else{
+                    log_color = COLOR_RED;
+                    notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
+                    return false;
+                }
+
+            }else if(c2 == "up"){
+
+                int aux_range1,aux_range2;
+
+                if(d4 > 0){
+
+                    aux_range1 = row_MinLimit - d4;
+                    aux_range2 = range_y - d4;
+
+                    if(aux_range1 < 0){
+
+                        log_color = COLOR_RED;
+                        notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
+                        return false;
+
+                    }else{
+
+                        row_MinLimit = row_MinLimit - d4;
+                        range_y = range_y - d4;
+
+                    }
+                }
+
             }
 
             log_color = COLOR_GREEN;

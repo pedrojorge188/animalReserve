@@ -7,6 +7,3 @@ add_executable(animalReserve main.cpp Reserve.cpp Reserve.h utils.h Simulator.cp
 
 target_link_libraries(animalReserve C:/Users/pedro/Desktop/ISEC/POO/TrabalhoPratico/TerminalLibrary/wincon/pdcurses.a)
 
-add_executable(animalReserve main.cpp Reserve.cpp Reserve.h utils.h Simulator.cpp Simulator.h curses.h Terminal.cpp Terminal.h Animal.cpp Animal.h Food.cpp Food.h)
-
-target_link_libraries(animalReserve C:/Users/luist/Desktop/POO_TP/PDCurses-3.9/wincon/pdcurses.a)
