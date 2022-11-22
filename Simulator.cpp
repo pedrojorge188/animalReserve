@@ -176,7 +176,7 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) const {
     window << "COLUMN VIEW AREA (" << min_range_x-2 << "->" << max_range_x-2 << ") pixels" << "\n\n";
     window << "RESERVE_SIZE (" << row << ',' << col << ")\n";
     window << "TOTAL FOOD - " << total_food << '\n';
-    window << "TOTAL ANIMALS - " << total_animals << '\n';
+    window << "TOTAL ANIMALS - " << total_animals-1 << '\n';
     window << '\n' <<"(PRESS ENTER TO WRITE COMMAND)" << '\n';
 
 }
@@ -819,8 +819,8 @@ bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
 
             animal = new Coelho(total_animals, 0, 0);
             pos[row][col] = animal->getType();
-
             total_animals++;
+
             break;
 
         case 'o':
