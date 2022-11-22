@@ -11,12 +11,12 @@ class Simulator {
 private:
     int total_animals;
     int total_food;
-    int range_x;
-    int col_MinLimit;
-    int row_MinLimit;
+    int max_range_x;
+    int min_range_x;
+    int min_range_y;
     int col_Maxlimit;
     int row_Maxlimit;
-    int range_y;
+    int max_range_y;
     int window_range_x;
     int window_range_y;
     int turn_instance;

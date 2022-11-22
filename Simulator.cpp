@@ -8,15 +8,15 @@ Simulator::Simulator(int row,int col) {
 
     total_animals = 0;
 
-    row_MinLimit = 2;
-    col_MinLimit = 2;
+    min_range_y = 2;
+    min_range_x = 2;
     row_Maxlimit = row;
     col_Maxlimit = col;
-    range_x = col+2;
-    range_y = row+2;
+    max_range_x = col+2;
+    max_range_y = row+2;
 
-    window_range_x = range_x;
-    window_range_y = range_y;
+    window_range_x = max_range_x;
+    window_range_y = max_range_y;
 
     total_food = 0;
     turn_instance = 0;
@@ -25,10 +25,10 @@ Simulator::Simulator(int row,int col) {
     log_color = COLOR_GREEN;
 
     if(col > 40 || row > 25){
-        range_x = 42;
-        range_y = 22;
-        window_range_x = range_x;
-        window_range_y = range_y;
+        max_range_x = 42;
+        max_range_y = 22;
+        window_range_x = max_range_x;
+        window_range_y = max_range_y;
     }
 
     Reserve reserve = Reserve(col, row);
@@ -72,28 +72,29 @@ bool Simulator::keyboard_detection(Window &window) {
 
         int aux_range1,aux_range2;
 
-        aux_range1 = row_MinLimit - 1;
-        aux_range2 = range_y - 1;
+        aux_range1 = min_range_y - 1;
+        aux_range2 = max_range_y - 1;
 
-        if(aux_range1 < 0){
+        if( aux_range1 <= 1 ){
 
             log_color = COLOR_RED;
             notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
             return false;
+
         }else{
 
-            row_MinLimit = row_MinLimit - 1;
-            range_y = range_y - 1;
+            min_range_y = min_range_y - 1;
+            max_range_y = max_range_y - 1;
         }
 
     }else if (s == "KEY_DOWN") {
 
-        aux_limiter = range_y+1;
+        aux_limiter = max_range_y+1;
 
         if(aux_limiter < row_Maxlimit){
 
-            row_MinLimit =  row_MinLimit + 1;
-            range_y = range_y + 1;
+            min_range_y =  min_range_y + 1;
+            max_range_y = max_range_y + 1;
 
         }else{
             log_color = COLOR_RED;
@@ -104,10 +105,10 @@ bool Simulator::keyboard_detection(Window &window) {
     }else if (s == "KEY_LEFT") {
 
         int aux_range1,aux_range2;
-        aux_range1 = col_MinLimit - 1;
-        aux_range2 = range_x - 1;
+        aux_range1 = min_range_x - 1;
+        aux_range2 = max_range_x - 1;
 
-        if(aux_range1 < 0){
+        if(aux_range1 <= 1){
 
             log_color = COLOR_RED;
             notification_str = "SLIDE COMMAND (DISTANCE VALUE TO LONG)! ";
@@ -115,19 +116,19 @@ bool Simulator::keyboard_detection(Window &window) {
 
         }else{
 
-            col_MinLimit = col_MinLimit - 1;
-            range_x = range_x - 1;
+            min_range_x = min_range_x - 1;
+            max_range_x = max_range_x - 1;
 
         }
 
     }else if (s == "KEY_RIGHT") {
 
-        aux_limiter = range_x+1;
+        aux_limiter = max_range_x+1;
 
         if(aux_limiter < row_Maxlimit){
 
-            col_MinLimit =  col_MinLimit + 1;
-            range_x = range_x + 1;
+            min_range_x =  min_range_x + 1;
+            max_range_x = max_range_x + 1;
 
         }else{
             log_color = COLOR_RED;
@@ -147,11 +148,11 @@ void Simulator::showReserve(Window &window,Reserve &reserve) const {
     char **poSx_poSy = reserve.getReserve();
     int col,row,col_start,row_start;
 
-    col_start = col_MinLimit - 2;
-    row_start = row_MinLimit - 2;
+    col_start = min_range_x - 2;
+    row_start = min_range_y - 2;
 
-    col = range_x - 2;
-    row = range_y - 2;
+    col = max_range_x - 2;
+    row = max_range_y - 2;
 
     for(int i=row_start;i<row;i++){
         for(int k=col_start;k<col;k++)
@@ -164,8 +165,8 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) const {
     window << set_color(COLOR_YELLOW);
     window << "SIMULATION DETAILS \n\n" << set_color(COLOR_GREEN);
     window << "TURN - " << turn_instance << "\n\n";
-    window << "ROW VIEW AREA (" << row_MinLimit-2 << "->" << range_y-2 << ") pixels" << '\n';
-    window << "COLUMN VIEW AREA (" << col_MinLimit-2 << "->" << range_x-2 << ") pixels" << "\n\n";
+    window << "ROW VIEW AREA (" << min_range_y-2 << "->" << max_range_y-2 << ") pixels" << '\n';
+    window << "COLUMN VIEW AREA (" << min_range_x-2 << "->" << max_range_x-2 << ") pixels" << "\n\n";
     window << "RESERVE_SIZE (" << row << ',' << col << ")\n";
     window << "TOTAL FOOD - " << total_food << '\n';
     window << "TOTAL ANIMALS - " << total_animals << '\n';
@@ -698,12 +699,12 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
             if(c2 == "right"){
 
-                aux_limiter = range_x+d4;
+                aux_limiter = max_range_x+d4;
 
                 if(aux_limiter < row_Maxlimit){
 
-                    col_MinLimit =  col_MinLimit + d4;
-                    range_x = range_x + d4;
+                    min_range_x =  min_range_x + d4;
+                    max_range_x = max_range_x + d4;
 
                 }else{
                     log_color = COLOR_RED;
@@ -717,8 +718,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
                 if(d4 > 0){
 
-                    aux_range1 = col_MinLimit - d4;
-                    aux_range2 = range_x - d4;
+                    aux_range1 = min_range_x - d4;
+                    aux_range2 = max_range_x - d4;
 
                     if(aux_range1 < 0){
 
@@ -728,20 +729,20 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
                     }else{
 
-                        col_MinLimit = col_MinLimit - d4;
-                        range_x = range_x - d4;
+                        min_range_x = min_range_x - d4;
+                        max_range_x = max_range_x - d4;
 
                     }
                 }
 
             }else if(c2 == "down"){
 
-                aux_limiter = range_y+d4;
+                aux_limiter = max_range_y+d4;
 
                 if(aux_limiter < row_Maxlimit){
 
-                    row_MinLimit =  row_MinLimit + d4;
-                    range_y = range_y + d4;
+                    min_range_y =  min_range_y + d4;
+                    max_range_y = max_range_y + d4;
 
                 }else{
                     log_color = COLOR_RED;
@@ -755,8 +756,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
                 if(d4 > 0){
 
-                    aux_range1 = row_MinLimit - d4;
-                    aux_range2 = range_y - d4;
+                    aux_range1 = min_range_y - d4;
+                    aux_range2 = max_range_y - d4;
 
                     if(aux_range1 < 0){
 
@@ -766,8 +767,8 @@ bool Simulator::readCommand(Window &window,Reserve &r) {
 
                     }else{
 
-                        row_MinLimit = row_MinLimit - d4;
-                        range_y = range_y - d4;
+                        min_range_y = min_range_y - d4;
+                        max_range_y = max_range_y - d4;
 
                     }
                 }
