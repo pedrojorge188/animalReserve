@@ -1,6 +1,3 @@
-//
-// Created by pedro on 09/11/2022.
-//
 
 #include "Simulator.h"
 #include "Food.h"
@@ -48,10 +45,13 @@ Simulator::Simulator(int row,int col) {
     {
         do{
 
+            randCol = rand() % col_Maxlimit - 1;
+            randRow = rand() % row_Maxlimit - 1;
+
             Window title = Window(15,2,20,1,false);
-            Window wReserve = Window(0,4,window_range_x,window_range_y,true);
+            Window wReserve = Window(0,3,window_range_x,window_range_y,true);
             Window wMenu = Window(window_range_x+2,6,60,16,false);
-            Window notification = Window(2,window_range_y+5,45,3,false);
+            Window notification = Window(2,window_range_y+4,45,4,false);
 
             notification << set_color(log_color) << notification_str ;
             title << set_color(COLOR_YELLOW) << "ANIMAL RESERVE" ;
@@ -233,8 +233,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             //submit reserve,type of animal char, row and col
             if(AnimalSpawner(r,c2[0],d4,d3)){
 
-                log_color = COLOR_GREEN;
-                notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+c3+"|col-"+c4+")";
+                log_color = COLOR_BLUE;
+                showAnimalInfo(total_animals);
                 total_animals++;
 
             }else{
@@ -259,8 +259,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             if(AnimalSpawner(r,c2[0],randCol,randRow)){
 
 
-                log_color = COLOR_GREEN;
-                notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+to_string(randRow)+"|col-"+to_string(randCol)+")";
+                log_color = COLOR_BLUE;
+                showAnimalInfo(total_animals);
                 total_animals++;
 
             }else{
@@ -395,69 +395,69 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
         if(command_start == "feed"){
 
-                if(words == 4){
+            if(words == 4){
 
-                    cmd >> d3; //row
-                    cmd >> d4; //col
-                    cmd >> d5; //n.points
-                    cmd >> d6; // tox.points
+                cmd >> d3; //row
+                cmd >> d4; //col
+                cmd >> d5; //n.points
+                cmd >> d6; // tox.points
 
-                    c2 = to_string(d3);
-                    c3 = to_string(d4);
-                    c4 = to_string(d5);
-                    c5 = to_string(d6);
+                c2 = to_string(d3);
+                c3 = to_string(d4);
+                c4 = to_string(d5);
+                c5 = to_string(d6);
 
-                    if( c2 != "0" || c3 != "0" || c4 != "0" || c5 != "0"){
-                        if(d3 == 0 || d4 == 0 || d5 == 0 || d6 == 0){
+                if( c2 != "0" || c3 != "0" || c4 != "0" || c5 != "0"){
+                    if(d3 == 0 || d4 == 0 || d5 == 0 || d6 == 0){
 
-                            log_color = COLOR_RED;
-                            notification_str = "FEED INVALID!";
-                            return false;
+                        log_color = COLOR_RED;
+                        notification_str = "FEED INVALID!";
+                        return false;
 
-                        }
                     }
-
-                    log_color = COLOR_GREEN;
-                    notification_str = "ANIMAL FEEDED (row-"+c2+"|col-"+c3+"|nutritiveP-"+c4+"|toxicP-"+c5+")";
-
-                }else {
-
-                    log_color = COLOR_RED;
-                    notification_str = "FEED COMMAND INVALID";
-                    return false;
-
                 }
+
+                log_color = COLOR_GREEN;
+                notification_str = "ANIMAL FEEDED (row-"+c2+"|col-"+c3+"|nutritiveP-"+c4+"|toxicP-"+c5+")";
+
+            }else {
+
+                log_color = COLOR_RED;
+                notification_str = "FEED COMMAND INVALID";
+                return false;
+
+            }
 
         }else if(command_start == "feedid"){
 
-                if (words == 3){
+            if (words == 3){
 
-                    cmd >> d3; //id
-                    cmd >> d4; //n.points
-                    cmd >> d5; //tox.points
+                cmd >> d3; //id
+                cmd >> d4; //n.points
+                cmd >> d5; //tox.points
 
-                    c2 = to_string(d3);
-                    c3 = to_string(d4);
-                    c4 = to_string(d5);
+                c2 = to_string(d3);
+                c3 = to_string(d4);
+                c4 = to_string(d5);
 
-                    if( c2 != "0" || c3 != "0" || c4 != "0"){
-                        if(d3 == 0 || d4 == 0 || d5 == 0){
+                if( c2 != "0" || c3 != "0" || c4 != "0"){
+                    if(d3 == 0 || d4 == 0 || d5 == 0){
 
-                            log_color = COLOR_RED;
-                            notification_str = "FEED INVALID!";
-                            return false;
+                        log_color = COLOR_RED;
+                        notification_str = "FEED INVALID!";
+                        return false;
 
-                        }
                     }
-
-                    log_color = COLOR_GREEN;
-                    notification_str = "ANIMAL FEEDED (id-"+c2+"|nutritiveP-"+c3+"|toxicP-"+c4+")";
-
-                }else{
-                    log_color = COLOR_RED;
-                    notification_str = "FEEDID COMMAND INVALID";
-                    return false;
                 }
+
+                log_color = COLOR_GREEN;
+                notification_str = "ANIMAL FEEDED (id-"+c2+"|nutritiveP-"+c3+"|toxicP-"+c4+")";
+
+            }else{
+                log_color = COLOR_RED;
+                notification_str = "FEEDID COMMAND INVALID";
+                return false;
+            }
 
         }else{
 
@@ -596,22 +596,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                     notification_str = "INFO COMMAND INVALID!";
                     return false;
                 }
-
-            }
-
-            auto animal_info =  vector_animals.begin();
-
-            while (animal_info != this->vector_animals.end()) {
-
-                if (animal_info->getId() == d3) {
-
-                    log_color = COLOR_BLUE;
-                    notification_str = animal_info->getType();
-                    notification_str.append("<-type | ");
-                    break;
-
-                } else
-                    ++animal_info;
 
             }
 
@@ -844,7 +828,7 @@ bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
 
     if(type == 'c'){
 
-        Animal animal = Coelho(total_animals,0,0);
+        Animal animal = Coelho(total_animals, row, col);
         vector_animals.push_back(animal);
 
         auto animal_info =  vector_animals.begin();
@@ -868,3 +852,28 @@ bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
     return  true;
 }
 
+void Simulator::showAnimalInfo(int id) {
+
+    auto animal_info =  vector_animals.begin();
+
+    ostringstream buf;
+
+    while (animal_info != this->vector_animals.end()) {
+
+        if (animal_info->getId() == id) {
+
+            buf << "ANIMAL INFORMATION" << endl;
+            buf << "ID:" << animal_info->getId() << endl;
+            buf << "Type:" << animal_info->getType() << endl;
+            buf << "Position(" <<animal_info->getPosY()<<','<<animal_info->getPosX()<< ')' << endl;
+
+            notification_str = buf.str();
+
+            break;
+
+        } else
+            ++animal_info;
+
+    }
+
+}

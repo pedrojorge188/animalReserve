@@ -34,6 +34,7 @@ public:
     bool readCommand(Window &window,Reserve &r);
     bool keyboard_detection(Window &window);
     bool AnimalSpawner(Reserve &r, char type, int col, int row);
+    void showAnimalInfo(int id);
 };
 
 #endif //ANIMALRESERVE_SIMULATOR_H
