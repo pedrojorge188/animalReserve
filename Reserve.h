@@ -12,9 +12,8 @@ public:
     Reserve(Reserve& aux);
     ~Reserve(){delete[]reserve_posx_posy;}
     char **getReserve() const {return reserve_posx_posy;}
-    int spawnFood(int id_food,int pos_x, int pos_y);
 
-    //int moveAnimal(int id,int next_line,int next_column);
+    //bool moveAnimal(int id,int next_line,int next_column);
     //int spawn_food(int type_food);
 };
 

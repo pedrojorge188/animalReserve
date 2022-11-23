@@ -820,7 +820,6 @@ bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
             animal = new Coelho(total_animals, 0, 0);
             pos[row][col] = animal->getType();
 
-            vector_animals.push_back(animal[total_animals]);
 
             /*  TRY TO DO WITH VECTOR
                         Animal animal = Coelho(total_animals, 0, 0);

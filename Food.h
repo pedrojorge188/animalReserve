@@ -11,7 +11,7 @@ protected:
     int toxicity;
     string smell_1, smell_2;
 public:
-    Food(char t, int i, int d=0, int n=0, int to=0, string s1="nothing", string s2="nothing" ): type(t), id(i), duration(d), nutriValue(n), toxicity(to), smell_1(s1), smell_2(s2){}
+    Food(char t, int i, int d=0, int n=0, int to=0, string s1="nothing", string s2="nothing" );
     virtual ~Food() = default;
 
     char getType() const {return type;}
