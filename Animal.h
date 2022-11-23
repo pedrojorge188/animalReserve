@@ -11,8 +11,7 @@ protected:
     int iniHealth;
     int perception;
     int walkDistance;
-    int weightMax;
-    int weightMin;
+    int weight;
     int vitality;
     int hunger;
     string preferedSmell;
@@ -21,7 +20,7 @@ protected:
     int deadBodyValue;
 
 public:
-    Animal(char t, int i, int in=0, int p=0, int w=0, int we1=0, int we2=0, int v=0, int h=0, string ps="nothing", int iw=0, int tb=0, int db=0);
+    Animal(char t, int i, int in=0, int p=0, int w=0, int we=0, int v=0, int h=0, string ps="nothing", int iw=0, int tb=0, int db=0);
     virtual ~Animal() = default;
 
     char getType() const {return type;}
@@ -29,8 +28,7 @@ public:
     int getIniHealth() const {return iniHealth;}
     int getPerception() const {return perception;}
     int getWalkDistance() const {return walkDistance;}  //em alguns casos é 1 ou 2, n está implementado
-    int getWeightMax() const {return weightMax;}
-    int getWeightMin() const {return weightMin;}
+    int getWeight() const {return weight;}
     int getVitality() const {return vitality;}
     int getHunger() const {return hunger;}  //Implicaçoes ainda n implementadas
     string getPreferedSmell() const {return preferedSmell;}
@@ -39,14 +37,15 @@ public:
     int getDeadBodyValue() const {return deadBodyValue;}
 };
 
+/*
 class Coelho: public Animal{
 public:
-    Coelho(int id, int health, int vitality): Animal('c', id, health, 4, 1, 1, 4, vitality, 1, "verdura"){};
+    Coelho(int id, int health, int vitality): Animal('C', id, health, 4, 1, 1, 4, vitality, 1, "verdura"){};
     //void chanceWalk();
     //void decrNutri();
 };
 
-/*
+
 class Cenoura: public Food{
 public:
     Cenoura(char type, int id): Food(type, id, 999, 4, 1, "verdura", "nothing"){};

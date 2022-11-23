@@ -10,7 +10,7 @@
 #include <cstdlib>
 #include "Terminal.h"
 #include <cctype>
-#include <time.h>
+#include <ctime>
 #include <string>
 
 using namespace std;

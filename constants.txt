@@ -6,5 +6,15 @@ SLobo 25
 VLobo 40
 SCanguru 20
 VCanguru 70
-SMistério 0
-VMistério 0
+SMisterio 0
+VMisterio 0
+WDCoelho 1 2
+WCoelho 1 4
+WDOvelha 1
+WOvelha 4 8
+WDLobo 1
+WLobo 15
+WDCanguru 1
+WCanguru 10
+WDMisterio 0
+WMisterio 0

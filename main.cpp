@@ -1,4 +1,5 @@
 #include <iostream>
+#include "utils.h"
 #include "Reserve.h"
 #include "Simulator.h"
 #include "curses.h"
