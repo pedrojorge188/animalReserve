@@ -6,7 +6,7 @@
 
 class Animal{
     char type;
-    int id ;
+    const int id ;
 protected:
     int iniHealth;
     int perception;

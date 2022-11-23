@@ -11,7 +11,6 @@ class Simulator {
 
 private:
     int randCol, randRow;
-    Animal *animal;
     vector <Animal> vector_animals;
     int total_animals;
     int total_food;

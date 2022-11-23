@@ -10,12 +10,12 @@ Simulator::Simulator(int row,int col) {
 
     //ConstValues();
     srand (time(NULL));
-    randCol = rand() % col - 1;
-    randRow = rand() % row - 1;
+    randCol = 0;
+    randRow = 0;
 
     total_animals = 1;
 
-    min_range_x = 2;  //trocar nome variaveis
+    min_range_x = 2;
     min_range_y = 2;
     row_Maxlimit = row;
     col_Maxlimit = col;
@@ -230,13 +230,18 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-
+            //submit reserve,type of animal char, row and col
             if(AnimalSpawner(r,c2[0],d4,d3)){
+
                 log_color = COLOR_GREEN;
                 notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+c3+"|col-"+c4+")";
+                total_animals++;
+
             }else{
+
                 log_color = COLOR_RED;
                 notification_str = "ANIMAL SPAWNER FAILED";
+
             }
 
         }else if(words == 1){
@@ -252,11 +257,17 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             }
 
             if(AnimalSpawner(r,c2[0],randCol,randRow)){
+
+
                 log_color = COLOR_GREEN;
-                notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+c3+"|col-"+c4+")";
+                notification_str = "ANIMAL SPAWNER (species-"+c2+"|row-"+to_string(randRow)+"|col-"+to_string(randCol)+")";
+                total_animals++;
+
             }else{
+
                 log_color = COLOR_RED;
                 notification_str = "ANIMAL SPAWNER FAILED";
+
             }
 
         }else{
@@ -588,8 +599,21 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            log_color = COLOR_GREEN;
-            notification_str = "INFO OF (id-"+c2+")";
+            auto animal_info =  vector_animals.begin();
+
+            while (animal_info != this->vector_animals.end()) {
+
+                if (animal_info->getId() == d3) {
+
+                    log_color = COLOR_BLUE;
+                    notification_str = animal_info->getType();
+                    notification_str.append("<-type | ");
+                    break;
+
+                } else
+                    ++animal_info;
+
+            }
 
         }else{
             log_color = COLOR_RED;
@@ -814,44 +838,33 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
 
     char **pos = r.getReserve();
-    switch (type) {
-        case 'c':
 
-            animal = new Coelho(total_animals, 0, 0);
-            pos[row][col] = animal->getType();
+    if(col <= 0 || col > col_Maxlimit || row <= 0 || row > row_Maxlimit)
+        return false;
 
+    if(type == 'c'){
 
-            /*  TRY TO DO WITH VECTOR
-                        Animal animal = Coelho(total_animals, 0, 0);
-                        vector_animals.push_back(animal);
+        Animal animal = Coelho(total_animals,0,0);
+        vector_animals.push_back(animal);
 
-                        //para ler ---
-                        while (i != this->vector_animals.end()) {
-                            if (i->getId() == total_animals) {
-                                pos[row][col] = i->getType();
-                            } else
-                                ++i;
-                        }
-            */
-                    total_animals++;
+        auto animal_info =  vector_animals.begin();
+
+        while (animal_info != this->vector_animals.end()) {
+
+            if (animal_info->getId() == total_animals) {
+
+                pos[row-1][col-1] = animal_info->getType();
                 break;
 
-            case 'o':
-                break;
-
-            case 'l':
-                break;
-
-            case 'g':
-                break;
-
-            case 'm':
-                break;
-
-            default:
-                return false;
-
+            } else
+                ++animal_info;
         }
 
-            return true;
-        }
+
+    }else{
+        return false;
+    }
+
+    return  true;
+}
+
