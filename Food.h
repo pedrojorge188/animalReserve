@@ -4,19 +4,23 @@
 
 class Food{
     char type;
-    int id;
+    const int id;
 protected:
+    int row;
+    int col;
     int duration;
     int nutriValue;
     int toxicity;
     string smell_1, smell_2;
 public:
-    Food(char t, int i, int d=0, int n=0, int to=0, string s1="nothing", string s2="nothing" );
+    Food(char t, int i,int row=0, int col=0, int d=0, int n=0, int to=0, string s1="nothing", string s2="nothing" );
     virtual ~Food() = default;
 
     char getType() const {return type;}
     int getId() const {return id;}
     int getDuration() const {return duration;}
+    int getPosY() const {return row;}
+    int getPosX() const {return col;}
     int getNutriValue() const {return nutriValue;}
     int getToxicity() const {return toxicity;}
     string getSmell1()  {return smell_1;}
@@ -32,20 +36,20 @@ public:
 
 class Relva: public Food{
 public:
-    Relva(char type, int id): Food(type, id, 20, 3, 0, "erva", "verdura"){};
+    Relva(int id, int r, int c): Food('r', id, r, c){};
     //void decrNutri();
 };
 
 class Cenoura: public Food{
 public:
-    Cenoura(char type, int id): Food(type, id, 999, 4, 1, "verdura", "nothing"){};
+    Cenoura(int id, int r, int c): Food('t', id, r, c){};
     //void incrToxy();
     //durationInfinity();
 };
 
 class Corpo: public Food{
 public:
-    Corpo(char type, int id): Food(type, id, 999, 0, 0, "carne", "nothing"){};
+    Corpo(int id, int r, int c): Food('p', id, r, c){};
     //void decrNutri();
     //void incrToxy();
     //durationInfinity();
@@ -53,7 +57,7 @@ public:
 
 class Bife: public Food{
 public:
-    Bife(char type, int id): Food(type, id, 30, 10, 2, "carne", "ketchup"){};
+    Bife(int id, int r, int c): Food('b', id, r, c){};
     //void decrNutri();
 };
 

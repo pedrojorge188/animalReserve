@@ -108,3 +108,4 @@ Animal::Animal(char t, int i, int in, int p, int w, int we, int v, int h, string
         }
     }
 }
+
