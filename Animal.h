@@ -22,7 +22,7 @@ protected:
     int deadBodyValue;
 
 public:
-    Animal(char t, int i,int row=0, int col=0, int in=0, int p=0, int w=0, int we1=0, int we2=0, int v=0, int h=0, string ps="nothing", int iw=0, int tb=0, int db=0);
+    Animal(char t, int i,int row=0, int col=0, int in=0, int p=0, int w=0, int we=0, int v=0, int h=0, string ps="nothing", int iw=0, int tb=0, int db=0);
     virtual ~Animal() = default;
 
     char getType() const {return type;}
@@ -41,10 +41,17 @@ public:
     int getDeadBodyValue() const {return deadBodyValue;}
 };
 
-/*
+
 class Coelho: public Animal{
 public:
     Coelho(int id, int r, int c): Animal('c',id, r, c){};
+    //void chanceWalk();
+    //void decrNutri();
+};
+
+class Lobo: public Animal{
+public:
+    Lobo(int id, int r, int c): Animal('l',id, r, c){};
     //void chanceWalk();
     //void decrNutri();
 };

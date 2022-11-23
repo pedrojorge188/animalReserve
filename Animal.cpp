@@ -1,11 +1,9 @@
 #include "Animal.h"
 
 
-Animal::Animal(char t, int i, int in, int p, int w, int we, int v, int h, string ps, int iw, int tb, int db):id(i) {
+Animal::Animal(char t, int i ,int r, int c, int in, int p, int w, int we, int v, int h, string ps, int iw, int tb, int db):id(i) {
 
     string::size_type sz;   // alias of size_t
-
-    srand (time(NULL));
     int maxValue=0, minValue=0;
 
     string data;
@@ -13,10 +11,12 @@ Animal::Animal(char t, int i, int in, int p, int w, int we, int v, int h, string
     fileConst.open("../constants.txt");
 
     type = toupper(t);
+    row = r;
+    col = c;
     iniHealth = in;
     perception = p;
-    walkDistance = w;  //May varie
-    weight = we;  //May varie
+    walkDistance = w;
+    weight = we;
     vitality = v;
     hunger = h;
     preferedSmell = ps;
@@ -38,12 +38,16 @@ Animal::Animal(char t, int i, int in, int p, int w, int we, int v, int h, string
                 maxValue = stoi(data, &sz);
                 fileConst >> data;
                 minValue = stoi(data, &sz);
+
+                srand (time(NULL));
                 walkDistance = rand()%maxValue + minValue;
             } else if (data == "WCoelho") {
                 fileConst >> data;
                 maxValue = stoi(data, &sz);
                 fileConst >> data;
                 minValue = stoi(data, &sz);
+
+                srand (time(NULL));
                 weight = rand()%maxValue + minValue;
             }
         } else if (type == 'O') {
@@ -61,6 +65,8 @@ Animal::Animal(char t, int i, int in, int p, int w, int we, int v, int h, string
                 maxValue = stoi(data, &sz);
                 fileConst >> data;
                 minValue = stoi(data, &sz);
+
+                srand (time(NULL));
                 weight = rand()%maxValue + minValue;
             }
         } else if (type == 'L') {

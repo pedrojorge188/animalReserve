@@ -866,6 +866,24 @@ bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
         }
 
 
+    }
+    else if(type == 'l') {
+
+        Animal animal = Lobo(total_animals, row, col);
+        vector_animals.push_back(animal);
+
+        auto animal_info = vector_animals.begin();
+
+        while (animal_info != this->vector_animals.end()) {
+
+            if (animal_info->getId() == total_animals) {
+
+                pos[row - 1][col - 1] = animal_info->getType();
+                break;
+
+            } else
+                ++animal_info;
+        }
     }else{
         return false;
     }
@@ -920,6 +938,7 @@ void Simulator::showAnimalInfo(int id) {
             buf << "ANIMAL INFORMATION" << endl;
             buf << "ID:" << animal_info->getId() << endl;
             buf << "Type:" << animal_info->getType() << endl;
+            buf << "Vitality:" << animal_info->getVitality() << endl;
             buf << "Position(" <<animal_info->getPosY()<<','<<animal_info->getPosX()<< ')' << endl;
 
             notification_str = buf.str();
