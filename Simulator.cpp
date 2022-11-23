@@ -11,6 +11,7 @@ Simulator::Simulator(int row,int col) {
     randRow = 0;
 
     total_animals = 1;
+    total_food = 1;
 
     min_range_x = 2;
     min_range_y = 2;
@@ -22,7 +23,6 @@ Simulator::Simulator(int row,int col) {
     window_range_x = max_range_x;
     window_range_y = max_range_y;
 
-    total_food = 0;
     turn_instance = 0;
 
     notification_str = " ";
@@ -230,7 +230,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            //submit reserve,type of animal char, row and col
             if(AnimalSpawner(r,c2[0],d4,d3)){
 
                 log_color = COLOR_BLUE;
@@ -362,8 +361,19 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             }
 
 
-            log_color = COLOR_GREEN;
-            notification_str = "SPAWN FOOD (type-"+c2+"|row-"+c3+"|col-"+c4+")";
+            if(FoodSpawner(r,c2[0],d4,d3)){
+
+                log_color = COLOR_BLUE;
+                showFoodInfo(total_animals);
+                total_food++;
+
+            }else{
+
+                log_color = COLOR_RED;
+                notification_str = "FOOD SPAWNER FAILED";
+
+            }
+
 
 
         }else if(words == 1){
@@ -378,8 +388,19 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            log_color = COLOR_GREEN;
-            notification_str = "SPAWN FOOD (type-"+c2+")";
+            if(FoodSpawner(r,c2[0],randCol,randRow)){
+
+
+                log_color = COLOR_BLUE;
+                showFoodInfo(total_animals);
+                total_animals++;
+
+            }else{
+
+                log_color = COLOR_RED;
+                notification_str = "ANIMAL SPAWNER FAILED";
+
+            }
 
         }else{
 
@@ -852,6 +873,40 @@ bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
     return  true;
 }
 
+bool Simulator::FoodSpawner(Reserve &r, char type, int col, int row){
+
+    char **pos = r.getReserve();
+
+    if(col <= 0 || col > col_Maxlimit || row <= 0 || row > row_Maxlimit)
+        return false;
+
+    if(type == 'r'){
+
+        Food food = Relva(total_food, row, col);
+        vector_food.push_back(food);
+
+        auto food_info = vector_food.begin();
+
+        while (food_info != this->vector_food.end()) {
+
+            if (food_info->getId() == total_food) {
+
+                pos[row-1][col-1] = food_info->getType();
+                break;
+
+            } else
+                ++food_info;
+        }
+
+
+    }else{
+        return false;
+    }
+
+    return  true;
+
+}
+
 void Simulator::showAnimalInfo(int id) {
 
     auto animal_info =  vector_animals.begin();
@@ -876,4 +931,28 @@ void Simulator::showAnimalInfo(int id) {
 
     }
 
+}
+
+void Simulator::showFoodInfo(int id){
+
+    auto food_info =  vector_food.begin();
+
+    ostringstream buf;
+
+    while (food_info != this->vector_food.end()) {
+
+        if (food_info->getId() == id) {
+
+            buf << "ANIMAL INFORMATION" << endl;
+            buf << "ID:" << food_info->getId() << endl;
+            buf << "Type:" << food_info->getType() << endl;
+            buf << "Position(" <<food_info->getPosY()<<','<<food_info->getPosX()<< ')' << endl;
+
+            notification_str = buf.str();
+            break;
+
+        } else
+            ++food_info;
+
+    }
 }
