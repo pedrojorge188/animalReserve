@@ -8,6 +8,7 @@ Animal::Animal(char t, int i ,int r, int c, int in, int p, int w, int we, int v,
 
     string data;
     ifstream fileConst;
+
     fileConst.open("../constants.txt");
 
     type = toupper(t);

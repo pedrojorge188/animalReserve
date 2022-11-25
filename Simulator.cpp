@@ -45,8 +45,14 @@ Simulator::Simulator(int row,int col) {
     {
         do{
 
-            randCol = rand() % col_Maxlimit - 1;
-            randRow = rand() % row_Maxlimit - 1;
+            random_device rd;
+            mt19937 mt(rd());
+
+            uniform_int_distribution<int> randomCol(0, col_Maxlimit - 1);
+            uniform_int_distribution<int> randomRow(0, row_Maxlimit - 1);
+
+            randRow = randomCol(mt);
+            randCol = randomRow(mt);
 
             Window title = Window(15,2,20,1,false);
             Window wReserve = Window(0,3,window_range_x,window_range_y,true);
@@ -60,6 +66,10 @@ Simulator::Simulator(int row,int col) {
             showSimulatorMenu(wMenu,col,row);
 
             if(!keyboard_detection(wMenu)){
+
+                wMenu << set_color(COLOR_BLUE)<< '\n' << "COMMAND:" ;
+                wMenu >> command;
+
                 readCommand(wMenu,reserve);
             }
 
@@ -188,8 +198,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     string command_start,c2,c3,c4,c5;
     int words = 0,d3,d4,d5,d6;
 
-    window << set_color(COLOR_BLUE)<< '\n' << "COMMAND:" ;
-    window >> command;
     cmd << command;
     cmd >> command_start;
 
@@ -352,7 +360,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            if(c2 != "r" && c2 != "t" && c2 != "b" && c2 != "a"){
+            if(c2 != "r" && c2 != "t" && c2 != "b" && c2 != "a" && c2 != "p"){
 
                 log_color = COLOR_RED;
                 notification_str = "FOOD TYPE INVALID!";
@@ -364,7 +372,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             if(FoodSpawner(r,c2[0],d4,d3)){
 
                 log_color = COLOR_BLUE;
-                showFoodInfo(total_animals);
+                showFoodInfo(total_food);
                 total_food++;
 
             }else{
@@ -380,7 +388,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             cmd >> c2; //type
 
-            if(c2 != "r" && c2 != "t" && c2 != "b" && c2 != "a"){
+            if(c2 != "r" && c2 != "t" && c2 != "b" && c2 != "a" && c2 != "p"){
 
                 log_color = COLOR_RED;
                 notification_str = "FOOD TYPE INVALID!";
@@ -390,15 +398,14 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             if(FoodSpawner(r,c2[0],randCol,randRow)){
 
-
-                log_color = COLOR_BLUE;
-                showFoodInfo(total_animals);
-                total_animals++;
+                log_color = COLOR_GREEN;
+                showFoodInfo(total_food);
+                total_food++;
 
             }else{
 
                 log_color = COLOR_RED;
-                notification_str = "ANIMAL SPAWNER FAILED";
+                notification_str = "FOOD SPAWNER FAILED";
 
             }
 
@@ -705,8 +712,20 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
         cmd >> c2;
 
-        log_color = COLOR_GREEN;
-        notification_str = "LOAD COMMAND FROM FILE ("+c2+")";
+        string data;
+        fstream commandFile;
+        commandFile.open("../"+c2);
+
+        if(commandFile.is_open()){
+            while(getline(commandFile,command)){
+                readCommand(window,r);
+                log_color  = COLOR_GREEN;
+            }
+        }else{
+            log_color = COLOR_RED;
+            notification_str = "ERROR OPENING ("+c2+")FILE";
+            return false;
+        }
 
     }
     else if(command_start.compare("slide") == 0){
@@ -917,6 +936,60 @@ bool Simulator::FoodSpawner(Reserve &r, char type, int col, int row){
         }
 
 
+    }else if(type == 't'){
+
+        Food food = Cenoura(total_food, row, col);
+        vector_food.push_back(food);
+
+        auto food_info = vector_food.begin();
+
+        while (food_info != this->vector_food.end()) {
+
+            if (food_info->getId() == total_food) {
+
+                pos[row-1][col-1] = food_info->getType();
+                break;
+
+            } else
+                ++food_info;
+        }
+
+    }else if(type == 'p'){
+
+        Food food = Corpo(total_food, row, col);
+        vector_food.push_back(food);
+
+        auto food_info = vector_food.begin();
+
+        while (food_info != this->vector_food.end()) {
+
+            if (food_info->getId() == total_food) {
+
+                pos[row-1][col-1] = food_info->getType();
+                break;
+
+            } else
+                ++food_info;
+        }
+
+    }else if(type == 'b'){
+
+        Food food = Bife(total_food, row, col);
+        vector_food.push_back(food);
+
+        auto food_info = vector_food.begin();
+
+        while (food_info != this->vector_food.end()) {
+
+            if (food_info->getId() == total_food) {
+
+                pos[row-1][col-1] = food_info->getType();
+                break;
+
+            } else
+                ++food_info;
+        }
+
     }else{
         return false;
     }
@@ -938,7 +1011,6 @@ void Simulator::showAnimalInfo(int id) {
             buf << "ANIMAL INFORMATION" << endl;
             buf << "ID:" << animal_info->getId() << endl;
             buf << "Type:" << animal_info->getType() << endl;
-            buf << "Vitality:" << animal_info->getVitality() << endl;
             buf << "Position(" <<animal_info->getPosY()<<','<<animal_info->getPosX()<< ')' << endl;
 
             notification_str = buf.str();
@@ -962,7 +1034,7 @@ void Simulator::showFoodInfo(int id){
 
         if (food_info->getId() == id) {
 
-            buf << "ANIMAL INFORMATION" << endl;
+            buf << "FOOD INFORMATION" << endl;
             buf << "ID:" << food_info->getId() << endl;
             buf << "Type:" << food_info->getType() << endl;
             buf << "Position(" <<food_info->getPosY()<<','<<food_info->getPosX()<< ')' << endl;
