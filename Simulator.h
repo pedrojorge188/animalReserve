@@ -28,6 +28,7 @@ private:
     int log_color;
     string command;
     string notification_str;
+    string object_str;
 
 public:
     Simulator(int row,int col);

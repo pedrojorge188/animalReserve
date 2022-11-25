@@ -26,6 +26,7 @@ Simulator::Simulator(int row,int col) {
     turn_instance = 0;
 
     notification_str = " ";
+    object_str  = " ";
     log_color = COLOR_GREEN;
 
     if(col > 40 || row > 25){
@@ -56,10 +57,13 @@ Simulator::Simulator(int row,int col) {
 
             Window title = Window(15,2,20,1,false);
             Window wReserve = Window(0,3,window_range_x,window_range_y,true);
-            Window wMenu = Window(window_range_x+2,6,60,16,false);
+            Window wMenu = Window(window_range_x+2,6,34,16,false);
             Window notification = Window(2,window_range_y+4,45,4,false);
+            Window objectInfo = Window(window_range_x+36,10,20,11,false);
 
             notification << set_color(log_color) << notification_str ;
+            objectInfo << set_color(log_color) << object_str;
+
             title << set_color(COLOR_YELLOW) << "ANIMAL RESERVE" ;
 
             showReserve(wReserve,reserve);
@@ -206,8 +210,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             words ++;
     }
 
-    if(command_start.compare(" ") == 0)
-        return false;
+    if(command_start.compare("animal") != 0 || command_start.compare("food") != 0)
+        object_str = " ";
 
     if(command_start.compare("animal") == 0){
 
@@ -225,6 +229,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
                     log_color = COLOR_RED;
                     notification_str = "ANIMAL ROW/LINE INVALID!";
+                    object_str = " ";
                     return false;
 
                 }
@@ -234,6 +239,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
                 log_color = COLOR_RED;
                 notification_str = "ANIMAL SPECIES INVALID!";
+                object_str = " ";
                 return false;
 
             }
@@ -242,12 +248,14 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
                 log_color = COLOR_BLUE;
                 showAnimalInfo(total_animals);
+                notification_str = "ANIMAL SPAWNED";
                 total_animals++;
 
             }else{
 
                 log_color = COLOR_RED;
                 notification_str = "ANIMAL SPAWNER FAILED";
+                object_str = " ";
 
             }
 
@@ -259,21 +267,23 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
                 log_color = COLOR_RED;
                 notification_str = "ANIMAL SPECIES INVALID!";
+                object_str = " ";
                 return false;
 
             }
 
             if(AnimalSpawner(r,c2[0],randCol,randRow)){
 
-
                 log_color = COLOR_BLUE;
                 showAnimalInfo(total_animals);
+                notification_str = "ANIMAL SPAWNED";
                 total_animals++;
 
             }else{
 
                 log_color = COLOR_RED;
                 notification_str = "ANIMAL SPAWNER FAILED";
+                object_str = " ";
 
             }
 
@@ -281,6 +291,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             log_color = COLOR_RED;
             notification_str = "ANIMAL COMMAND INVALID!";
+            object_str = " ";
             return false;
 
         }
@@ -355,6 +366,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 if(d3 == 0 || d4 == 0){
                     log_color = COLOR_RED;
                     notification_str = "FOOD ROW/COL COMMAND INVALID!";
+                    object_str = " ";
                     return false;
                 }
 
@@ -364,6 +376,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
                 log_color = COLOR_RED;
                 notification_str = "FOOD TYPE INVALID!";
+                object_str = " ";
                 return false;
 
             }
@@ -373,12 +386,14 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
                 log_color = COLOR_BLUE;
                 showFoodInfo(total_food);
+                notification_str = "FOOD SPAWNED";
                 total_food++;
 
             }else{
 
                 log_color = COLOR_RED;
                 notification_str = "FOOD SPAWNER FAILED";
+                object_str = " ";
 
             }
 
@@ -392,20 +407,23 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
                 log_color = COLOR_RED;
                 notification_str = "FOOD TYPE INVALID!";
+                object_str = " ";
                 return false;
 
             }
 
             if(FoodSpawner(r,c2[0],randCol,randRow)){
 
-                log_color = COLOR_GREEN;
+                log_color = COLOR_BLUE;
                 showFoodInfo(total_food);
+                notification_str = "FOOD SPAWNED";
                 total_food++;
 
             }else{
 
                 log_color = COLOR_RED;
                 notification_str = "FOOD SPAWNER FAILED";
+                object_str = " ";
 
             }
 
@@ -413,6 +431,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             log_color = COLOR_RED;
             notification_str = "FOOD COMMAND INVALID";
+            object_str = " ";
             return false;
         }
 
@@ -1011,9 +1030,11 @@ void Simulator::showAnimalInfo(int id) {
             buf << "ANIMAL INFORMATION" << endl;
             buf << "ID:" << animal_info->getId() << endl;
             buf << "Type:" << animal_info->getType() << endl;
+            buf << "Vitality: " << animal_info->getVitality() << endl;
+            buf << "Hunger:" << animal_info->getHunger() << endl;
             buf << "Position(" <<animal_info->getPosY()<<','<<animal_info->getPosX()<< ')' << endl;
 
-            notification_str = buf.str();
+            object_str = buf.str();
 
             break;
 
@@ -1037,9 +1058,10 @@ void Simulator::showFoodInfo(int id){
             buf << "FOOD INFORMATION" << endl;
             buf << "ID:" << food_info->getId() << endl;
             buf << "Type:" << food_info->getType() << endl;
+            buf << "Duration" << food_info->getDuration() << endl;
             buf << "Position(" <<food_info->getPosY()<<','<<food_info->getPosX()<< ')' << endl;
 
-            notification_str = buf.str();
+            object_str = buf.str();
             break;
 
         } else
