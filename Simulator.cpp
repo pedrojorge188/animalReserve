@@ -5,8 +5,6 @@
 
 Simulator::Simulator(int row,int col) {
 
-    //ConstValues();
-    srand (time(NULL));
     randCol = 0;
     randRow = 0;
 
@@ -35,6 +33,10 @@ Simulator::Simulator(int row,int col) {
         window_range_x = max_range_x;
         window_range_y = max_range_y;
     }
+
+}
+
+void Simulator::SimulationProcess(int row,int col){
 
     Reserve reserve = Reserve(col, row);
     Terminal &t = Terminal::instance();
@@ -645,6 +647,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 }
 
             }
+
+            showAnimalInfo(d3);
 
         }else{
             log_color = COLOR_RED;

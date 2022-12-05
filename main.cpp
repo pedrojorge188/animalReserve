@@ -16,6 +16,9 @@ int main() {
     cout << "COLUMNS:";
     cin >> cols;
 
-    Simulator(rows,cols);
+    Simulator sim = Simulator(rows,cols);
+
+    sim.SimulationProcess(rows,cols);
+
     return 0;
 }

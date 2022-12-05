@@ -39,6 +39,7 @@ public:
     bool AnimalSpawner(Reserve &r, char type, int col, int row);
     bool FoodSpawner(Reserve &r, char type, int col, int row);
     void showAnimalInfo(int id);
+    void SimulationProcess(int row,int col);
     void showFoodInfo(int id);
 };
 
