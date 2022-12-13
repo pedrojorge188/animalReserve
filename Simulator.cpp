@@ -680,12 +680,17 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             }
 
             log_color = COLOR_GREEN;
+
             notification_str = "ADVANCING..";
 
         }else if(words == 1){
 
             cmd >> d3; //turns
             c2 = to_string(d3);
+
+            for(int i=0;i<d3;i++){
+                move_animal(r);
+            }
 
             log_color = COLOR_GREEN;
             notification_str = "ADVANCE'"+c2+"'TURNS";
@@ -695,6 +700,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             log_color = COLOR_GREEN;
             notification_str = "ADVANCE TURN";
+
+            move_animal(r);
             turn_instance++;
 
         }else{
@@ -870,32 +877,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             return false;
         }
 
-    }
-    else if(command_start.compare("next") == 0){
-
-        int rowHere=0;
-        int colHere=0;
-
-        auto animal_info =  vector_animals.begin();
-
-            while (animal_info != this->vector_animals.end()) {
-
-                int current_row = animal_info->getPosY();
-                int current_col = animal_info->getPosX();
-
-                pos[current_row-1][current_col-1] = ' ';
-
-                animal_info->moveAnimal(r.getCollums(), r.getLines());
-
-                int new_row = animal_info->getPosY();
-                int new_col = animal_info->getPosX();
-
-                pos[new_row-1][new_col-1] = animal_info->getType();
-
-                ++animal_info;
-            }
-        }
-    else{
+    }else{
 
         notification_str = "COMMAND NOT FOUND";
         log_color = COLOR_RED ;
@@ -1097,4 +1079,31 @@ void Simulator::showFoodInfo(int id){
             ++food_info;
 
     }
+}
+
+void Simulator::move_animal(Reserve &r) {
+
+    int rowHere=0;
+    int colHere=0;
+    char **pos = r.getReserve();
+
+    auto animal_info =  vector_animals.begin();
+
+    while (animal_info != this->vector_animals.end()) {
+
+        int current_row = animal_info->getPosY();
+        int current_col = animal_info->getPosX();
+
+        pos[current_row-1][current_col-1] = ' ';
+
+        animal_info->moveAnimal(r.getCollums(), r.getLines());
+
+        int new_row = animal_info->getPosY();
+        int new_col = animal_info->getPosX();
+
+        pos[new_row-1][new_col-1] = animal_info->getType();
+
+        ++animal_info;
+    }
+
 }
