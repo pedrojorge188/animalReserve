@@ -2,6 +2,7 @@
 #include "Simulator.h"
 #include "Food.h"
 #include "Animal.h"
+#include <unistd.h>
 
 Simulator::Simulator(int row,int col) {
 
@@ -78,7 +79,6 @@ void Simulator::SimulationProcess(int row,int col){
 
                 readCommand(wMenu,reserve);
             }
-
         }while(command != "exit");
 
     }
@@ -878,23 +878,23 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
         auto animal_info =  vector_animals.begin();
 
-        while (animal_info != this->vector_animals.end()) {
+            while (animal_info != this->vector_animals.end()) {
 
-            int current_row = animal_info->getPosY();
-            int current_col = animal_info->getPosX();
+                int current_row = animal_info->getPosY();
+                int current_col = animal_info->getPosX();
 
-            pos[current_row-1][current_col-1] = ' ';
+                pos[current_row-1][current_col-1] = ' ';
 
-            animal_info->moveAnimal(r.getCollums(), r.getLines());
+                animal_info->moveAnimal(r.getCollums(), r.getLines());
 
-            int new_row = animal_info->getPosY();
-            int new_col = animal_info->getPosX();
+                int new_row = animal_info->getPosY();
+                int new_col = animal_info->getPosX();
 
-            pos[new_row-1][new_col-1] = animal_info->getType();
+                pos[new_row-1][new_col-1] = animal_info->getType();
 
-            ++animal_info;
+                ++animal_info;
+            }
         }
-    }
     else{
 
         notification_str = "COMMAND NOT FOUND";

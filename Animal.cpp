@@ -123,7 +123,7 @@ void Animal::moveAnimal(int maxX, int maxY) {
     uniform_int_distribution<int> randomN(0, 3);
     uniform_int_distribution<int> randomS(1, 2);
 
-    random =randomN(mt);
+    random = randomN(mt);
     int nSteps = 1;
 
     if (type == 'C') {
@@ -147,13 +147,13 @@ void Animal::moveAnimal(int maxX, int maxY) {
         cout << "erro, lol";
     }
 
-    if(col == maxX+1){
+    if(col >= maxX+1){
         col = 1;
-    }else if(row == maxY+1){
+    }else if(row >= maxY+1){
         row = 1;
-    }else if(row == 0){
+    }else if(row <= 0){
         row = maxY;
-    }else if(col == 0){
+    }else if(col <= 0){
         col = maxX;
     }
 }
