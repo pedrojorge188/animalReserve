@@ -17,4 +17,5 @@ public:
     //int spawn_food(int type_food);
 };
 
+
 #endif //ANIMALRESERVE_RESERVE_H
