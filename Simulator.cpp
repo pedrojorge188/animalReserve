@@ -870,7 +870,32 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             return false;
         }
 
-    }else{
+    }
+    else if(command_start.compare("next") == 0){
+
+        int rowHere=0;
+        int colHere=0;
+
+        auto animal_info =  vector_animals.begin();
+
+        while (animal_info != this->vector_animals.end()) {
+
+            int current_row = animal_info->getPosY();
+            int current_col = animal_info->getPosX();
+
+            pos[current_row-1][current_col-1] = ' ';
+
+            animal_info->moveAnimal(r.getCollums(), r.getLines());
+
+            int new_row = animal_info->getPosY();
+            int new_col = animal_info->getPosX();
+
+            pos[new_row-1][new_col-1] = animal_info->getType();
+
+            ++animal_info;
+        }
+    }
+    else{
 
         notification_str = "COMMAND NOT FOUND";
         log_color = COLOR_RED ;
@@ -1023,7 +1048,7 @@ bool Simulator::FoodSpawner(Reserve &r, char type, int col, int row){
 
 void Simulator::showAnimalInfo(int id) {
 
-    auto animal_info =  vector_animals.begin();
+    auto animal_info = vector_animals.begin();
 
     ostringstream buf;
 

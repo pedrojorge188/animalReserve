@@ -8,6 +8,7 @@ class Animal{
     char type;
     const int id ;
 protected:
+    int random;
     int row;
     int col;
     int iniHealth;
@@ -39,6 +40,8 @@ public:
     int getInteractWeight() const {return interactWeight;}
     int getTimeBorn() const {return timeBorn;}
     int getDeadBodyValue() const {return deadBodyValue;}
+
+    void moveAnimal(int maxX, int maxY);
 };
 
 

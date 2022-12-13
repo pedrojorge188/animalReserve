@@ -116,3 +116,44 @@ Animal::Animal(char t, int i ,int r, int c, int in, int p, int w, int we, int v,
     }
 }
 
+void Animal::moveAnimal(int maxX, int maxY) {
+    random_device rd;
+    mt19937 mt(rd());
+
+    uniform_int_distribution<int> randomN(0, 3);
+    uniform_int_distribution<int> randomS(1, 2);
+
+    random =randomN(mt);
+    int nSteps = 1;
+
+    if (type == 'C') {
+        nSteps = randomS(mt);
+    }
+
+    //Right
+    if(random == 0){
+        col+=nSteps;
+    }//Left
+    else if(random == 1){
+        col-=nSteps;
+    }//Up
+    else if(random == 2){
+        row+=nSteps;
+    }//Down
+    else if(random == 3){
+        row-=nSteps;
+    }//error
+    else{
+        cout << "erro, lol";
+    }
+
+    if(col == maxX+1){
+        col = 1;
+    }else if(row == maxY+1){
+        row = 1;
+    }else if(row == 0){
+        row = maxY;
+    }else if(col == 0){
+        col = maxX;
+    }
+}
