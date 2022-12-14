@@ -951,6 +951,57 @@ bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
             } else
                 ++animal_info;
         }
+    }else if(type == 'o') {
+
+        Animal animal = Ovelha(total_animals, row, col);
+        vector_animals.push_back(animal);
+
+        auto animal_info = vector_animals.begin();
+
+        while (animal_info != this->vector_animals.end()) {
+
+            if (animal_info->getId() == total_animals) {
+
+                pos[row - 1][col - 1] = animal_info->getType();
+                break;
+
+            } else
+                ++animal_info;
+        }
+    }else if(type == 'g') {
+
+        Animal animal = Canguru(total_animals, row, col);
+        vector_animals.push_back(animal);
+
+        auto animal_info = vector_animals.begin();
+
+        while (animal_info != this->vector_animals.end()) {
+
+            if (animal_info->getId() == total_animals) {
+
+                pos[row - 1][col - 1] = animal_info->getType();
+                break;
+
+            } else
+                ++animal_info;
+        }
+    }else if(type == 'm') {
+
+        Animal animal = MisteryAnimal(total_animals, row, col);
+        vector_animals.push_back(animal);
+
+        auto animal_info = vector_animals.begin();
+
+        while (animal_info != this->vector_animals.end()) {
+
+            if (animal_info->getId() == total_animals) {
+
+                pos[row - 1][col - 1] = animal_info->getType();
+                break;
+
+            } else
+                ++animal_info;
+        }
     }else{
         return false;
     }
@@ -1038,6 +1089,24 @@ bool Simulator::FoodSpawner(Reserve &r, char type, int col, int row){
                 ++food_info;
         }
 
+    }else if(type == 'a'){
+
+        Food food = MisteryFood(total_food, row, col);
+        vector_food.push_back(food);
+
+        auto food_info = vector_food.begin();
+
+        while (food_info != this->vector_food.end()) {
+
+            if (food_info->getId() == total_food) {
+
+                pos[row-1][col-1] = food_info->getType();
+                break;
+
+            } else
+                ++food_info;
+        }
+
     }else{
         return false;
     }
@@ -1059,7 +1128,7 @@ void Simulator::showAnimalInfo(int id) {
             buf << "ANIMAL INFORMATION" << endl;
             buf << "ID:" << animal_info->getId() << endl;
             buf << "Type:" << animal_info->getType() << endl;
-            buf << "Vitality: " << animal_info->getVitality() << endl;
+            buf << "Weight: " << animal_info->getWeight() << endl;
             buf << "Hunger:" << animal_info->getHunger() << endl;
             buf << "Position(" <<animal_info->getPosY()<<','<<animal_info->getPosX()<< ')' << endl;
 

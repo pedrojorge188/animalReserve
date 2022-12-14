@@ -61,5 +61,11 @@ public:
     //void decrNutri();
 };
 
+class MisteryFood: public Food{
+public:
+    MisteryFood(int id, int r, int c): Food('a', id, r, c){};
+    //void decrNutri();
+};
+
 
 #endif //TERMINAL_CPP_FOOD_H
