@@ -18,7 +18,7 @@ Simulator::Simulator(int row,int col) {
     col_Maxlimit = col;
     max_range_x = col+2;
     max_range_y = row+2;
-
+    instance[0] = 0; instance[1] = 0;
     window_range_x = max_range_x;
     window_range_y = max_range_y;
 
@@ -48,7 +48,6 @@ void Simulator::SimulationProcess(int row,int col){
 
     {
         do{
-
             random_device rd;
             mt19937 mt(rd());
 
@@ -72,18 +71,34 @@ void Simulator::SimulationProcess(int row,int col){
             showReserve(wReserve,reserve);
             showSimulatorMenu(wMenu,col,row);
 
-            if(!keyboard_detection(wMenu)){
+            sleep(instance[1]);
 
-                wMenu << set_color(COLOR_BLUE)<< '\n' << "COMMAND:" ;
-                wMenu >> command;
+            if(instance[0] > 0) {
 
-                readCommand(wMenu,reserve);
+                cout << instance[0];
+                move_animal(reserve);
+                turn_instance++;
+                instance[0]--;
+                if(instance[0] == 0)
+                    notification_str = "Simulation completed!";
+            }else{
+
+                instance[1]=0;
+
+                if(!keyboard_detection(wMenu)){
+
+                    wMenu << set_color(COLOR_BLUE)<< '\n' << "COMMAND:" ;
+                    wMenu >> command;
+
+                    readCommand(wMenu,reserve);
+                }
+
             }
+
         }while(command != "exit");
 
     }
 }
-
 bool Simulator::keyboard_detection(Window &window) {
 
     std::string s;
@@ -680,12 +695,20 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             }
 
             log_color = COLOR_GREEN;
+
+            instance[0] = d3;
+            instance[1] = d4;
+
             notification_str = "ADVANCING..";
 
         }else if(words == 1){
 
             cmd >> d3; //turns
             c2 = to_string(d3);
+
+            for(int i=0;i<d3;i++){
+                move_animal(r);
+            }
 
             log_color = COLOR_GREEN;
             notification_str = "ADVANCE'"+c2+"'TURNS";
@@ -695,6 +718,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             log_color = COLOR_GREEN;
             notification_str = "ADVANCE TURN";
+
+            move_animal(r);
             turn_instance++;
 
         }else{
@@ -870,32 +895,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             return false;
         }
 
-    }
-    else if(command_start.compare("next") == 0){
-
-        int rowHere=0;
-        int colHere=0;
-
-        auto animal_info =  vector_animals.begin();
-
-            while (animal_info != this->vector_animals.end()) {
-
-                int current_row = animal_info->getPosY();
-                int current_col = animal_info->getPosX();
-
-                pos[current_row-1][current_col-1] = ' ';
-
-                animal_info->moveAnimal(r.getCollums(), r.getLines());
-
-                int new_row = animal_info->getPosY();
-                int new_col = animal_info->getPosX();
-
-                pos[new_row-1][new_col-1] = animal_info->getType();
-
-                ++animal_info;
-            }
-        }
-    else{
+    }else{
 
         notification_str = "COMMAND NOT FOUND";
         log_color = COLOR_RED ;
@@ -1166,4 +1166,31 @@ void Simulator::showFoodInfo(int id){
             ++food_info;
 
     }
+}
+
+void Simulator::move_animal(Reserve &r) {
+
+    int rowHere=0;
+    int colHere=0;
+    char **pos = r.getReserve();
+
+    auto animal_info =  vector_animals.begin();
+
+    while (animal_info != this->vector_animals.end()) {
+
+        int current_row = animal_info->getPosY();
+        int current_col = animal_info->getPosX();
+
+        pos[current_row-1][current_col-1] = ' ';
+
+        animal_info->moveAnimal(r.getCollums(), r.getLines());
+
+        int new_row = animal_info->getPosY();
+        int new_col = animal_info->getPosX();
+
+        pos[new_row-1][new_col-1] = animal_info->getType();
+
+        ++animal_info;
+    }
+
 }

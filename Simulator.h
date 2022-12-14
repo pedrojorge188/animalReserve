@@ -9,7 +9,6 @@
 #include <vector>
 
 class Simulator {
-
 private:
     int randCol, randRow;
     vector <Animal> vector_animals;
@@ -26,6 +25,7 @@ private:
     int window_range_y;
     int turn_instance;
     int log_color;
+    int instance[2];
     string command;
     string notification_str;
     string object_str;
@@ -39,6 +39,7 @@ public:
     bool AnimalSpawner(Reserve &r, char type, int col, int row);
     bool FoodSpawner(Reserve &r, char type, int col, int row);
     void showAnimalInfo(int id);
+    void move_animal(Reserve &r);
     void SimulationProcess(int row,int col);
     void showFoodInfo(int id);
 };
