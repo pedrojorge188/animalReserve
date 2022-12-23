@@ -16,7 +16,7 @@ protected:
     int vitality;
     int hunger;
     string preferedSmell;
-
+    string species;
 public:
     Animal(int m_id, int m_row, int m_col);
 
@@ -25,6 +25,7 @@ public:
     //Getters
 
     char getType() const {return type;}
+    string getSpecies() const {return species;}
     int getId() const {return id;}
     int getIniHealth() const {return iniHealth;}
     int getPosX() const {return col;}
@@ -49,6 +50,7 @@ public:
     virtual int checkDie() {return 0;}
 
     ostringstream printInfo() const;
+    ostringstream informations() const;
 };
 
 class Rabbit : public Animal {

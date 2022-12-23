@@ -27,11 +27,12 @@ public:
     int getLines() const {return n_lines;}
     char **getReserve() const {return reserve_posx_posy;}
 
-    //Actions
+    //Actions for animals ....
     pair<string,string> spawnAnimal(int col,int row, char animalType);
     string _drawAnimalType(int id,int row, int col) const;
     int killAnimal(int row,int col);
     int killAnimal(int id);
+    string animalsInReserve() const;
 
 };
 

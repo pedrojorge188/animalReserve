@@ -152,5 +152,17 @@ string Reserve::_drawAnimalType(int id,int row,int col) const {
     return res.str();
 }
 
+string Reserve::animalsInReserve() const {
+    ostringstream res;
+    string toReturn;
+    auto i = animals.begin();
+
+    for(;i != animals.end(); i++){
+        res = i->informations();
+        toReturn.append(res.str());
+    }
+
+    return toReturn;
+}
 
 

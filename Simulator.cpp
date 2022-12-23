@@ -59,7 +59,7 @@ void Simulator::SimulationProcess(int row,int col){
             Window wReserve = Window(0,3,window_range_x,window_range_y,true);
             Window wMenu = Window(window_range_x+2,6,34,16,false);
             Window notification = Window(2,window_range_y+4,45,4,false);
-            Window objectInfo = Window(window_range_x+36,10,20,11,false);
+            Window objectInfo = Window(window_range_x+36,10,35,11,false);
 
             notification << set_color(log_color) << notification_str ;
             objectInfo << set_color(log_color) << object_str;
@@ -689,7 +689,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     }
     else if(command_start.compare("anim") == 0){
 
-        notification_str = "List animals id";
+        object_str = r.animalsInReserve();
 
     }
     else if(command_start.compare("visanim") == 0){

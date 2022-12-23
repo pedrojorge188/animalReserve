@@ -6,7 +6,7 @@ Animal::Animal(int m_id,int m_row, int m_col)
     this->id = m_id;        this->weight = 0;
     this->row = m_row;      this->vitality = 0;
     this->col = m_col;      this->hunger = 0;
-    this->preferedSmell = "ANY";
+    this->preferedSmell = "ANY"; this->species = "ANY";
 
 }
 
@@ -19,7 +19,7 @@ ostringstream Animal::printInfo() const {
     ostringstream buf;
 
     buf << "ID:" << this->getId() <<endl;
-    buf << "TYPE:" << this->getType() <<endl;
+    buf << "SPECIES:" << this->getSpecies() <<endl;
     buf << "COL:" << this->getPosX() << "| ROW: " << this->getPosY() << endl;
     buf << "WEIGHT:" << this->getWeight() <<endl;
     buf << "HEALTH:" << this->getIniHealth() << endl;
@@ -29,10 +29,21 @@ ostringstream Animal::printInfo() const {
 
 }
 
+ostringstream  Animal::informations() const {
+
+    ostringstream buf;
+    buf << "{ID:" << this->getId() << "/" ;
+    buf << "SPECIES:" << this->getSpecies() << "/";
+    buf << "HEALTH:" << this->getIniHealth() << "}" <<endl;
+
+    return buf;
+}
+
 //Rabbit initializing defaults
 
 Rabbit::Rabbit(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 
+    this->species = "Rabbit";
     this->type = 'C';
     this->id = mId;
     this->row = mRow;
@@ -82,6 +93,7 @@ Rabbit::Rabbit(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 
 Sheep::Sheep(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 
+    this->species = "Sheep";
     this->type = 'O';
     this->id = mId;
     this->row = mRow;
@@ -131,6 +143,7 @@ Sheep::Sheep(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 
 Wolf::Wolf(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 
+    this->species = "Wolf";
     this->type = 'L';
     this->id = mId;
     this->row = mRow;
@@ -174,6 +187,7 @@ Wolf::Wolf(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 //Kangaroo initializing defaults
 Kangaroo::Kangaroo(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 
+    this->species = "Kangaroo";
     this->type = 'G';
     this->id = mId;
     this->row = mRow;
