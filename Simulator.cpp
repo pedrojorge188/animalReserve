@@ -76,7 +76,6 @@ void Simulator::SimulationProcess(int row,int col){
             if(instance[0] > 0) {
 
                 cout << instance[0];
-                move_animal(reserve);
                 turn_instance++;
                 instance[0]--;
                 if(instance[0] == 0)
@@ -99,6 +98,7 @@ void Simulator::SimulationProcess(int row,int col){
 
     }
 }
+
 bool Simulator::keyboard_detection(Window &window) {
 
     std::string s;
@@ -261,20 +261,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            if(AnimalSpawner(r,c2[0],d4,d3)){
-
-                log_color = COLOR_BLUE;
-                showAnimalInfo(total_animals);
-                notification_str = "ANIMAL SPAWNED";
-                total_animals++;
-
-            }else{
-
-                log_color = COLOR_RED;
-                notification_str = "ANIMAL SPAWNER FAILED";
-                object_str = " ";
-
-            }
 
         }else if(words == 1){
 
@@ -286,21 +272,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 notification_str = "ANIMAL SPECIES INVALID!";
                 object_str = " ";
                 return false;
-
-            }
-
-            if(AnimalSpawner(r,c2[0],randCol,randRow)){
-
-                log_color = COLOR_BLUE;
-                showAnimalInfo(total_animals);
-                notification_str = "ANIMAL SPAWNED";
-                total_animals++;
-
-            }else{
-
-                log_color = COLOR_RED;
-                notification_str = "ANIMAL SPAWNER FAILED";
-                object_str = " ";
 
             }
 
@@ -399,22 +370,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             }
 
 
-            if(FoodSpawner(r,c2[0],d4,d3)){
-
-                log_color = COLOR_BLUE;
-                showFoodInfo(total_food);
-                notification_str = "FOOD SPAWNED";
-                total_food++;
-
-            }else{
-
-                log_color = COLOR_RED;
-                notification_str = "FOOD SPAWNER FAILED";
-                object_str = " ";
-
-            }
-
-
 
         }else if(words == 1){
 
@@ -429,20 +384,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            if(FoodSpawner(r,c2[0],randCol,randRow)){
-
-                log_color = COLOR_BLUE;
-                showFoodInfo(total_food);
-                notification_str = "FOOD SPAWNED";
-                total_food++;
-
-            }else{
-
-                log_color = COLOR_RED;
-                notification_str = "FOOD SPAWNER FAILED";
-                object_str = " ";
-
-            }
 
         }else{
 
@@ -663,7 +604,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            showAnimalInfo(d3);
 
         }else{
             log_color = COLOR_RED;
@@ -707,7 +647,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             c2 = to_string(d3);
 
             for(int i=0;i<d3;i++){
-                move_animal(r);
+               // move_animal(r);
             }
 
             log_color = COLOR_GREEN;
@@ -719,7 +659,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             log_color = COLOR_GREEN;
             notification_str = "ADVANCE TURN";
 
-            move_animal(r);
+            //move_animal(r);
             turn_instance++;
 
         }else{
@@ -907,290 +847,3 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     return true;
 }
 
-bool Simulator::AnimalSpawner(Reserve &r,char type, int col, int row) {
-
-    char **pos = r.getReserve();
-
-    if(col <= 0 || col > col_Maxlimit || row <= 0 || row > row_Maxlimit)
-        return false;
-
-    if(type == 'c'){
-
-        Animal animal = Coelho(total_animals, row, col);
-        vector_animals.push_back(animal);
-
-        auto animal_info =  vector_animals.begin();
-
-        while (animal_info != this->vector_animals.end()) {
-
-            if (animal_info->getId() == total_animals) {
-
-                pos[row-1][col-1] = animal_info->getType();
-                break;
-
-            } else
-                ++animal_info;
-        }
-
-
-    }
-    else if(type == 'l') {
-
-        Animal animal = Lobo(total_animals, row, col);
-        vector_animals.push_back(animal);
-
-        auto animal_info = vector_animals.begin();
-
-        while (animal_info != this->vector_animals.end()) {
-
-            if (animal_info->getId() == total_animals) {
-
-                pos[row - 1][col - 1] = animal_info->getType();
-                break;
-
-            } else
-                ++animal_info;
-        }
-    }else if(type == 'o') {
-
-        Animal animal = Ovelha(total_animals, row, col);
-        vector_animals.push_back(animal);
-
-        auto animal_info = vector_animals.begin();
-
-        while (animal_info != this->vector_animals.end()) {
-
-            if (animal_info->getId() == total_animals) {
-
-                pos[row - 1][col - 1] = animal_info->getType();
-                break;
-
-            } else
-                ++animal_info;
-        }
-    }else if(type == 'g') {
-
-        Animal animal = Canguru(total_animals, row, col);
-        vector_animals.push_back(animal);
-
-        auto animal_info = vector_animals.begin();
-
-        while (animal_info != this->vector_animals.end()) {
-
-            if (animal_info->getId() == total_animals) {
-
-                pos[row - 1][col - 1] = animal_info->getType();
-                break;
-
-            } else
-                ++animal_info;
-        }
-    }else if(type == 'm') {
-
-        Animal animal = MisteryAnimal(total_animals, row, col);
-        vector_animals.push_back(animal);
-
-        auto animal_info = vector_animals.begin();
-
-        while (animal_info != this->vector_animals.end()) {
-
-            if (animal_info->getId() == total_animals) {
-
-                pos[row - 1][col - 1] = animal_info->getType();
-                break;
-
-            } else
-                ++animal_info;
-        }
-    }else{
-        return false;
-    }
-
-    return  true;
-}
-
-bool Simulator::FoodSpawner(Reserve &r, char type, int col, int row){
-
-    char **pos = r.getReserve();
-
-    if(col <= 0 || col > col_Maxlimit || row <= 0 || row > row_Maxlimit)
-        return false;
-
-    if(type == 'r'){
-
-        Food food = Relva(total_food, row, col);
-        vector_food.push_back(food);
-
-        auto food_info = vector_food.begin();
-
-        while (food_info != this->vector_food.end()) {
-
-            if (food_info->getId() == total_food) {
-
-                pos[row-1][col-1] = food_info->getType();
-                break;
-
-            } else
-                ++food_info;
-        }
-
-
-    }else if(type == 't'){
-
-        Food food = Cenoura(total_food, row, col);
-        vector_food.push_back(food);
-
-        auto food_info = vector_food.begin();
-
-        while (food_info != this->vector_food.end()) {
-
-            if (food_info->getId() == total_food) {
-
-                pos[row-1][col-1] = food_info->getType();
-                break;
-
-            } else
-                ++food_info;
-        }
-
-    }else if(type == 'p'){
-
-        Food food = Corpo(total_food, row, col);
-        vector_food.push_back(food);
-
-        auto food_info = vector_food.begin();
-
-        while (food_info != this->vector_food.end()) {
-
-            if (food_info->getId() == total_food) {
-
-                pos[row-1][col-1] = food_info->getType();
-                break;
-
-            } else
-                ++food_info;
-        }
-
-    }else if(type == 'b'){
-
-        Food food = Bife(total_food, row, col);
-        vector_food.push_back(food);
-
-        auto food_info = vector_food.begin();
-
-        while (food_info != this->vector_food.end()) {
-
-            if (food_info->getId() == total_food) {
-
-                pos[row-1][col-1] = food_info->getType();
-                break;
-
-            } else
-                ++food_info;
-        }
-
-    }else if(type == 'a'){
-
-        Food food = MisteryFood(total_food, row, col);
-        vector_food.push_back(food);
-
-        auto food_info = vector_food.begin();
-
-        while (food_info != this->vector_food.end()) {
-
-            if (food_info->getId() == total_food) {
-
-                pos[row-1][col-1] = food_info->getType();
-                break;
-
-            } else
-                ++food_info;
-        }
-
-    }else{
-        return false;
-    }
-
-    return  true;
-
-}
-
-void Simulator::showAnimalInfo(int id) {
-
-    auto animal_info = vector_animals.begin();
-
-    ostringstream buf;
-
-    while (animal_info != this->vector_animals.end()) {
-
-        if (animal_info->getId() == id) {
-
-            buf << "ANIMAL INFORMATION" << endl;
-            buf << "ID:" << animal_info->getId() << endl;
-            buf << "Type:" << animal_info->getType() << endl;
-            buf << "Weight: " << animal_info->getWeight() << endl;
-            buf << "Hunger:" << animal_info->getHunger() << endl;
-            buf << "Position(" <<animal_info->getPosY()<<','<<animal_info->getPosX()<< ')' << endl;
-
-            object_str = buf.str();
-
-            break;
-
-        } else
-            ++animal_info;
-
-    }
-
-}
-
-void Simulator::showFoodInfo(int id){
-
-    auto food_info =  vector_food.begin();
-
-    ostringstream buf;
-
-    while (food_info != this->vector_food.end()) {
-
-        if (food_info->getId() == id) {
-
-            buf << "FOOD INFORMATION" << endl;
-            buf << "ID:" << food_info->getId() << endl;
-            buf << "Type:" << food_info->getType() << endl;
-            buf << "Duration" << food_info->getDuration() << endl;
-            buf << "Position(" <<food_info->getPosY()<<','<<food_info->getPosX()<< ')' << endl;
-
-            object_str = buf.str();
-            break;
-
-        } else
-            ++food_info;
-
-    }
-}
-
-void Simulator::move_animal(Reserve &r) {
-
-    int rowHere=0;
-    int colHere=0;
-    char **pos = r.getReserve();
-
-    auto animal_info =  vector_animals.begin();
-
-    while (animal_info != this->vector_animals.end()) {
-
-        int current_row = animal_info->getPosY();
-        int current_col = animal_info->getPosX();
-
-        pos[current_row-1][current_col-1] = ' ';
-
-        animal_info->moveAnimal(r.getCollums(), r.getLines());
-
-        int new_row = animal_info->getPosY();
-        int new_col = animal_info->getPosX();
-
-        pos[new_row-1][new_col-1] = animal_info->getType();
-
-        ++animal_info;
-    }
-
-}
