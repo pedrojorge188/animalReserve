@@ -8,11 +8,12 @@
 
 
 int main() {
-
+/*
     vector <Animal> animals;
     ostringstream buf;
 
     Rabbit coelho1(1,0,0);
+
     Sheep Sheep1(2,5,5);
     Wolf Wolf1(3,7,7);
     Kangaroo k1(4,15,222);
@@ -26,7 +27,7 @@ int main() {
 
     auto i = animals.begin();
 
-    //animals.erase(i);
+    animals.erase(i);
 
     while(i != animals.end()){
 
@@ -35,8 +36,7 @@ int main() {
 
         ++i;
     }
-
-/*
+*/
     int rows,cols;
 
     cout << "INSERT RESERVE AREA!" << endl;
@@ -48,6 +48,6 @@ int main() {
     Simulator sim = Simulator(rows,cols);
 
     sim.SimulationProcess(rows,cols);
-*/
+
     return 0;
 }

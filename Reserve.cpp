@@ -6,6 +6,7 @@ Reserve::Reserve(int columns, int lines) {
 
     n_columns = columns;
     n_lines = lines;
+    current_id = 1;
 
     try{
         reserve_posx_posy = new char*[n_lines];
@@ -43,6 +44,76 @@ Reserve::Reserve(Reserve &aux) {
             reserve_posx_posy[i][k] = aux.reserve_posx_posy[i][k];
     }
 
+}
+
+pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
+
+    pair <string,string> response ("Any info","Any Change made!");
+    auto i = animals.begin();
+
+    try{
+
+        if( animalType == RABBIT ) {
+
+            Rabbit _new(current_id,row,col);
+            animals.push_back(_new);
+
+        }else if( animalType == SHEEP ){
+
+            Sheep _new(current_id,row,col);
+            animals.push_back(_new);
+
+        }else if( animalType == WOLF ){
+
+            Wolf _new(current_id,row,col);
+            animals.push_back(_new);
+
+        }else if( animalType == KANGAROO ){
+
+            Kangaroo _new(current_id,row,col);
+            animals.push_back(_new);
+
+        }else if( animalType == MYSTERIO ){
+
+            Mysterio _new(current_id,row,col);
+            animals.push_back(_new);
+        }
+
+    }catch(...){response.second = "Unespected error storing animal!"; return response;}
+
+    response.first = _drawAnimalType(current_id,row,col);
+    response.second = "ANIMAL ADDED TO YOUR SIMULATION!";
+
+    ++current_id;
+    return response;
+}
+
+int Reserve::_getTotalAnimals() const {
+
+    int _animals = 0;
+
+    auto i = animals.begin();
+    for(;i != animals.end();i++)
+        ++_animals;
+
+    return _animals;
+
+}
+
+string Reserve::_drawAnimalType(int id,int row,int col) const {
+    ostringstream res;
+
+    auto i = animals.begin();
+    for(;i != animals.end();i++){
+
+        if(i->getId() == id){
+             res = i->printInfo();
+             reserve_posx_posy[row][col] = i->getType();
+        }
+
+    }
+
+    return res.str();
 }
 
 

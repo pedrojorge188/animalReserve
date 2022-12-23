@@ -9,8 +9,6 @@
 class Simulator {
 private:
     int randCol, randRow;
-    int total_animals;
-    int total_food;
     int max_range_x;
     int min_range_x;
     int min_range_y;
@@ -29,7 +27,7 @@ private:
 public:
     Simulator(int row,int col);
     void showReserve(Window &window,Reserve &reserve) const;
-    void showSimulatorMenu(Window &window,int col,int row) const;
+    void showSimulatorMenu(Window &window,int col,int row,Reserve &r) const;
     bool readCommand(Window &window,Reserve &r);
     bool keyboard_detection(Window &window);
     void SimulationProcess(int row,int col);

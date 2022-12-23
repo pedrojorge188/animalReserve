@@ -14,7 +14,7 @@ void Animal::setHealth(int new_health_value){this->iniHealth = new_health_value;
 void Animal::setHunger(int new_hunger_value) {this->hunger = new_hunger_value;}
 void Animal::setWeight(int new_weight) {this->weight = new_weight;}
 
-ostringstream Animal::printInfo() {
+ostringstream Animal::printInfo() const {
 
     ostringstream buf;
 
@@ -24,8 +24,6 @@ ostringstream Animal::printInfo() {
     buf << "WEIGHT:" << this->getWeight() <<endl;
     buf << "HEALTH:" << this->getIniHealth() << endl;
     buf << "VITALITY:" << this->getVitality() << endl;
-    buf << "HUNGER:" << this->getHunger() <<endl;
-    buf << "SMELL:" << this->getPreferedSmell() <<endl;
 
     return buf;
 
@@ -133,7 +131,7 @@ Sheep::Sheep(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 
 Wolf::Wolf(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 
-    this->type = 'W';
+    this->type = 'L';
     this->id = mId;
     this->row = mRow;
     this->col = mCol;

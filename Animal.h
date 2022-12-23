@@ -48,7 +48,7 @@ public:
 
     virtual int checkDie() {return 0;}
 
-    ostringstream printInfo();
+    ostringstream printInfo() const;
 };
 
 class Rabbit : public Animal {

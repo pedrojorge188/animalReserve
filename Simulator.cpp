@@ -9,8 +9,6 @@ Simulator::Simulator(int row,int col) {
     randCol = 0;
     randRow = 0;
 
-    total_animals = 1;
-    total_food = 1;
 
     min_range_x = 2;
     min_range_y = 2;
@@ -69,13 +67,12 @@ void Simulator::SimulationProcess(int row,int col){
             title << set_color(COLOR_YELLOW) << "ANIMAL RESERVE" ;
 
             showReserve(wReserve,reserve);
-            showSimulatorMenu(wMenu,col,row);
+            showSimulatorMenu(wMenu,col,row,reserve);
 
             sleep(instance[1]);
 
             if(instance[0] > 0) {
 
-                cout << instance[0];
                 turn_instance++;
                 instance[0]--;
                 if(instance[0] == 0)
@@ -198,7 +195,7 @@ void Simulator::showReserve(Window &window,Reserve &reserve) const {
     }
 }
 
-void Simulator::showSimulatorMenu(Window &window,int col,int row) const {
+void Simulator::showSimulatorMenu(Window &window,int col,int row,Reserve &r) const {
 
     window << set_color(COLOR_YELLOW);
     window << "SIMULATION DETAILS \n\n" << set_color(COLOR_GREEN);
@@ -206,8 +203,8 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row) const {
     window << "ROW VIEW AREA (" << min_range_y-2 << "->" << max_range_y-2 << ") pixels" << '\n';
     window << "COLUMN VIEW AREA (" << min_range_x-2 << "->" << max_range_x-2 << ") pixels" << "\n\n";
     window << "RESERVE_SIZE (" << row << ',' << col << ")\n";
-    window << "TOTAL FOOD - " << total_food << '\n';
-    window << "TOTAL ANIMALS - " << total_animals-1 << '\n';
+    window << "TOTAL FOOD - " << 0 << '\n';
+    window << "TOTAL ANIMALS - " << r._getTotalAnimals() << '\n';
     window << '\n' <<"(PRESS ENTER TO WRITE COMMAND)" << '\n';
 
 }
@@ -218,6 +215,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     stringstream cmd;
     string command_start,c2,c3,c4,c5;
     int words = 0,d3,d4,d5,d6;
+    pair <string ,string> req;
 
     cmd << command;
     cmd >> command_start;
@@ -261,6 +259,12 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
+            req = r.spawnAnimal(d3,d4,c2[0]);
+
+            object_str = req.first;
+            notification_str = req.second;
+
+
 
         }else if(words == 1){
 
@@ -272,7 +276,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 notification_str = "ANIMAL SPECIES INVALID!";
                 object_str = " ";
                 return false;
-
             }
 
         }else{
@@ -284,9 +287,12 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
         }
 
+        req = r.spawnAnimal(randCol,randRow,c2[0]);
+
+        object_str = req.first;
+        notification_str = req.second;
+
         return true;
-
-
     }
     else if(command_start.compare("kill") == 0 || command_start.compare("killid") == 0){
 
