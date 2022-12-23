@@ -88,6 +88,42 @@ pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
     return response;
 }
 
+int Reserve::killAnimal(int row, int col) {
+
+    auto i = animals.begin();
+    int current_col, current_row;
+
+    for(;i != animals.end();i++){
+
+        current_col = i->getPosX();
+        current_row = i->getPosY();
+
+        if(current_col == col && current_row == row){
+            animals.erase(i);
+            reserve_posx_posy[row][col] = ' ';
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int Reserve::killAnimal(int id) {
+
+    auto i = animals.begin();
+
+    for(;i != animals.end();i++){
+
+        if(i->getId() == id){
+            animals.erase(i);
+            reserve_posx_posy[i->getPosY()][i->getPosX()] = ' ';
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 int Reserve::_getTotalAnimals() const {
 
     int _animals = 0;

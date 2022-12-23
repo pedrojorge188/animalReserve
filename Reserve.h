@@ -30,6 +30,8 @@ public:
     //Actions
     pair<string,string> spawnAnimal(int col,int row, char animalType);
     string _drawAnimalType(int id,int row, int col) const;
+    int killAnimal(int row,int col);
+    int killAnimal(int id);
 
 };
 

@@ -278,6 +278,11 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 return false;
             }
 
+            req = r.spawnAnimal(randCol,randRow,c2[0]);
+
+            object_str = req.first;
+            notification_str = req.second;
+
         }else{
 
             log_color = COLOR_RED;
@@ -287,13 +292,10 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
         }
 
-        req = r.spawnAnimal(randCol,randRow,c2[0]);
-
-        object_str = req.first;
-        notification_str = req.second;
 
         return true;
     }
+
     else if(command_start.compare("kill") == 0 || command_start.compare("killid") == 0){
 
         if(words == 2){
@@ -314,8 +316,10 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            log_color = COLOR_GREEN;
-            notification_str = "KILL ANIMAL (row-"+c2+"|col-"+c3+")";
+            if(r.killAnimal(d3,d4)){
+                log_color = COLOR_GREEN;
+                notification_str = "KILL ANIMAL (row-"+c2+"|col-"+c3+")";
+            }
 
 
         }else if(words == 1 && command_start == "killid"){
@@ -331,8 +335,13 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 }
             }
 
-            log_color = COLOR_GREEN;
-            notification_str = "KILL ANIMAL (id-"+c2+")";
+            if( r.killAnimal(d3)){
+                log_color = COLOR_GREEN;
+                notification_str = "KILL ANIMAL (id-"+c2+")";
+            }else{
+                log_color = COLOR_RED;
+                notification_str = "YOU DONT KILL ANIMAL (id-"+c2+")";
+            }
 
         }else{
 
