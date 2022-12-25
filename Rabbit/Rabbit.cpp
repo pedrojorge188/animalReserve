@@ -83,14 +83,14 @@ int Rabbit::move(int maxX, int maxY) {
         row-=nSteps;
     }
 
-    if(col >= maxX+1){
+    if(col >= maxX){
         col = 1;
-    }else if(row >= maxY+1){
+    }else if(row >= maxY){
         row = 1;
-    }else if(row <= 0){
-        row = maxY;
-    }else if(col <= 0){
-        col = maxX;
+    }else if(row <= 1){
+        row = maxY-1;
+    }else if(col <= 1){
+        col = maxX-1;
     }
 
 
@@ -103,5 +103,17 @@ void Rabbit::setHealth() {
 
     if(this->hunger > 10)
         this->iniHealth -= 1;
+    else if(this->hunger > 20)
+        this->iniHealth -= 2;
 
 }
+
+bool Rabbit::die() {
+
+    if(this->vitality == 0) { return true; }
+    else if(this->iniHealth == 0) { return true; }
+
+    return false;
+}
+
+

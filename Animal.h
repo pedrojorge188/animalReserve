@@ -50,7 +50,7 @@ public:
 
     virtual int eatFood() {return 0;}
 
-    virtual int checkDie() {return 0;}
+    virtual bool die() {return false;}
 
     ostringstream printInfo() const;
     ostringstream informations() const;

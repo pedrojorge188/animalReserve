@@ -1,11 +1,6 @@
-//
-// Created by pedro on 25/12/2022.
-//
-
 #ifndef ANIMALRESERVE_RABBIT_H
 #define ANIMALRESERVE_RABBIT_H
 #include "../Animal.h"
-
 
 class Rabbit : public Animal {
 public:
@@ -15,7 +10,7 @@ public:
     void setHunger() override;
     void setHealth() override;
     //virtual int eatFood() override;
-    //virtual int die() override;
+    bool die() override;
     int reproduce();
 
 private:

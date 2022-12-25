@@ -15,7 +15,7 @@
 #define MYSTERIO 'm'
 
 class Reserve {
-private:;
+private:
     int n_columns;
     int n_lines;
     int current_id;

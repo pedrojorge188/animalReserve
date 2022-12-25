@@ -177,16 +177,27 @@ string Reserve::animalsInReserve() const {
 
 void Reserve::_newTurn() {
 
-    int loc_x;int loc_y;
     auto i = animals.begin();
 
-    for( ; i != animals.end(); i++){
+    for( ; i != animals.end(); i++ ){
+
         reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = ' ';
-        (*i)->setVitality();
-        (*i)->setHunger();
-        (*i)->setHealth();
-        (*i)->move(n_columns,n_lines);
-        reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
+
+        if((*i)->die()){
+
+            delete *i;
+            animals.erase(i);
+            return;
+
+        }else{
+
+            (*i)->setVitality();
+            (*i)->setHunger();
+            (*i)->setHealth();
+            (*i)->move(n_columns,n_lines);
+            reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
+
+        }
 
     }
 

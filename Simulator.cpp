@@ -662,7 +662,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             c2 = to_string(d3);
 
             for(int i=0;i<d3;i++){
-               // move_animal(r);
+                r._newTurn();
             }
 
             log_color = COLOR_GREEN;
@@ -674,7 +674,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             log_color = COLOR_GREEN;
             notification_str = "ADVANCE TURN";
 
-            //move_animal(r);
+            r._newTurn();
             turn_instance++;
 
         }else{
