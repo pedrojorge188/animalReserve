@@ -55,27 +55,32 @@ pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
 
         if( animalType == RABBIT ) {
 
-            Rabbit _new(current_id,row,col);
+            Rabbit * _new;
+            _new = new Rabbit(current_id,row,col);
             animals.push_back(_new);
 
         }else if( animalType == SHEEP ){
 
-            Sheep _new(current_id,row,col);
+            Sheep * _new;
+            _new = new Sheep(current_id,row,col);
             animals.push_back(_new);
 
         }else if( animalType == WOLF ){
 
-            Wolf _new(current_id,row,col);
+            Wolf * _new;
+            _new = new Wolf(current_id,row,col);
             animals.push_back(_new);
 
         }else if( animalType == KANGAROO ){
 
-            Kangaroo _new(current_id,row,col);
+            Kangaroo * _new;
+            _new = new Kangaroo(current_id,row,col);
             animals.push_back(_new);
 
         }else if( animalType == MYSTERIO ){
 
-            Mysterio _new(current_id,row,col);
+            Mysterio * _new;
+            _new = new Mysterio(current_id,row,col);
             animals.push_back(_new);
         }
 
@@ -90,17 +95,18 @@ pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
 
 int Reserve::killAnimal(int row, int col) {
 
-    auto i = animals.begin();
     int current_col, current_row;
+    auto i = animals.begin();
 
-    for(;i != animals.end();i++){
+    for( ; i != animals.end(); i++){
 
-        current_col = i->getPosX();
-        current_row = i->getPosY();
+        current_col = (*i)->getPosX();
+        current_row = (*i)->getPosY();
 
-        if(current_col == col && current_row == row){
+        if(((*i)->getPosY() == row) && ((*i)->getPosY() == col)){
+            delete *i;
             animals.erase(i);
-            reserve_posx_posy[row][col] = ' ';
+            reserve_posx_posy[current_row][current_col] = ' ';
             return 1;
         }
     }
@@ -110,13 +116,18 @@ int Reserve::killAnimal(int row, int col) {
 
 int Reserve::killAnimal(int id) {
 
+    int current_col, current_row;
     auto i = animals.begin();
 
-    for(;i != animals.end();i++){
+    for( ; i != animals.end(); i++){
 
-        if(i->getId() == id){
+        current_col = (*i)->getPosX();
+        current_row = (*i)->getPosY();
+
+        if((*i)->getId() == id){
+            delete *i;
             animals.erase(i);
-            reserve_posx_posy[i->getPosY()][i->getPosX()] = ' ';
+            reserve_posx_posy[current_row][current_col] = ' ';
             return 1;
         }
     }
@@ -138,16 +149,16 @@ int Reserve::_getTotalAnimals() const {
 
 string Reserve::_drawAnimalType(int id,int row,int col) const {
     ostringstream res;
-
     auto i = animals.begin();
-    for(;i != animals.end();i++){
 
-        if(i->getId() == id){
-             res = i->printInfo();
-             reserve_posx_posy[row][col] = i->getType();
+    for(;i != animals.end(); i++){
+
+        if((*i)->getId() == id){
+            res = (*i)->printInfo();
+            reserve_posx_posy[row][col] = (*i)->getType();
         }
-
     }
+
 
     return res.str();
 }
@@ -155,14 +166,30 @@ string Reserve::_drawAnimalType(int id,int row,int col) const {
 string Reserve::animalsInReserve() const {
     ostringstream res;
     string toReturn;
-    auto i = animals.begin();
 
-    for(;i != animals.end(); i++){
-        res = i->informations();
+    for(int i = 0;i < animals.size(); i++){
+        res = animals[i]->informations();
         toReturn.append(res.str());
     }
 
     return toReturn;
+}
+
+void Reserve::_newTurn() {
+
+    int loc_x;int loc_y;
+    auto i = animals.begin();
+
+    for( ; i != animals.end(); i++){
+        reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = ' ';
+        (*i)->setVitality();
+        (*i)->setHunger();
+        (*i)->setHealth();
+        (*i)->move(n_columns,n_lines);
+        reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
+
+    }
+
 }
 
 

@@ -72,7 +72,7 @@ void Simulator::SimulationProcess(int row,int col){
             sleep(instance[1]);
 
             if(instance[0] > 0) {
-
+                reserve._newTurn();
                 turn_instance++;
                 instance[0]--;
                 if(instance[0] == 0)

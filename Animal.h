@@ -1,7 +1,6 @@
 #ifndef TERMINAL_CPP_ANIMAL_H
 #define TERMINAL_CPP_ANIMAL_H
 #include <utility>
-
 #include "utils.h"
 
 class Animal{
@@ -37,13 +36,17 @@ public:
 
     //Setters
 
-    void setHealth(int new_health_value);
+    void setVitality();
+
     void setWeight(int new_weight);
-    void setHunger(int new_hunger_value);
+
+    virtual void setHealth();
+
+    virtual void setHunger();
 
     //Actions
 
-    virtual int move(int col, int row) {return 0;}
+    virtual int move(int maxX, int maxY);
 
     virtual int eatFood() {return 0;}
 
@@ -52,75 +55,6 @@ public:
     ostringstream printInfo() const;
     ostringstream informations() const;
 };
-
-class Rabbit : public Animal {
-public:
-
-    Rabbit(int mId, int mRow, int mCol);
-    //virtual int move(int col, int row) override ;
-    //virtual int eatFood() override;
-    //virtual int die() override;
-    int reproduce();
-
-private:
-    int reproduceTime;
-    int reproduceRange;
-};
-
-class Sheep : public Animal {
-public:
-    Sheep(int mId,int mRow,int mCol);
-    //virtual int move(int col,int row) override;
-    //virtual int eatFood() override;
-    //virtual int die() override;
-    int reproduceAction();
-private:
-    int reproduceTime;
-    int reproduceLimit;
-};
-
-class Wolf : public Animal {
-public:
-    Wolf(int mId, int mRow, int mCol);
-    //virtual int move(int col,int row) override;
-    //virtual int eatFood() override;
-    //virtual int die() override;
-
-    int reproduce();
-private:
-    int randomSpawnInstance;
-};
-
-class Kangaroo : public Animal {
-public:
-    Kangaroo(int mId, int mRow, int mCol);
-
-    //virtual int move(int col,int row) override;
-    //virtual int eatFood() override;
-    //virtual int die() override;
-    int getBornPause() const {return bornPause;}
-    int getAge() const {return age;}
-
-    int reproduce();
-    int incAge(); // increments age after turns
-
-private:
-    int reproduceTime;
-    int reproduceRange;
-    int bornPause;
-    int age;
-};
-
-class Mysterio : public Animal {
-public:
-    Mysterio(int mId, int mRow, int mCol);
-
-    //virtual int move(int col,int row) override;
-    //virtual int eatFood() override;
-    //virtual int die() override;
-};
-
-
 
 
 
