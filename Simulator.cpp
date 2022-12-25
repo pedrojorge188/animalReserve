@@ -259,7 +259,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            req = r.spawnAnimal(d3,d4,c2[0]);
+            req = r.spawnAnimal(d4-1,d3-1,c2[0]);
 
             object_str = req.first;
             notification_str = req.second;
@@ -694,7 +694,10 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     }
     else if(command_start.compare("visanim") == 0){
 
-        notification_str = "List animals idd";
+        pair <int,int> _range_x (min_range_x, max_range_x);
+        pair <int,int> _range_y (min_range_y, max_range_y);
+
+        object_str = r.animalsInReserve(_range_y,_range_x);
 
     }
     else if(command_start.compare("store") == 0){

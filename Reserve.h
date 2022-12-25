@@ -40,6 +40,7 @@ public:
     int killAnimal(int id);
 
     string animalsInReserve() const;
+    string animalsInReserve(pair<int,int> range_y,pair<int,int> range_x) const;
     void _newTurn();
 };
 

@@ -175,6 +175,24 @@ string Reserve::animalsInReserve() const {
     return toReturn;
 }
 
+string Reserve::animalsInReserve(pair<int,int>range_y,pair<int,int> range_x) const {
+    ostringstream res;
+    string toReturn;
+
+    for(int i = 0;i < animals.size(); i++){
+
+        if((animals[i]->getPosY() < range_y.second  && animals[i]->getPosY() > range_y.first) &&
+          (animals[i]->getPosY() < range_x.second  && animals[i]->getPosY() > range_x.first))
+        {
+            res = animals[i]->informations();
+            toReturn.append(res.str());
+        }
+    }
+
+    return toReturn;
+}
+
+
 void Reserve::_newTurn() {
 
     auto i = animals.begin();
