@@ -179,6 +179,9 @@ void Reserve::_newTurn() {
 
     auto i = animals.begin();
 
+    pair <int,int> _result;
+    pair <int,int> _input (n_lines,n_columns);
+
     for( ; i != animals.end(); i++ ){
 
         reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = ' ';
@@ -187,19 +190,27 @@ void Reserve::_newTurn() {
 
             delete *i;
             animals.erase(i);
+
+            return;
+
+        }else if((*i)->reproduce()) {
+
+            _result = (*i)->sonSpawnLocation(_input);
+
+            this->spawnAnimal(_result.second,_result.first,tolower((*i)->getType()));
+
             return;
 
         }else{
 
-            (*i)->setVitality();
-            (*i)->setHunger();
-            (*i)->setHealth();
-            (*i)->move(n_columns,n_lines);
-            reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
+                (*i)->setVitality();
+                (*i)->setHunger();
+                (*i)->setHealth();
+                (*i)->move(n_columns,n_lines);
+                reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
 
+            }
         }
-
-    }
 
 }
 

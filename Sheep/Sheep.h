@@ -13,7 +13,6 @@ public:
     //virtual int move(int maxX, int maxY) override ;
     //virtual int eatFood() override;
     //virtual int die() override;
-    int reproduceAction();
 private:
     int reproduceTime;
     int reproduceLimit;

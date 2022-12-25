@@ -1,6 +1,3 @@
-//
-// Created by pedro on 25/12/2022.
-//
 
 #ifndef ANIMALRESERVE_MYSTERIO_H
 #define ANIMALRESERVE_MYSTERIO_H

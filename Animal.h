@@ -34,9 +34,12 @@ public:
     int getHunger() const {return hunger;}
     string getPreferedSmell() const {return preferedSmell;}
 
-    //Setters
 
     void setVitality();
+
+    ostringstream printInfo() const;
+
+    ostringstream informations() const;
 
     void setWeight(int new_weight);
 
@@ -44,16 +47,16 @@ public:
 
     virtual void setHunger();
 
-    //Actions
-
     virtual int move(int maxX, int maxY);
 
     virtual int eatFood() {return 0;}
 
     virtual bool die() {return false;}
 
-    ostringstream printInfo() const;
-    ostringstream informations() const;
+    virtual bool reproduce() {return false;}
+
+    virtual pair<int,int> sonSpawnLocation(pair<int,int> input);
+
 };
 
 

@@ -41,3 +41,11 @@ ostringstream  Animal::informations() const {
 }
 
 int Animal::move(int maxX, int maxY) { col = this->col; row = this->row;}
+
+pair <int,int> Animal::sonSpawnLocation(pair<int,int> input) {
+
+    pair <int,int> location (input.first,input.second);
+
+    return location;
+
+}

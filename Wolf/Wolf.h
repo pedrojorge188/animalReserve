@@ -14,7 +14,6 @@ public:
     //virtual int eatFood() override;
     //virtual int die() override;
 
-    int reproduce();
 private:
     int randomSpawnInstance;
 };

@@ -1,17 +1,19 @@
 #ifndef ANIMALRESERVE_RABBIT_H
 #define ANIMALRESERVE_RABBIT_H
 #include "../Animal.h"
+#include "../Reserve.h"
 
 class Rabbit : public Animal {
 public:
 
     Rabbit(int mId, int mRow, int mCol);
-    int move(int maxX, int maxY);
-    void setHunger() override;
-    void setHealth() override;
+    virtual int move(int maxX, int maxY);
+    virtual void setHunger() override;
+    virtual void setHealth() override;
+    virtual bool reproduce() override;
+    virtual pair <int,int>  sonSpawnLocation(pair<int,int> input) override;
     //virtual int eatFood() override;
-    bool die() override;
-    int reproduce();
+    virtual bool die() override;
 
 private:
     int random;

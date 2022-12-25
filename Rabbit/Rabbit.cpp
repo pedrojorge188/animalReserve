@@ -116,4 +116,52 @@ bool Rabbit::die() {
     return false;
 }
 
+pair <int,int> Rabbit::sonSpawnLocation(pair<int,int> input) {
+
+    pair <int,int> output;
+    int row_coords = 0, col_coords = 0;
+
+    random_device rd;
+    mt19937 mt(rd());
+
+    uniform_int_distribution<int> _spawn(0,100);
+
+    do{
+        uniform_int_distribution<int> _row(this->row, (this->row + this->reproduceRange));
+        uniform_int_distribution<int> _col(this->col, (this->col + this->reproduceRange));
+
+        row_coords =  _row(mt);
+        col_coords =  _col(mt);
+
+    }while(row_coords >= input.second || col_coords >= input.first);
+
+    output.first = row_coords;
+    output.second = col_coords;
+
+    return output;
+}
+
+bool Rabbit::reproduce() {
+
+    int _spawn_;
+
+    random_device rd;
+    mt19937 mt(rd());
+
+    uniform_int_distribution<int> _spawn(0,100);
+    _spawn_ = _spawn(mt);
+
+    if(this->reproduceTime == 0){
+        reproduceTime += 8;
+        if(_spawn_ >= 50)
+            return true;
+    }
+    else
+        reproduceTime--;
+
+    return false;
+
+}
+
+
 

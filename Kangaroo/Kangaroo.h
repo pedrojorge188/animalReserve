@@ -17,7 +17,6 @@ public:
     int getBornPause() const {return bornPause;}
     int getAge() const {return age;}
 
-    int reproduce();
     int incAge(); // increments age after turns
 
 private:
