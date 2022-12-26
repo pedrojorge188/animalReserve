@@ -1,6 +1,3 @@
-//
-// Created by pedro on 25/12/2022.
-//
 
 #ifndef ANIMALRESERVE_WOLF_H
 #define ANIMALRESERVE_WOLF_H
@@ -9,12 +6,21 @@
 
 class Wolf : public Animal {
 public:
+
     Wolf(int mId, int mRow, int mCol);
-    //virtual int move(int maxX, int maxY) override ;
+    bool getReproduceStatus() {return  reproduceStatus;}
+    virtual int move(int maxX, int maxY, vector<Animal*>&_animals);
+    virtual void setHunger() override;
+    virtual void setHealth() override;
+    virtual bool reproduce() override;
+    virtual pair <int,int>  sonSpawnLocation(pair<int,int> input) override;
     //virtual int eatFood() override;
-    //virtual int die() override;
+    virtual pair <bool,bool> die() override;
 
 private:
+    int random;
+    int reproduceRange;
+    bool reproduceStatus;
     int randomSpawnInstance;
 };
 

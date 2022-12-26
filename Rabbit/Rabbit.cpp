@@ -50,7 +50,7 @@ Rabbit::Rabbit(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
     }
 }
 
-int Rabbit::move(int maxX, int maxY, vector<Animal*>&_rabbit) {
+int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal) {
 
     int _start_col = this->col;
     int _start_row = this->row;
@@ -75,19 +75,49 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_rabbit) {
         nSteps = randomS(mt);
     }
 
+
+    pair <int,int> LimitMax (
+            this->col + this->perception,
+            this->row + this->perception
+    );
+
+    pair <int,int> LimitMin (
+            this->col - this->perception,
+            this->row - this->perception
+    );
+
+
     if(random == 0){ col+=nSteps; }
     else if(random == 1){ col-=nSteps; }
     else if(random == 2){ row+=nSteps; }
     else if(random == 3){ row-=nSteps; }
 
 
+    for (int i = 0 ; i < _heavyAnimal.size() ; i++){
+        if(_heavyAnimal[i]->getPosX() <= LimitMax.first && _heavyAnimal[i]->getPosX() >= LimitMin.first){
+            if(_heavyAnimal[i]->getPosY() <= LimitMax.second && _heavyAnimal[i]->getPosY() >= LimitMin.second){
+                if(_heavyAnimal[i]->getWeight() > 10){
+                    if(_heavyAnimal[i]->getPosX() < this->getPosX())
+                        col = _start_col + 1;
+                    else if(_heavyAnimal[i]->getPosX() > this->getPosX())
+                        col = _start_col - 1;
+                    else if(_heavyAnimal[i]->getPosY() < this->getPosY())
+                        row = _start_row + 1;
+                    else if(_heavyAnimal[i]->getPosY() > this->getPosY())
+                        row = _start_row - 1;
+
+                }
+            }
+        }
+    }
+
     if(col >= maxX){
-        col = 1;
+        col = 0;
     }else if(row >= maxY){
-        row = 1;
-    }else if(row <= 1){
+        row = 0;
+    }else if(row <= 0){
         row = maxY-1;
-    }else if(col <= 1){
+    }else if(col <= 0){
         col = maxX-1;
     }
 
@@ -106,12 +136,20 @@ void Rabbit::setHealth() {
 
 }
 
-bool Rabbit::die() {
+pair <bool,bool> Rabbit::die() {
 
-    if(this->vitality == 0) { return true; }
-    else if(this->iniHealth == 0) { return true; }
+    pair <bool,bool> output (false,false);
 
-    return false;
+    if(this->vitality == 0 ) {
+        output.first = true;
+    }
+    else if(this->iniHealth == 0 ) {
+        output.first = true;;
+    }
+
+    return output;
+
+
 }
 
 pair <int,int> Rabbit::sonSpawnLocation(pair<int,int> input) {

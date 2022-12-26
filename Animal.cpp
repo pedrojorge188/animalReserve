@@ -50,3 +50,11 @@ pair <int,int> Animal::sonSpawnLocation(pair<int,int> input) {
     return location;
 
 }
+
+pair <bool,bool> Animal::die() {
+
+    pair <bool,bool> output (false,false);
+
+    return output;
+
+;}

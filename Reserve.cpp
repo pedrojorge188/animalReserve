@@ -86,7 +86,7 @@ pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
                 animals.push_back(_new);
             }
 
-        }catch(...){response.second = "Unespected error storing animal!"; return response;}
+        }catch(...){response.second = "Unexpected error storing animal!"; return response;}
 
         response.first = _drawAnimalType(current_id,row,col);
         response.second = "ANIMAL ADDED TO YOUR SIMULATION!";
@@ -105,7 +105,7 @@ int Reserve::killAnimal(int row, int col) {
     int current_col, current_row;
     auto i = animals.begin();
 
-    for( ; i != animals.end(); i++){
+    for( ; i != animals.end() ; i++){
 
         current_col = (*i)->getPosX();
         current_row = (*i)->getPosY();
@@ -211,15 +211,20 @@ void Reserve::_newTurn() {
 
     pair <int,int> _result;
     pair <int,int> _input (n_lines,n_columns);
+    pair <bool,bool> _dead_values;
 
     for( ; i != animals.end(); i++ ){
 
+        _dead_values = (*i)->die();
         reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = ' ';
 
-        if((*i)->die()){
+        if(_dead_values.first){
 
             delete *i;
             animals.erase(i);
+
+            if(_dead_values.second)
+                cout << "Spawnar um corpo";
 
             return;
 

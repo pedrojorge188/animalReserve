@@ -47,13 +47,15 @@ public:
 
     virtual void setHealth();
 
+    void setHealth(int value){this->iniHealth = value;}
+
     virtual void setHunger();
 
     virtual int move(int maxX, int maxY, vector<Animal*> &_animal);
 
     virtual int eatFood() {return 0;}
 
-    virtual bool die() {return false;}
+    virtual pair <bool,bool> die() ;
 
     virtual bool reproduce() {return false;}
 
