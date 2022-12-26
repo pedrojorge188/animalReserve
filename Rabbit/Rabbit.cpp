@@ -11,6 +11,7 @@ Rabbit::Rabbit(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
     this->preferedSmell = "verdura";
     this->reproduceTime = 8;
     this->reproduceRange = 10;
+    this->perception = 4;
 
     random_device rd;
     mt19937 mt(rd());
@@ -49,7 +50,10 @@ Rabbit::Rabbit(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
     }
 }
 
-int Rabbit::move(int maxX, int maxY) {
+int Rabbit::move(int maxX, int maxY, vector<Animal*>&_rabbit) {
+
+    int _start_col = this->col;
+    int _start_row = this->row;
 
     random_device rd;
     mt19937 mt(rd());
@@ -57,6 +61,7 @@ int Rabbit::move(int maxX, int maxY) {
     uniform_int_distribution<int> randomN(0, 3);
 
     random = randomN(mt);
+
     int nSteps;
 
     if(hunger > 20){
@@ -70,18 +75,11 @@ int Rabbit::move(int maxX, int maxY) {
         nSteps = randomS(mt);
     }
 
-    if(random == 0){
-        col+=nSteps;
-    }
-    else if(random == 1){
-        col-=nSteps;
-    }
-    else if(random == 2){
-        row+=nSteps;
-    }
-    else if(random == 3){
-        row-=nSteps;
-    }
+    if(random == 0){ col+=nSteps; }
+    else if(random == 1){ col-=nSteps; }
+    else if(random == 2){ row+=nSteps; }
+    else if(random == 3){ row-=nSteps; }
+
 
     if(col >= maxX){
         col = 1;

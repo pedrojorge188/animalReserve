@@ -36,6 +36,7 @@ Reserve::Reserve(Reserve &aux) {
 
     n_columns = aux.n_columns;
     n_lines = aux.n_lines;
+    copy(aux.animals.begin(), aux.animals.end(), back_inserter(animals));
 
     reserve_posx_posy = new char *[n_lines];
 
@@ -44,52 +45,58 @@ Reserve::Reserve(Reserve &aux) {
             reserve_posx_posy[i][k] = aux.reserve_posx_posy[i][k];
     }
 
+
 }
 
 pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
 
     pair <string,string> response ("Any info","Any Change made!");
-    auto i = animals.begin();
 
-    try{
+    if((col < n_columns &&  row < n_lines) || (col < 1 || row < 1)){
+        try{
 
-        if( animalType == RABBIT ) {
+            if( animalType == RABBIT ) {
 
-            Rabbit * _new;
-            _new = new Rabbit(current_id,row,col);
-            animals.push_back(_new);
+                Rabbit * _new;
+                _new = new Rabbit(current_id,row,col);
+                animals.push_back(_new);
 
-        }else if( animalType == SHEEP ){
+            }else if( animalType == SHEEP ){
 
-            Sheep * _new;
-            _new = new Sheep(current_id,row,col);
-            animals.push_back(_new);
+                Sheep * _new;
+                _new = new Sheep(current_id,row,col);
+                animals.push_back(_new);
 
-        }else if( animalType == WOLF ){
+            }else if( animalType == WOLF ){
 
-            Wolf * _new;
-            _new = new Wolf(current_id,row,col);
-            animals.push_back(_new);
+                Wolf * _new;
+                _new = new Wolf(current_id,row,col);
+                animals.push_back(_new);
 
-        }else if( animalType == KANGAROO ){
+            }else if( animalType == KANGAROO ){
 
-            Kangaroo * _new;
-            _new = new Kangaroo(current_id,row,col);
-            animals.push_back(_new);
+                Kangaroo * _new;
+                _new = new Kangaroo(current_id,row,col);
+                animals.push_back(_new);
 
-        }else if( animalType == MYSTERIO ){
+            }else if( animalType == MYSTERIO ){
 
-            Mysterio * _new;
-            _new = new Mysterio(current_id,row,col);
-            animals.push_back(_new);
-        }
+                Mysterio * _new;
+                _new = new Mysterio(current_id,row,col);
+                animals.push_back(_new);
+            }
 
-    }catch(...){response.second = "Unespected error storing animal!"; return response;}
+        }catch(...){response.second = "Unespected error storing animal!"; return response;}
 
-    response.first = _drawAnimalType(current_id,row,col);
-    response.second = "ANIMAL ADDED TO YOUR SIMULATION!";
+        response.first = _drawAnimalType(current_id,row,col);
+        response.second = "ANIMAL ADDED TO YOUR SIMULATION!";
 
-    ++current_id;
+        ++current_id;
+
+    }else{
+        response.second = "ANIMAL CANT BE ADDED CHECK YOUR INPUT";
+    }
+
     return response;
 }
 
@@ -103,13 +110,18 @@ int Reserve::killAnimal(int row, int col) {
         current_col = (*i)->getPosX();
         current_row = (*i)->getPosY();
 
-        if(((*i)->getPosY() == row) && ((*i)->getPosY() == col)){
-            delete *i;
-            animals.erase(i);
-            reserve_posx_posy[current_row][current_col] = ' ';
-            return 1;
+        if(current_row == row){
+            if(current_col == col){
+
+                reserve_posx_posy[current_row][current_col] = ' ';
+
+                delete *i;
+                animals.erase(i);
+                return 1;
+            }
         }
     }
+
 
     return 0;
 }
@@ -224,7 +236,7 @@ void Reserve::_newTurn() {
                 (*i)->setVitality();
                 (*i)->setHunger();
                 (*i)->setHealth();
-                (*i)->move(n_columns,n_lines);
+                (*i)->move(n_columns,n_lines,animals);
                 reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
 
             }

@@ -11,6 +11,7 @@ protected:
     int row;
     int col;
     int iniHealth;
+    int perception;
     int weight;
     int vitality;
     int hunger;
@@ -31,6 +32,7 @@ public:
     int getPosY() const {return row;}
     int getWeight() const {return weight;}
     int getVitality() const {return vitality;}
+    int getPerception() const {return perception;}
     int getHunger() const {return hunger;}
     string getPreferedSmell() const {return preferedSmell;}
 
@@ -47,7 +49,7 @@ public:
 
     virtual void setHunger();
 
-    virtual int move(int maxX, int maxY);
+    virtual int move(int maxX, int maxY, vector<Animal*> &_animal);
 
     virtual int eatFood() {return 0;}
 

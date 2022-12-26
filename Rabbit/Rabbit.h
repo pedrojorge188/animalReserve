@@ -1,13 +1,17 @@
 #ifndef ANIMALRESERVE_RABBIT_H
 #define ANIMALRESERVE_RABBIT_H
 #include "../Animal.h"
-#include "../Reserve.h"
+
+#define FRONT "front"
+#define LEFT "left"
+#define BACK "back"
+#define RIGHT "right"
 
 class Rabbit : public Animal {
 public:
 
     Rabbit(int mId, int mRow, int mCol);
-    virtual int move(int maxX, int maxY);
+    virtual int move(int maxX, int maxY, vector<Animal*>&_rabbit);
     virtual void setHunger() override;
     virtual void setHealth() override;
     virtual bool reproduce() override;

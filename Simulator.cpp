@@ -316,7 +316,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            if(r.killAnimal(d3,d4)){
+            if(r.killAnimal(d3-1,d4-1) == 1){
                 log_color = COLOR_GREEN;
                 notification_str = "KILL ANIMAL (row-"+c2+"|col-"+c3+")";
             }
