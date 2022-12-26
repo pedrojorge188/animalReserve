@@ -62,6 +62,7 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals) {
     uniform_int_distribution<int> Direction(0, 3);
 
     random = Direction(mt);
+    int animalsToHunt = 0;
 
     int nSteps ;
 
@@ -75,6 +76,9 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals) {
 
     for(int i = 0 ; i < _animals.size(); i++){
         if(_animals[i]->getType() != 'L'){
+
+            animalsToHunt++;
+
             if(this->hunger > 15) { nSteps = 3;} else { nSteps = 2; }
 
             if(_animals[i]->getPosX() < LimitMax.first && _animals[i]->getPosX() > LimitMin.first){
@@ -91,7 +95,21 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals) {
                             row += 1;
 
                         if(_animals[i]->getPosX() == this->getPosX() && _animals[i]->getPosY() == this->getPosY()){
-                            _animals[i]->setHealth(0);
+
+                            if(_animals[i]->getWeight() > this->weight){
+
+                                uniform_int_distribution<int> Fighting(0, 100);
+
+                                int fight =  Fighting(mt);
+
+                                if(fight > 50)
+                                    _animals[i]->setHealth(0);
+                                else
+                                    this->iniHealth = 0;
+
+                            }else{
+                                _animals[i]->setHealth(0);
+                            }
                         }
                 }
 
@@ -107,7 +125,12 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals) {
 
     }
 
-
+    if(animalsToHunt == 0){
+        if(random == 0){ col+=nSteps; }
+        else if(random == 1){ col-=nSteps; }
+        else if(random == 2){ row+=nSteps; }
+        else if(random == 3){ row-=nSteps; }
+    }
 
     if(col >= maxX){
         col = maxX-1;
