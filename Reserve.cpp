@@ -123,7 +123,7 @@ pair<string,string> Reserve::spawnFood(int col, int row, char foodType) {
             }else if( foodType == BODY ){
 
                 Body * _new;
-                _new = new Body(current_id_food,row,col);
+                _new = new Body(current_id_food,row,col, 10, 10); //Default
                 foods.push_back(_new);
 
             }else if( foodType == MEAT ){

@@ -8,6 +8,7 @@ Carrot::Carrot(int i, int row, int col) : Food(i, row, col) {
     this->duration = 1;     //infinita
     this->smell_1 = "verdura";
     this->smell_2 = "nothing";
+    this->inst=0;
 }
 
 bool Carrot::die() {
@@ -15,4 +16,11 @@ bool Carrot::die() {
     if(this->duration == 0) { return true; }
 
     return false;
+}
+
+void Carrot::setToxicity() {
+    inst++;
+    if(inst%10==0 && this->toxicity < 3){
+        this->toxicity += 1;
+    }
 }

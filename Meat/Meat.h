@@ -12,6 +12,8 @@ public:
 
     virtual bool die() override;
 
+    virtual void setNutriValue() override;
+
 };
 
 

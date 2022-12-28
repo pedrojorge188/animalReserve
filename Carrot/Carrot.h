@@ -7,10 +7,15 @@
 #include "../Food.h"
 
 class Carrot: public Food {
+protected:
+    int inst;
 public:
     Carrot(int i, int row, int col);
 
     virtual bool die() override;
+
+    virtual void setDuration() override {this->duration=this->duration;};
+    virtual void setToxicity() override;
 
 };
 

@@ -40,8 +40,10 @@ ostringstream  Food::informations() const {
     ostringstream buf;
     buf << "{ID:" << this->getId() << " | " ;
     buf << "SPECIES:" << this->getType() << " | ";
-    buf << "X: " << this->getPosX() << " Y: " << this->getPosY() << " | ";
-    buf << "HEALTH:" << this->getDuration() << "}" <<endl;
+    buf << "X: " << this->getPosX() << " Y: " << this->getPosY() << " | " << endl;
+    buf << "DUR:" << this->getDuration() << " | ";
+    buf << "TOX:" << this->getToxicity() << " | ";
+    buf << "NUTR:" << this->getNutriValue() << "}" <<endl;
 
     return buf;
 }

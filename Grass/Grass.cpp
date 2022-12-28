@@ -4,7 +4,7 @@ Grass::Grass(int i, int row, int col) : Food(i, row, col) {
     this->tried = false;
     this->reproMin = 4;
     this->reproMax = 8;
-    this->reproTime = 17;
+    this->reproTime = 5;
     this->type = 'r';
     this->id = i;   this->row = row;
     this->col = col;  this->toxicity = 0;

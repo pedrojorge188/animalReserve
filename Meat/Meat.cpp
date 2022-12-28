@@ -16,3 +16,9 @@ bool Meat::die() {
 
     return false;
 }
+
+void Meat::setNutriValue() {
+    if(this->nutriValue>0){
+        this->nutriValue-=1;
+    }
+}
