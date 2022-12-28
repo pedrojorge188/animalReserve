@@ -48,6 +48,11 @@ public:
     int getLines() const {return n_lines;}
     char **getReserve() const {return reserve_posx_posy;}
 
+    //Global Actions ....
+
+    bool cleanPositions(int row,int col);
+
+
     //Actions for animals ....
     pair<string,string> spawnAnimal(int col,int row, char animalType);
     string _drawAnimalType(int id,int row, int col) const;

@@ -187,6 +187,7 @@ int Reserve::killAnimal(int row, int col) {
     return 0;
 }
 
+
 int Reserve::killAnimal(int id) {
 
     int current_col, current_row;
@@ -248,6 +249,16 @@ int Reserve::killFood(int row, int col) {
 
 
     return 0;
+}
+
+bool Reserve::cleanPositions(int row, int col) {
+
+    if(killAnimal(row,col) == 0)
+        if(killFood(row,col) == 0)
+            return false;
+
+    return true;
+
 }
 
 int Reserve::killFood(int id) {

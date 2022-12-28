@@ -576,7 +576,13 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             }
 
             log_color = COLOR_GREEN;
-            notification_str = "CLEAN POSITION (row-"+c2+"|col-"+c3+")";
+
+            if(r.cleanPositions(d3-1,d4-1))
+                notification_str = "CLEAN POSITION (row-"+c2+"|col-"+c3+")";
+            else{
+                log_color = COLOR_RED;
+                notification_str = "ANY ANIMAL OR FOOD TO CLEAN";
+            }
 
 
         }else{
