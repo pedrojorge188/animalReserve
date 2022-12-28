@@ -6,7 +6,8 @@ Reserve::Reserve(int columns, int lines) {
 
     n_columns = columns;
     n_lines = lines;
-    current_id = 1;
+    current_id_animal = 1;
+    current_id_food = 1;
 
     try{
         reserve_posx_posy = new char*[n_lines];
@@ -58,43 +59,95 @@ pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
             if( animalType == RABBIT ) {
 
                 Rabbit * _new;
-                _new = new Rabbit(current_id,row,col);
+                _new = new Rabbit(current_id_animal,row,col);
                 animals.push_back(_new);
 
             }else if( animalType == SHEEP ){
 
                 Sheep * _new;
-                _new = new Sheep(current_id,row,col);
+                _new = new Sheep(current_id_animal,row,col);
                 animals.push_back(_new);
 
             }else if( animalType == WOLF ){
 
                 Wolf * _new;
-                _new = new Wolf(current_id,row,col);
+                _new = new Wolf(current_id_animal,row,col);
                 animals.push_back(_new);
 
             }else if( animalType == KANGAROO ){
 
                 Kangaroo * _new;
-                _new = new Kangaroo(current_id,row,col);
+                _new = new Kangaroo(current_id_animal,row,col);
                 animals.push_back(_new);
 
             }else if( animalType == MYSTERIO ){
 
                 Mysterio * _new;
-                _new = new Mysterio(current_id,row,col);
+                _new = new Mysterio(current_id_animal,row,col);
                 animals.push_back(_new);
             }
 
         }catch(...){response.second = "Unexpected error storing animal!"; return response;}
 
-        response.first = _drawAnimalType(current_id,row,col);
+        response.first = _drawAnimalType(current_id_animal,row,col);
         response.second = "ANIMAL ADDED TO YOUR SIMULATION!";
 
-        ++current_id;
+        ++current_id_animal;
 
     }else{
         response.second = "ANIMAL CANT BE ADDED CHECK YOUR INPUT";
+    }
+
+    return response;
+}
+
+pair<string,string> Reserve::spawnFood(int col, int row, char foodType) {
+
+    pair <string,string> response ("Any info","Any Change made!");
+
+    if((col < n_columns &&  row < n_lines) || (col < 1 || row < 1)){
+        try{
+
+            if( foodType == GRASS ) {
+
+                Grass * _new;
+                _new = new Grass(current_id_food,row,col);
+                foods.push_back(_new);
+
+            }else if( foodType == CARROT ){
+
+                Carrot * _new;
+                _new = new Carrot(current_id_food,row,col);
+                foods.push_back(_new);
+
+            }else if( foodType == BODY ){
+
+                Body * _new;
+                _new = new Body(current_id_food,row,col);
+                foods.push_back(_new);
+
+            }else if( foodType == MEAT ){
+
+                Meat * _new;
+                _new = new Meat(current_id_food,row,col);
+                foods.push_back(_new);
+
+            }else if( foodType == MISTERY_FOOD ){
+
+                misteryFood * _new;
+                _new = new misteryFood(current_id_food,row,col);
+                foods.push_back(_new);
+            }
+
+        }catch(...){response.second = "Unespected error storing food!"; return response;}
+
+        response.first = _drawFoodType(current_id_food,row,col);
+        response.second = "FOOD ADDED TO YOUR SIMULATION!";
+
+        ++current_id_food;
+
+    }else{
+        response.second = "FOOD CANT BE ADDED CHECK YOUR INPUT";
     }
 
     return response;
@@ -147,6 +200,53 @@ int Reserve::killAnimal(int id) {
     return 0;
 }
 
+int Reserve::killFood(int row, int col) {
+
+    int current_col, current_row;
+    auto i = foods.begin();
+
+    for( ; i != foods.end(); i++){
+
+        current_col = (*i)->getPosX();
+        current_row = (*i)->getPosY();
+
+        if(current_row == row){
+            if(current_col == col){
+
+                reserve_posx_posy[current_row][current_col] = ' ';
+
+                delete *i;
+                foods.erase(i);
+                return 1;
+            }
+        }
+    }
+
+
+    return 0;
+}
+
+int Reserve::killFood(int id) {
+
+    int current_col, current_row;
+    auto i = foods.begin();
+
+    for( ; i != foods.end(); i++){
+
+        current_col = (*i)->getPosX();
+        current_row = (*i)->getPosY();
+
+        if((*i)->getId() == id){
+            delete *i;
+            foods.erase(i);
+            reserve_posx_posy[current_row][current_col] = ' ';
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 int Reserve::_getTotalAnimals() const {
 
     int _animals = 0;
@@ -159,11 +259,39 @@ int Reserve::_getTotalAnimals() const {
 
 }
 
+int Reserve::_getTotalFood() const {
+
+    int _food = 0;
+
+    auto i = foods.begin();
+    for(;i != foods.end();i++)
+        ++_food;
+
+    return _food;
+
+}
+
 string Reserve::_drawAnimalType(int id,int row,int col) const {
     ostringstream res;
     auto i = animals.begin();
 
     for(;i != animals.end(); i++){
+
+        if((*i)->getId() == id){
+            res = (*i)->printInfo();
+            reserve_posx_posy[row][col] = (*i)->getType();
+        }
+    }
+
+
+    return res.str();
+}
+
+string Reserve::_drawFoodType(int id,int row,int col) const {
+    ostringstream res;
+    auto i = foods.begin();
+
+    for(;i != foods.end(); i++){
 
         if((*i)->getId() == id){
             res = (*i)->printInfo();
@@ -204,10 +332,22 @@ string Reserve::animalsInReserve(pair<int,int>range_y,pair<int,int> range_x) con
     return toReturn;
 }
 
+string Reserve::foodInReserve() const {
+    ostringstream res;
+    string toReturn;
+
+    for(int i = 0;i < foods.size(); i++){
+        res = foods[i]->informations();
+        toReturn.append(res.str());
+    }
+
+    return toReturn;
+}
 
 void Reserve::_newTurn() {
 
     auto i = animals.begin();
+    auto j = foods.begin();
 
     pair <int,int> _result;
     pair <int,int> _input (n_lines,n_columns);
@@ -246,6 +386,40 @@ void Reserve::_newTurn() {
 
             }
         }
+
+    for( ; j != foods.end(); j++ ){
+        reserve_posx_posy[(*j)->getPosY()][(*j)->getPosX()] = ' ';
+
+        if((*j)->die()){
+
+            delete *j;
+            foods.erase(j);
+
+            return;
+
+        }else if((*j)->reproduce()) {
+
+            (*j)->setDuration();
+            (*j)->setNutriValue();
+            (*j)->setToxicity();
+
+            reserve_posx_posy[(*j)->getPosY()][(*j)->getPosX()] = (*j)->getType();
+
+            _result = (*j)->sonSpawnLocation(_input);
+
+            spawnFood(_result.second,_result.first,(*j)->getType());
+
+            return;
+
+        }else{
+
+            (*j)->setDuration();
+            (*j)->setNutriValue();
+            (*j)->setToxicity();
+
+        }
+        reserve_posx_posy[(*j)->getPosY()][(*j)->getPosX()] = (*j)->getType();
+    }
 
 }
 

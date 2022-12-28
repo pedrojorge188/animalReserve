@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "utils.h"
 #include "Reserve.h"
 #include "Animal.h"
@@ -7,8 +8,37 @@
 #include "Terminal.h"
 
 
+#include <vector>
+#include "Food.h"
+#include "Grass\Grass.h"
+
+
 int main() {
-/*
+    /*
+    vector <Food *> f;
+
+    Food *relva1;
+    relva1 = new Grass(1, 1, 1);
+    //Food *relva2 = new Grass(2, 10, 1);
+    //Food *relva3 = new Food(3, 1, 10);
+    //Food *relva4 = new Food(4, 12, 2);
+
+    f.push_back(relva1);
+
+    auto i = f.begin();
+
+    (*i)->
+
+
+
+
+
+
+
+
+
+
+
     vector <Animal> animals;
     ostringstream buf;
 
@@ -36,6 +66,7 @@ int main() {
 
         ++i;
     }
+
 */
     int rows,cols;
 
@@ -50,4 +81,5 @@ int main() {
     sim.SimulationProcess(rows,cols);
 
     return 0;
+
 }

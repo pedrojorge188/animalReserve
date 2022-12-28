@@ -203,7 +203,7 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row,Reserve &r) con
     window << "ROW VIEW AREA (" << min_range_y-2 << "->" << max_range_y-2 << ") pixels" << '\n';
     window << "COLUMN VIEW AREA (" << min_range_x-2 << "->" << max_range_x-2 << ") pixels" << "\n\n";
     window << "RESERVE_SIZE (" << row << ',' << col << ")\n";
-    window << "TOTAL FOOD - " << 0 << '\n';
+    window << "TOTAL FOOD - " << r._getTotalFood() << '\n';
     window << "TOTAL ANIMALS - " << r._getTotalAnimals() << '\n';
     window << '\n' <<"(PRESS ENTER TO WRITE COMMAND)" << '\n';
 
@@ -384,6 +384,11 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
+            req = r.spawnFood(d4-1,d3-1,c2[0]);
+
+            object_str = req.first;
+            notification_str = req.second;
+
 
 
         }else if(words == 1){
@@ -398,6 +403,11 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 return false;
 
             }
+
+            req = r.spawnFood(randCol,randRow,c2[0]);
+
+            object_str = req.first;
+            notification_str = req.second;
 
 
         }else{
@@ -510,8 +520,10 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            log_color = COLOR_GREEN;
-            notification_str = "FOOD REMOVED (row-"+c2+"|col-"+c3+")";
+            if(r.killFood(d3-1,d4-1) == 1){
+                log_color = COLOR_GREEN;
+                notification_str = "FOOD REMOVED (row-"+c2+"|col-"+c3+")";
+            }
 
 
         }else if(words == 1){
@@ -527,8 +539,13 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 }
             }
 
-            log_color = COLOR_GREEN;
-            notification_str = "FOOD REMOVED (id-"+c2+")";
+            if( r.killFood(d3)){
+                log_color = COLOR_GREEN;
+                notification_str = "FOOD REMOVED (id-"+c2+")";
+            }else{
+                log_color = COLOR_RED;
+                notification_str = "YOU DONT REMOVE FOOD (id-"+c2+")";
+            }
 
         }else{
 
@@ -689,7 +706,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     }
     else if(command_start.compare("anim") == 0){
 
-        object_str = r.animalsInReserve();
+        //object_str = r.animalsInReserve();
+        object_str = r.foodInReserve();
 
     }
     else if(command_start.compare("visanim") == 0){
