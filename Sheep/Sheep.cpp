@@ -112,6 +112,7 @@ int Sheep::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_f
     random_device rd;
     mt19937 mt(rd());
 
+    
     uniform_int_distribution<int> Direction(0, 3);
     uniform_int_distribution<int> hungerSteps(1, 2);
 
