@@ -395,7 +395,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             cmd >> c2; //type
 
-            if(c2 != "r" && c2 != "t" && c2 != "b" && c2 != "a" && c2 != "p"){
+            if(c2 != "r" && c2 != "t" && c2 != "b" && c2 != "a"){
 
                 log_color = COLOR_RED;
                 notification_str = "FOOD TYPE INVALID!";

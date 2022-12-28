@@ -9,7 +9,7 @@ public:
 
     Wolf(int mId, int mRow, int mCol);
     bool getReproduceStatus() {return  reproduceStatus;}
-    virtual int move(int maxX, int maxY, vector<Animal*>&_animals);
+    virtual int move(int maxX, int maxY, vector<Animal*>&_animals , vector<Food*>&_food);
     virtual void setHunger() override;
     virtual void setHealth() override;
     virtual bool reproduce() override;
