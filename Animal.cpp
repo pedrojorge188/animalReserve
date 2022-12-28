@@ -34,14 +34,9 @@ ostringstream Animal::printInfo() const {
 ostringstream  Animal::informations() const {
 
     ostringstream buf;
-    /*
+
     buf << "{ID:" << this->getId() << " | " ;
     buf << "SPECIES:" << this->getSpecies() << " | ";
-    buf << "HEALTH:" << this->getIniHealth() << "}" <<endl;
-    */
-    buf << "{ID:" << this->getId() << " | " ;
-    buf << "SPECIES:" << this->getType() << " | ";
-    buf << "X: " << this->getPosX()+1 << " Y: " << this->getPosY()+1 << " | " << endl;
     buf << "HUNGER:" << this->getHunger() << " | ";
     buf << "HEALTH:" << this->getIniHealth() << "}" <<endl;
 

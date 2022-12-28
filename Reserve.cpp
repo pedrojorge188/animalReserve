@@ -483,7 +483,18 @@ void Reserve::_newTurn() {
 
             _result = (*i)->sonSpawnLocation(_input);
 
-            this->spawnAnimal(_result.second,_result.first,tolower((*i)->getType()));
+            if((*i)->getType() == SHEEP){
+
+                Sheep * _new;
+                _new = new Sheep(current_id_animal,_result.first,_result.second);
+                animals.push_back(_new);
+                current_id_animal++;
+
+                for(auto & animal : animals)
+                    animal->setHealth((*i)->getWeight());
+
+            }else
+                this->spawnAnimal(_result.second,_result.first,tolower((*i)->getType()));
 
             return;
 
