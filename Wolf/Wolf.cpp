@@ -21,7 +21,6 @@ Wolf::Wolf(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
     mt19937 mt(rd());
 
     string::size_type sz;
-    int maxValue=0, minValue=0;
 
     string data;
     ifstream fileConst;
@@ -52,9 +51,6 @@ Wolf::Wolf(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
 }
 
 int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_food) {
-
-    int _start_col ;
-    int _start_row ;
 
     random_device rd;
     mt19937 mt(rd());

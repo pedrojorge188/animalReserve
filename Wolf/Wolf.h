@@ -14,7 +14,6 @@ public:
     virtual void setHealth() override;
     virtual bool reproduce() override;
     virtual pair <int,int>  sonSpawnLocation(pair<int,int> input) override;
-    //virtual int eatFood() override;
     virtual pair <bool,bool> die() override;
 
 private:

@@ -171,8 +171,8 @@ int Reserve::killAnimal(int row, int col) {
                     }
 
                     _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
+
                     foods.push_back(_new);
-                    _drawFoodType(current_id_food,(*i)->getPosY()+1,new_pos);
                     ++current_id_food;
                 }
 
@@ -200,6 +200,7 @@ int Reserve::killAnimal(int id) {
 
         if((*i)->getId() == id){
 
+
             if((*i)->getType() == toupper(WOLF)){
                 Body * _new;
                 int new_pos = (*i)->getPosX()+1;
@@ -209,9 +210,8 @@ int Reserve::killAnimal(int id) {
                 }
 
                 _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
-                foods.push_back(_new);
 
-                _drawFoodType(current_id_food,(*i)->getPosY()+1,new_pos);
+                foods.push_back(_new);
                 ++current_id_food;
             }
 
@@ -429,7 +429,7 @@ void Reserve::_newTurn() {
                     }
 
                     _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
-                    
+
                     foods.push_back(_new);
                 }
 
