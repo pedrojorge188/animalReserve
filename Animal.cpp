@@ -41,7 +41,7 @@ ostringstream  Animal::informations() const {
     return buf;
 }
 
-int Animal::move(int maxX, int maxY, vector<Animal*>&_animal ) { col = this->col; row = this->row;}
+int Animal::move(int maxX, int maxY, vector<Animal*>&_animal  ,vector<Food*> &_food) { col = this->col; row = this->row; return 0;}
 
 pair <int,int> Animal::sonSpawnLocation(pair<int,int> input) {
 

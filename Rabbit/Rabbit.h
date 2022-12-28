@@ -6,7 +6,7 @@ class Rabbit : public Animal {
 public:
 
     Rabbit(int mId, int mRow, int mCol);
-    virtual int move(int maxX, int maxY, vector<Animal*>&_heavyAnimal);
+    virtual int move(int maxX, int maxY, vector<Animal*>&_heavyAnimal,  vector<Food*> &_food);
     virtual void setHunger() override;
     virtual void setHealth() override;
     virtual bool reproduce() override;

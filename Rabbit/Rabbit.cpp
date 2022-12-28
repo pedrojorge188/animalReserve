@@ -50,11 +50,10 @@ Rabbit::Rabbit(int mId, int mRow, int mCol) : Animal(mId, mRow, mCol) {
     }
 }
 
-int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal) {
+int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal,  vector<Food*> &_food) {
 
     int _start_col = this->col;
     int _start_row = this->row;
-
     random_device rd;
     mt19937 mt(rd());
 
@@ -91,6 +90,33 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal) {
     else if(random == 1){ col-=nSteps; }
     else if(random == 2){ row+=nSteps; }
     else if(random == 3){ row-=nSteps; }
+
+
+    for (int i=0; i < _food.size(); i++){
+        if(_food[i]->getPosX() <= LimitMax.first && _food[i]->getPosX() >= LimitMin.first){
+            if(_food[i]->getPosY() <= LimitMax.second && _food[i]->getPosY() >= LimitMin.second){
+                if(_food[i]->getSmell1() == this->preferedSmell || _food[i]->getSmell2() == this->preferedSmell){
+
+                    if(_food[i]->getPosX() < this->getPosX())
+                        col -= 1;
+                    else if(_food[i]->getPosX() > this->getPosX())
+                        col += 1;
+
+                    if(_food[i]->getPosY() < this->getPosY())
+                        row  -= 1;
+                    else if(_food[i]->getPosY() > this->getPosY())
+                        row += 1;
+
+                    if(_food[i]->getPosX() == this->getPosX() && _food[i]->getPosY() == this->getPosY()){
+                        this->iniHealth += _food[i]->getNutriValue();
+                        this->iniHealth -= _food[i]->getToxicity();
+                        _food[i]->setDuration(0);
+                    }
+
+                }
+            }
+        }
+    }
 
 
     for (int i = 0 ; i < _heavyAnimal.size() ; i++){

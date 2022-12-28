@@ -29,6 +29,7 @@ public:
     string getSmell2() const {return smell_2;}
 
     virtual void setDuration(){duration=this->duration-1;};
+    void setDuration(int value){duration=value;}
     virtual void setNutriValue(){nutriValue=this->nutriValue;};
     virtual void setToxicity(){toxicity=this->toxicity;};
 

@@ -1,6 +1,7 @@
 #ifndef TERMINAL_CPP_ANIMAL_H
 #define TERMINAL_CPP_ANIMAL_H
 #include <utility>
+#include "Food.h"
 #include "utils.h"
 
 class Animal{
@@ -51,7 +52,7 @@ public:
 
     virtual void setHunger();
 
-    virtual int move(int maxX, int maxY, vector<Animal*> &_animal);
+    virtual int move(int maxX, int maxY, vector<Animal*> &_animal, vector<Food*> &_food);
 
     virtual int eatFood() {return 0;}
 

@@ -381,7 +381,7 @@ void Reserve::_newTurn() {
                 (*i)->setVitality();
                 (*i)->setHunger();
                 (*i)->setHealth();
-                (*i)->move(n_columns,n_lines,animals);
+                (*i)->move(n_columns,n_lines,animals,foods);
                 reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
 
             }
