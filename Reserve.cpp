@@ -20,7 +20,7 @@ Reserve::Reserve(int columns, int lines) {
 
 
         if(n_lines < 16 || n_lines > 500 || n_columns < 16 || n_columns > 500){
-           throw 1;
+            throw 1;
         }
     }catch (int error){
         if(error == 1) {
@@ -380,7 +380,7 @@ string Reserve::animalsInReserve(pair<int,int>range_y,pair<int,int> range_x) con
     for(int i = 0;i < animals.size(); i++){
 
         if((animals[i]->getPosY() < range_y.second  && animals[i]->getPosY() > range_y.first) &&
-          (animals[i]->getPosY() < range_x.second  && animals[i]->getPosY() > range_x.first))
+           (animals[i]->getPosY() < range_x.second  && animals[i]->getPosY() > range_x.first))
         {
             res = animals[i]->informations();
             toReturn.append(res.str());
@@ -429,8 +429,8 @@ void Reserve::_newTurn() {
                     }
 
                     _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
+                    
                     foods.push_back(_new);
-                    _drawFoodType(current_id_food,(*i)->getPosY()+1,new_pos);
                 }
 
                 ++current_id_food;
@@ -451,14 +451,14 @@ void Reserve::_newTurn() {
 
         }else{
 
-                (*i)->setVitality();
-                (*i)->setHunger();
-                (*i)->setHealth();
-                (*i)->move(n_columns,n_lines,animals,foods);
-                reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
+            (*i)->setVitality();
+            (*i)->setHunger();
+            (*i)->setHealth();
+            (*i)->move(n_columns,n_lines,animals,foods);
+            reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
 
-            }
         }
+    }
 
     for( ; j != foods.end(); j++ ){
         reserve_posx_posy[(*j)->getPosY()][(*j)->getPosX()] = ' ';
@@ -537,4 +537,3 @@ string Reserve::_feedAnimals(int id, int nut_points, int tox_points) {
     return response;
 
 }
-
