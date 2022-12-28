@@ -65,9 +65,9 @@ pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
             }else if( animalType == SHEEP ){
 
                 Sheep * _new;
-                _new = new Sheep(current_id_animal,row,col);
+                _new = new Sheep(current_id_animal,row,col, (*i)->getIniHealth());
                 animals.push_back(_new);
-
+                
             }else if( animalType == WOLF ){
 
                 Wolf * _new;
@@ -411,55 +411,6 @@ void Reserve::_newTurn() {
     pair <int,int> _input (n_lines,n_columns);
     pair <bool,bool> _dead_values;
 
-    for( ; i != animals.end(); i++ ){
-
-        _dead_values = (*i)->die();
-        reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = ' ';
-
-        if(_dead_values.first){
-
-            if(_dead_values.second){
-
-                if((*i)->getType() == toupper(WOLF)){
-                    Body * _new;
-                    int new_pos = (*i)->getPosX()+1;
-
-                    if((*i)->getPosY()+1 >= this->n_lines || (*i)->getPosX()+1 >= this->n_columns){
-                        new_pos = (*i)->getPosX()-1;
-                    }
-
-                    _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
-                    
-                    foods.push_back(_new);
-                }
-
-                ++current_id_food;
-            }
-
-            delete *i;
-            animals.erase(i);
-
-            return;
-
-        }else if((*i)->reproduce()) {
-
-            _result = (*i)->sonSpawnLocation(_input);
-
-            this->spawnAnimal(_result.second,_result.first,tolower((*i)->getType()));
-
-            return;
-
-        }else{
-
-            (*i)->setVitality();
-            (*i)->setHunger();
-            (*i)->setHealth();
-            (*i)->move(n_columns,n_lines,animals,foods);
-            reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
-
-        }
-    }
-
     for( ; j != foods.end(); j++ ){
         reserve_posx_posy[(*j)->getPosY()][(*j)->getPosX()] = ' ';
 
@@ -489,9 +440,58 @@ void Reserve::_newTurn() {
             (*j)->setDuration();
             (*j)->setNutriValue();
             (*j)->setToxicity();
+            reserve_posx_posy[(*j)->getPosY()][(*j)->getPosX()] = (*j)->getType();
+        }
+
+    }
+
+    for( ; i != animals.end(); i++ ){
+
+        _dead_values = (*i)->die();
+        reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = ' ';
+
+        if(_dead_values.first){
+            /*
+            if(_dead_values.second){
+
+                if((*i)->getType() == toupper(WOLF)){
+                    Body * _new;
+                    int new_pos = (*i)->getPosX()+1;
+
+                    if((*i)->getPosY()+1 >= this->n_lines || (*i)->getPosX()+1 >= this->n_columns){
+                        new_pos = (*i)->getPosX()-1;
+                    }
+
+                    _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
+                    
+                    foods.push_back(_new);
+                }
+
+                ++current_id_food;
+            }
+            */
+            delete *i;
+            animals.erase(i);
+
+            return;
+
+        }else if((*i)->reproduce()) {
+
+            _result = (*i)->sonSpawnLocation(_input);
+
+            this->spawnAnimal(_result.second,_result.first, tolower((*i)->getType()));
+
+            return;
+
+        }else{
+
+            (*i)->setVitality();
+            (*i)->setHunger();
+            (*i)->setHealth();
+            (*i)->move(n_columns,n_lines,animals,foods);
+            reserve_posx_posy[(*i)->getPosY()][(*i)->getPosX()] = (*i)->getType();
 
         }
-        reserve_posx_posy[(*j)->getPosY()][(*j)->getPosX()] = (*j)->getType();
     }
 
 }
