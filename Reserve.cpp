@@ -172,6 +172,8 @@ int Reserve::killAnimal(int row, int col) {
 
                     _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
                     foods.push_back(_new);
+                    _drawFoodType(current_id_food,(*i)->getPosY()+1,new_pos);
+                    ++current_id_food;
                 }
 
                 delete *i;
@@ -207,10 +209,10 @@ int Reserve::killAnimal(int id) {
 
                 _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
                 foods.push_back(_new);
-            }
 
-            _drawFoodType(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1);
-            ++current_id_food;
+                _drawFoodType(current_id_food,(*i)->getPosY()+1,new_pos);
+                ++current_id_food;
+            }
 
             delete *i;
             animals.erase(i);
@@ -394,9 +396,9 @@ void Reserve::_newTurn() {
 
                     _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
                     foods.push_back(_new);
+                    _drawFoodType(current_id_food,(*i)->getPosY()+1,new_pos);
                 }
 
-                _drawFoodType(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1);
                 ++current_id_food;
             }
 
@@ -459,6 +461,8 @@ void Reserve::_newTurn() {
     }
 
 }
+
+
 
 string Reserve::_feedAnimals(int row, int col, int nut_points, int tox_points) {
 

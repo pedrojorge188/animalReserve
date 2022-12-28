@@ -706,8 +706,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     }
     else if(command_start.compare("anim") == 0){
 
-        object_str = r.animalsInReserve();
-        //object_str = r.foodInReserve();
+        //object_str = r.animalsInReserve();
+        object_str = r.foodInReserve();
 
     }
     else if(command_start.compare("visanim") == 0){
