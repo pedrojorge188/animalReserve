@@ -189,7 +189,7 @@ pair <bool,bool> Wolf::die(){
 
     pair <bool,bool> _output (false,false);
 
-    if( this->iniHealth == 0 || this->getVitality() == 0){
+    if( this->iniHealth <= 0 || this->getVitality() == 0){
         _output.first = true;
         _output.second = true;
     }
