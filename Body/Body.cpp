@@ -14,8 +14,6 @@ Body::Body(int i, int row, int col, int tox, int nutr) : Food(i, row, col) {
 
 bool Body::die() {
 
-    if(this->duration == 0) { return true; }
-
     return false;
 }
 

@@ -97,6 +97,8 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal) {
         if(_heavyAnimal[i]->getPosX() <= LimitMax.first && _heavyAnimal[i]->getPosX() >= LimitMin.first){
             if(_heavyAnimal[i]->getPosY() <= LimitMax.second && _heavyAnimal[i]->getPosY() >= LimitMin.second){
                 if(_heavyAnimal[i]->getWeight() > 10){
+
+
                     if(_heavyAnimal[i]->getPosX() < this->getPosX())
                         col = _start_col + 1;
                     else if(_heavyAnimal[i]->getPosX() > this->getPosX())
@@ -107,6 +109,7 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal) {
                         row = _start_row - 1;
 
                 }
+
             }
         }
     }
