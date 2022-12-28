@@ -261,6 +261,29 @@ bool Reserve::cleanPositions(int row, int col) {
 
 }
 
+string Reserve::watchPositionsInfo(int row, int col) {
+
+    ostringstream res;
+    string toReturn = " ";
+
+    for(int i = 0;i < animals.size(); i++){
+        if(animals[i]->getPosY() == row && animals[i]->getPosX() == col){
+            res = animals[i]->informations();
+            toReturn.append(res.str());
+        }
+    }
+
+    for(int i = 0;i < foods.size(); i++){
+        if(foods[i]->getPosY() == row && foods[i]->getPosX() == col){
+            res = foods[i]->informations();
+            toReturn.append(res.str());
+        }
+    }
+
+    return toReturn;
+
+}
+
 int Reserve::killFood(int id) {
 
     int current_col, current_row;

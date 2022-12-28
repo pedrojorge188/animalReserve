@@ -9,7 +9,6 @@ Simulator::Simulator(int row,int col) {
     randCol = 0;
     randRow = 0;
 
-
     min_range_x = 2;
     min_range_y = 2;
     row_Maxlimit = row;
@@ -613,8 +612,8 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             }
 
-            log_color = COLOR_GREEN;
-            notification_str = "SEE POSITION (row-"+c2+"|col-"+c3+")";
+            log_color = COLOR_WHITE;
+            notification_str = r.watchPositionsInfo(d3-1,d4-1);
 
 
         }else{
