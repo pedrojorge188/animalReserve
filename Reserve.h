@@ -58,6 +58,10 @@ public:
     string animalsInReserve() const;
     string animalsInReserve(pair<int,int> range_y,pair<int,int> range_x) const;
 
+    //Overload sintaxe ----
+    string _feedAnimals(int row,int col,int nut_points,int tox_points);
+    string _feedAnimals(int id,int nut_points,int tox_points);
+
     //Actions for food .....
     pair<string,string> spawnFood(int col,int row, char foodType);
     string _drawFoodType(int id,int row, int col) const;

@@ -164,13 +164,16 @@ int Reserve::killAnimal(int row, int col) {
 
                 if((*i)->getType() == toupper(WOLF)){
                     Body * _new;
-                    _new = new Body(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1, 0, 10);
+                    int new_pos = (*i)->getPosX()+1;
+
+                    if((*i)->getPosY()+1 >= this->n_lines || (*i)->getPosX()+1 >= this->n_columns){
+                        new_pos = (*i)->getPosX()-1;
+                    }
+
+                    _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
                     foods.push_back(_new);
                 }
 
-                _drawFoodType(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1);
-                ++current_id_food;
-                
                 delete *i;
                 animals.erase(i);
                 return 1;
@@ -196,7 +199,13 @@ int Reserve::killAnimal(int id) {
 
             if((*i)->getType() == toupper(WOLF)){
                 Body * _new;
-                _new = new Body(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1, 0, 10);
+                int new_pos = (*i)->getPosX()+1;
+
+                if((*i)->getPosY()+1 >= this->n_lines || (*i)->getPosX()+1 >= this->n_columns){
+                    new_pos = (*i)->getPosX()-1;
+                }
+
+                _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
                 foods.push_back(_new);
             }
 
@@ -377,7 +386,13 @@ void Reserve::_newTurn() {
 
                 if((*i)->getType() == toupper(WOLF)){
                     Body * _new;
-                    _new = new Body(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1, 0, 10);
+                    int new_pos = (*i)->getPosX()+1;
+
+                    if((*i)->getPosY()+1 >= this->n_lines || (*i)->getPosX()+1 >= this->n_columns){
+                        new_pos = (*i)->getPosX()-1;
+                    }
+
+                    _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, 10);
                     foods.push_back(_new);
                 }
 
@@ -445,4 +460,43 @@ void Reserve::_newTurn() {
 
 }
 
+string Reserve::_feedAnimals(int row, int col, int nut_points, int tox_points) {
+
+    auto i = animals.begin();
+    int value;
+    string response =  "Animal not found!";
+
+    for( ; i != animals.end() ; i++){
+
+        if((*i)->getPosY() == row){
+            if((*i)->getPosX() == col){
+
+                value = (*i)->getIniHealth() + nut_points - tox_points;
+                (*i)->setHealth(value);
+                response = "Animal feeded by users!";
+            }
+        }
+    }
+
+    return response;
+
+}
+
+string Reserve::_feedAnimals(int id, int nut_points, int tox_points) {
+
+    auto i = animals.begin();
+    int value;
+    string response =  "Animal id invalid!";
+
+    for( ; i != animals.end() ; i++){
+        if((*i)->getId() == id){
+            value = (*i)->getIniHealth() + nut_points - tox_points;
+            (*i)->setHealth(value);
+            response = "Animal feeded by users!";
+        }
+    }
+
+    return response;
+
+}
 

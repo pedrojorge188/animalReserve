@@ -448,7 +448,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 }
 
                 log_color = COLOR_GREEN;
-                notification_str = "ANIMAL FEEDED (row-"+c2+"|col-"+c3+"|nutritiveP-"+c4+"|toxicP-"+c5+")";
+                notification_str = r._feedAnimals(d3-1,d4-1,d5,d6);
 
             }else {
 
@@ -481,7 +481,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                 }
 
                 log_color = COLOR_GREEN;
-                notification_str = "ANIMAL FEEDED (id-"+c2+"|nutritiveP-"+c3+"|toxicP-"+c4+")";
+                notification_str = r._feedAnimals(d3,d4,d5);
 
             }else{
                 log_color = COLOR_RED;

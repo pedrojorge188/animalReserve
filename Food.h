@@ -15,7 +15,7 @@ protected:
     string smell_1, smell_2;
 public:
     Food(int i, int row=0, int col=0);
-    virtual ~Food() {cout << "Destroyed Food, id -> " << id << endl;};
+    virtual ~Food() {};
 
     //GET'ERS
     char getType() const {return type;}

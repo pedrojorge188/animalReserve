@@ -74,32 +74,6 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
     pair <int,int> LimitMax (col + perception, row + perception);
     pair <int,int> LimitMin (col - perception, row - perception);
 
-    for (int i=0; i < _food.size(); i++){
-        if(_food[i]->getPosX() <= LimitMax.first && _food[i]->getPosX() >= LimitMin.first){
-            if(_food[i]->getPosY() <= LimitMax.second && _food[i]->getPosY() >= LimitMin.second){
-                if(_food[i]->getSmell1() == this->preferedSmell || _food[i]->getSmell2() == this->preferedSmell){
-
-                    if(_food[i]->getPosX() < this->getPosX())
-                        col -= 1;
-                    else if(_food[i]->getPosX() > this->getPosX())
-                        col += 1;
-
-                    if(_food[i]->getPosY() < this->getPosY())
-                        row  -= 1;
-                    else if(_food[i]->getPosY() > this->getPosY())
-                        row += 1;
-
-                    if(_food[i]->getPosX() == this->getPosX() && _food[i]->getPosY() == this->getPosY()){
-                        this->iniHealth += _food[i]->getNutriValue();
-                        this->iniHealth -= _food[i]->getToxicity();
-                        _food[i]->setDuration(0);
-                    }
-
-                }
-            }
-        }
-    }
-
     for(int i = 0 ; i < _animals.size(); i++){
         if(_animals[i]->getType() != 'L'){
 
@@ -120,7 +94,10 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
                         else if(_animals[i]->getPosY() > this->getPosY())
                             row += 1;
 
-                        if(_animals[i]->getPosX() == this->getPosX() && _animals[i]->getPosY() == this->getPosY()){
+                        if((_animals[i]->getPosX() == this->getPosX() && _animals[i]->getPosY() == this->getPosY()) ||
+                            (_animals[i]->getPosX()+1 == this->getPosX() && _animals[i]->getPosY()+1 == this->getPosY()) ||
+                             (_animals[i]->getPosX()-1 == this->getPosX() && _animals[i]->getPosY()-1 == this->getPosY())
+                            ){
 
                             if(_animals[i]->getWeight() > this->weight){
 
@@ -149,6 +126,32 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
             }
         }
 
+    }
+
+    for (int i=0; i < _food.size(); i++){
+        if(_food[i]->getPosX() <= LimitMax.first && _food[i]->getPosX() >= LimitMin.first){
+            if(_food[i]->getPosY() <= LimitMax.second && _food[i]->getPosY() >= LimitMin.second){
+                if(_food[i]->getSmell1() == this->preferedSmell || _food[i]->getSmell2() == this->preferedSmell){
+
+                    if(_food[i]->getPosX() < this->getPosX())
+                        col -= 1;
+                    else if(_food[i]->getPosX() > this->getPosX())
+                        col += 1;
+
+                    if(_food[i]->getPosY() < this->getPosY())
+                        row  -= 1;
+                    else if(_food[i]->getPosY() > this->getPosY())
+                        row += 1;
+
+                    if(_food[i]->getPosX() == this->getPosX() && _food[i]->getPosY() == this->getPosY()){
+                        this->iniHealth += _food[i]->getNutriValue();
+                        this->iniHealth -= _food[i]->getToxicity();
+                        _food[i]->setDuration(0);
+                    }
+
+                }
+            }
+        }
     }
 
     if(animalsToHunt == 0){
