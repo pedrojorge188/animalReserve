@@ -61,6 +61,9 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal,  vector<Food*
 
     random = randomN(mt);
 
+    int animalToRun = 0;
+    int foodToEat = 0;
+
     int nSteps;
 
     if(hunger > 20){
@@ -86,16 +89,14 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal,  vector<Food*
     );
 
 
-    if(random == 0){ col+=nSteps; }
-    else if(random == 1){ col-=nSteps; }
-    else if(random == 2){ row+=nSteps; }
-    else if(random == 3){ row-=nSteps; }
+
 
 
     for (int i=0; i < _food.size(); i++){
         if(_food[i]->getPosX() <= LimitMax.first && _food[i]->getPosX() >= LimitMin.first){
             if(_food[i]->getPosY() <= LimitMax.second && _food[i]->getPosY() >= LimitMin.second){
                 if(_food[i]->getSmell1() == this->preferedSmell || _food[i]->getSmell2() == this->preferedSmell){
+                    foodToEat++;
 
                     if(_food[i]->getPosX() < this->getPosX())
                         col -= 1;
@@ -112,7 +113,6 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal,  vector<Food*
                         this->iniHealth -= _food[i]->getToxicity();
                         _food[i]->setDuration(0);
                     }
-
                 }
             }
         }
@@ -123,7 +123,7 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal,  vector<Food*
         if(_heavyAnimal[i]->getPosX() <= LimitMax.first && _heavyAnimal[i]->getPosX() >= LimitMin.first){
             if(_heavyAnimal[i]->getPosY() <= LimitMax.second && _heavyAnimal[i]->getPosY() >= LimitMin.second){
                 if(_heavyAnimal[i]->getWeight() > 10){
-
+                    animalToRun++;
 
                     if(_heavyAnimal[i]->getPosX() < this->getPosX())
                         col = _start_col + 1;
@@ -135,10 +135,17 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal,  vector<Food*
                         row = _start_row - 1;
 
                 }
-
             }
         }
     }
+
+    if(animalToRun==0 && foodToEat==0){
+        if(random == 0){ col+=nSteps; }
+        else if(random == 1){ col-=nSteps; }
+        else if(random == 2){ row+=nSteps; }
+        else if(random == 3){ row-=nSteps; }
+    }
+
 
     if(col >= maxX){
         col = 0;

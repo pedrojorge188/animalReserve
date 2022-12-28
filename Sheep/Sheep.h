@@ -1,7 +1,3 @@
-//
-// Created by pedro on 25/12/2022.
-//
-
 #ifndef ANIMALRESERVE_SHEEP_H
 #define ANIMALRESERVE_SHEEP_H
 
@@ -15,10 +11,13 @@ public:
     virtual void setHealth() override;
     virtual bool reproduce() override;
     virtual pair <int,int>  sonSpawnLocation(pair<int,int> input) override;
+    //virtual int eatFood() override;
     virtual pair <bool,bool> die() override;
 private:
     int reproduceTime;
-    int reproduceLimit;
+    int random;
+    int reproduceRange;
+    int inst;
 };
 
 #endif //ANIMALRESERVE_SHEEP_H

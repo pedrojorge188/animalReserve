@@ -59,6 +59,7 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
 
     random = Direction(mt);
     int animalsToHunt = 0;
+    int foodToEat = 0;
 
     int nSteps ;
 
@@ -129,6 +130,8 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
             if(_food[i]->getPosY() <= LimitMax.second && _food[i]->getPosY() >= LimitMin.second){
                 if(_food[i]->getSmell1() == this->preferedSmell || _food[i]->getSmell2() == this->preferedSmell){
 
+                    foodToEat++;
+
                     if(_food[i]->getPosX() < this->getPosX())
                         col -= 1;
                     else if(_food[i]->getPosX() > this->getPosX())
@@ -150,7 +153,7 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
         }
     }
 
-    if(animalsToHunt == 0){
+    if(animalsToHunt == 0 && foodToEat == 0){
         if(random == 0){ col+=nSteps; }
         else if(random == 1){ col-=nSteps; }
         else if(random == 2){ row+=nSteps; }
