@@ -120,12 +120,6 @@ pair<string,string> Reserve::spawnFood(int col, int row, char foodType) {
                 _new = new Carrot(current_id_food,row,col);
                 foods.push_back(_new);
 
-            }else if( foodType == BODY ){
-
-                Body * _new;
-                _new = new Body(current_id_food,row,col, 10, 10); //Default
-                foods.push_back(_new);
-
             }else if( foodType == MEAT ){
 
                 Meat * _new;
@@ -168,6 +162,15 @@ int Reserve::killAnimal(int row, int col) {
 
                 reserve_posx_posy[current_row][current_col] = ' ';
 
+                if((*i)->getType() == toupper(WOLF)){
+                    Body * _new;
+                    _new = new Body(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1, 0, 10);
+                    foods.push_back(_new);
+                }
+
+                _drawFoodType(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1);
+                ++current_id_food;
+                
                 delete *i;
                 animals.erase(i);
                 return 1;
@@ -190,6 +193,16 @@ int Reserve::killAnimal(int id) {
         current_row = (*i)->getPosY();
 
         if((*i)->getId() == id){
+
+            if((*i)->getType() == toupper(WOLF)){
+                Body * _new;
+                _new = new Body(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1, 0, 10);
+                foods.push_back(_new);
+            }
+
+            _drawFoodType(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1);
+            ++current_id_food;
+
             delete *i;
             animals.erase(i);
             reserve_posx_posy[current_row][current_col] = ' ';
@@ -360,11 +373,20 @@ void Reserve::_newTurn() {
 
         if(_dead_values.first){
 
+            if(_dead_values.second){
+
+                if((*i)->getType() == toupper(WOLF)){
+                    Body * _new;
+                    _new = new Body(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1, 0, 10);
+                    foods.push_back(_new);
+                }
+
+                _drawFoodType(current_id_food,(*i)->getPosY()+1,(*i)->getPosX()+1);
+                ++current_id_food;
+            }
+
             delete *i;
             animals.erase(i);
-
-            if(_dead_values.second)
-                cout << "Spawnar um corpo";
 
             return;
 
