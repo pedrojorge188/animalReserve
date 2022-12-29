@@ -82,14 +82,14 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
                 if(_animals[i]->getPosY() < LimitMax.second && _animals[i]->getPosY() > LimitMin.second){
 
                         if(_animals[i]->getPosX() < this->getPosX())
-                            col -= 1;
+                            col -= nSteps;
                         else if(_animals[i]->getPosX() > this->getPosX())
-                            col += 1;
+                            col += nSteps;
 
                         if(_animals[i]->getPosY() < this->getPosY())
-                            row  -= 1;
+                            row  -= nSteps;
                         else if(_animals[i]->getPosY() > this->getPosY())
-                            row += 1;
+                            row += nSteps;
 
                         if((_animals[i]->getPosX() == this->getPosX() && _animals[i]->getPosY() == this->getPosY()) ||
                             (_animals[i]->getPosX()+1 == this->getPosX() && _animals[i]->getPosY()+1 == this->getPosY()) ||

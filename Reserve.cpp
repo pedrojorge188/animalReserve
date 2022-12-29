@@ -77,7 +77,7 @@ pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
             }else if( animalType == KANGAROO ){
 
                 Kangaroo * _new;
-                _new = new Kangaroo(current_id_animal,row,col);
+                _new = new Kangaroo(current_id_animal,row,col,0);
                 animals.push_back(_new);
 
             }else if( animalType == MYSTERIO ){
@@ -187,6 +187,19 @@ int Reserve::killAnimal(int row, int col) {
 
                     foods.push_back(_new);
                     ++current_id_food;
+
+                }else if((*i)->getType() == toupper(KANGAROO)){
+                    Body * _new;
+                    int new_pos = (*i)->getPosX()+1;
+
+                    if((*i)->getPosY()+1 >= this->n_lines || (*i)->getPosX()+1 >= this->n_columns){
+                        new_pos = (*i)->getPosX()-1;
+                    }
+
+                    _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 5,15);
+
+                    foods.push_back(_new);
+                    ++current_id_food;
                 }
 
                 delete *i;
@@ -236,6 +249,19 @@ int Reserve::killAnimal(int id) {
                 }
 
                 _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, (*i)->getWeight());
+
+                foods.push_back(_new);
+                ++current_id_food;
+
+            }else if((*i)->getType() == toupper(KANGAROO)){
+                Body * _new;
+                int new_pos = (*i)->getPosX()+1;
+
+                if((*i)->getPosY()+1 >= this->n_lines || (*i)->getPosX()+1 >= this->n_columns){
+                    new_pos = (*i)->getPosX()-1;
+                }
+
+                _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 5,15);
 
                 foods.push_back(_new);
                 ++current_id_food;
@@ -469,6 +495,18 @@ void Reserve::_newTurn() {
                     _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 0, (*i)->getWeight());
 
                     foods.push_back(_new);
+
+                }else if((*i)->getType() == toupper(KANGAROO)){
+                    Body * _new;
+                    int new_pos = (*i)->getPosX()+1;
+
+                    if((*i)->getPosY()+1 >= this->n_lines || (*i)->getPosX()+1 >= this->n_columns){
+                        new_pos = (*i)->getPosX()-1;
+                    }
+
+                    _new = new Body(current_id_food,(*i)->getPosY(),new_pos, 5,15);
+
+                    foods.push_back(_new);
                 }
 
                 ++current_id_food;
@@ -483,18 +521,32 @@ void Reserve::_newTurn() {
 
             _result = (*i)->sonSpawnLocation(_input);
 
-            if((*i)->getType() == SHEEP){
+            if((*i)->getType() == toupper(SHEEP)){
 
                 Sheep * _new;
                 _new = new Sheep(current_id_animal,_result.first,_result.second);
                 animals.push_back(_new);
+
+
+                for(auto k = animals.begin(); k != animals.end(); k++){
+                    if((*k)->getId() == current_id_animal)
+                        (*k)->setHealth((*i)->getIniHealth());
+                }
+
                 current_id_animal++;
 
-                for(auto & animal : animals)
-                    animal->setHealth((*i)->getWeight());
+            }else if((*i)->getType() == toupper(KANGAROO)){
 
-            }else
-                this->spawnAnimal(_result.second,_result.first,tolower((*i)->getType()));
+                Kangaroo * _new;
+                _new = new Kangaroo(current_id_animal,_result.first,_result.second,(*i)->getId());
+                animals.push_back(_new);
+
+
+                current_id_animal++;
+
+            }else{
+                this->spawnAnimal(_result.second, _result.first, tolower((*i)->getType()));
+            }
 
             return;
 
