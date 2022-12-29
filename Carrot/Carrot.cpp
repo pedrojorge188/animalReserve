@@ -2,6 +2,7 @@
 
 Carrot::Carrot(int i, int row, int col) : Food(i, row, col) {
     this->type = 't';
+    this->name = "cenoura";
     this->id = i;   this->row = row;
     this->col = col;  this->toxicity = 0;
     this->nutriValue = 4;

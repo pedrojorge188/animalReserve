@@ -112,6 +112,7 @@ int Rabbit::move(int maxX, int maxY, vector<Animal*>&_heavyAnimal,  vector<Food*
                         this->iniHealth += _food[i]->getNutriValue();
                         this->iniHealth -= _food[i]->getToxicity();
                         _food[i]->setDuration(0);
+                        this->setHistory(_food[i]->getName(), _food[i]->getToxicity(), _food[i]->getNutriValue());
                     }
                 }
             }

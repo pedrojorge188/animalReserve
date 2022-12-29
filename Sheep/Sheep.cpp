@@ -112,7 +112,7 @@ int Sheep::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_f
     random_device rd;
     mt19937 mt(rd());
 
-    
+
     uniform_int_distribution<int> Direction(0, 3);
     uniform_int_distribution<int> hungerSteps(1, 2);
 
@@ -153,6 +153,7 @@ int Sheep::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_f
                         this->iniHealth += _food[i]->getNutriValue();
                         this->iniHealth -= _food[i]->getToxicity();
                         _food[i]->setDuration(0);
+                        this->setHistory(_food[i]->getName(), _food[i]->getToxicity(), _food[i]->getNutriValue());
                     }
 
                 }
@@ -199,5 +200,5 @@ int Sheep::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_f
     }else if(col <= 0){
         col = 0;
     }
-
+    return 1;
 }

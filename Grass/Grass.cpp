@@ -1,6 +1,7 @@
 #include "Grass.h"
 
 Grass::Grass(int i, int row, int col) : Food(i, row, col) {
+    this->name = "relva";
     this->tried = false;
     this->reproMin = 4;
     this->reproMax = 8;

@@ -3,10 +3,13 @@
 #include <utility>
 #include "Food.h"
 #include "utils.h"
+#include <cstring>
 
 class Animal{
 
 protected:
+    string *oldHistory;
+    string *newHistory;
     char type;
     int id ;
     int row;
@@ -16,12 +19,13 @@ protected:
     int weight;
     int vitality;
     int hunger;
+    int nEntries;
     string preferedSmell;
     string species;
 public:
     Animal(int m_id, int m_row, int m_col);
 
-    virtual ~Animal() = default;
+    virtual ~Animal(){delete[]oldHistory;};
 
     //Getters
 
@@ -61,6 +65,10 @@ public:
     virtual bool reproduce() {return false;}
 
     virtual pair<int,int> sonSpawnLocation(pair<int,int> input);
+
+    void setHistory(string food, int tox, int nutr);
+
+    string printHistory() const;
 
 };
 

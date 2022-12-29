@@ -218,7 +218,6 @@ int Reserve::killAnimal(int row, int col) {
     return 0;
 }
 
-
 int Reserve::killAnimal(int id) {
 
     int current_col, current_row;
@@ -602,8 +601,6 @@ void Reserve::_newTurn() {
 
 }
 
-
-
 string Reserve::_feedAnimals(int row, int col, int nut_points, int tox_points) {
 
     auto i = animals.begin();
@@ -617,6 +614,7 @@ string Reserve::_feedAnimals(int row, int col, int nut_points, int tox_points) {
 
                 value = (*i)->getIniHealth() + nut_points - tox_points;
                 (*i)->setHealth(value);
+                (*i)->setHistory("user", tox_points, nut_points);
                 response = "Animal feeded by users!";
             }
         }
@@ -636,6 +634,7 @@ string Reserve::_feedAnimals(int id, int nut_points, int tox_points) {
         if((*i)->getId() == id){
             value = (*i)->getIniHealth() + nut_points - tox_points;
             (*i)->setHealth(value);
+            (*i)->setHistory("user", tox_points, nut_points);
             response = "Animal feeded by users!";
         }
     }
@@ -644,3 +643,18 @@ string Reserve::_feedAnimals(int id, int nut_points, int tox_points) {
 
 }
 
+string Reserve::animalHistory(int id) const {
+    string toReturn;
+
+    auto i = animals.begin();
+
+    for(;i != animals.end(); i++){
+
+        if((*i)->getId() == id){
+            toReturn = (*i)->printHistory();
+        }
+    }
+
+
+    return toReturn;
+}

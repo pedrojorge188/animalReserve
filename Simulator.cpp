@@ -56,7 +56,7 @@ void Simulator::SimulationProcess(int row,int col){
                     _res_index = i;
             }
 
-            cout << _res_index;
+            //cout << _res_index;
             random_device rd;
             mt19937 mt(rd());
 
@@ -306,7 +306,6 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
         return true;
     }
-
     else if(command_start.compare("kill") == 0 || command_start.compare("killid") == 0){
 
         if(words == 2){
@@ -651,8 +650,9 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
                     return false;
                 }
 
+                object_str = r.animalHistory(d3);
+                
             }
-
 
         }else{
             log_color = COLOR_RED;

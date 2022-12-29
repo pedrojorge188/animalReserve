@@ -118,7 +118,7 @@ int Mysterio::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>
     }else if(col <= 0){
         col = 0;
     }
-
+    return 1;
 }
 
 void Mysterio::setHunger() {

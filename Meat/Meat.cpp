@@ -2,6 +2,7 @@
 
 Meat::Meat(int i, int row, int col) : Food(i, row, col) {
     this->type = 'b';
+    this->name = "carne";
     this->id = i;   this->row = row;
     this->col = col;  this->toxicity = 2;
     this->nutriValue = 10;

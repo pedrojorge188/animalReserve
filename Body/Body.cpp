@@ -2,6 +2,7 @@
 
 Body::Body(int i, int row, int col, int tox, int nutr) : Food(i, row, col) {
     this->type = 'p';
+    this->name = "corpo";
     this->id = i;   this->row = row;
     this->col = col;  this->toxicity = tox;
     this->nutriValue = nutr;

@@ -146,8 +146,8 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
                         this->iniHealth += _food[i]->getNutriValue();
                         this->iniHealth -= _food[i]->getToxicity();
                         _food[i]->setDuration(0);
+                        this->setHistory(_food[i]->getName(), _food[i]->getToxicity(), _food[i]->getNutriValue());
                     }
-
                 }
             }
         }
@@ -169,7 +169,7 @@ int Wolf::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_fo
     }else if(col <= 0){
         col = 0;
     }
-
+    return 1;
 }
 
 void Wolf::setHunger() {

@@ -1,6 +1,7 @@
 #include "Food.h"
 
 Food::Food(int i,int r,int c){
+    this->name = "comida";
     this->type = '?';
     this->id = i;   this->row = r;
     this->col = c;  this->toxicity = 0;

@@ -5,6 +5,7 @@
 
 class Food{
 protected:
+    string name;
     char type;
     int id;
     int row;
@@ -18,6 +19,7 @@ public:
     virtual ~Food() = default;
 
     //GET'ERS
+    string getName() const {return name;}
     char getType() const {return type;}
     int getId() const {return id;}
     int getDuration() const {return duration;}

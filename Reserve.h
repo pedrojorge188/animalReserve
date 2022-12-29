@@ -81,6 +81,8 @@ public:
 
     string foodInReserve() const;
 
+    string animalHistory(int id) const;
+
 
     void _newTurn();
 };

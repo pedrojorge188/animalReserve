@@ -9,6 +9,7 @@ Animal::Animal(int m_id,int m_row, int m_col)
     this->preferedSmell = "ANY"; this->species = "ANY";
     this->perception = 0;
 
+    this->nEntries = 0;
 }
 
 void Animal::setHealth(){iniHealth = this->iniHealth;}
@@ -60,3 +61,56 @@ pair <bool,bool> Animal::die() {
     return output;
 
 ;}
+
+void Animal::setHistory(string food, int tox, int nutr) {
+    ostringstream buf;
+    if(nEntries == 0){
+        oldHistory = new string;
+        cout << "1";
+    }else if(nEntries > 0){
+        newHistory = new string[nEntries];
+        cout << "2";
+        for (int i = 0; i < nEntries; ++i) {
+            newHistory[i] = oldHistory[i];
+            cout << "3";
+        }
+        if(nEntries==1){
+            delete oldHistory;
+            cout << "4A";
+        }else{
+            delete [] oldHistory;
+            cout << "4B";
+        }
+
+        oldHistory = new string[nEntries+1];
+        cout << "5";
+        for (int i = 0; i < nEntries; ++i) {
+            oldHistory[i] = newHistory[i];
+            cout << "6";
+        }
+        delete [] newHistory;
+        cout << "7";
+    }
+
+    buf << "-> " << food << ", tox: " << tox << " , nutr: " << nutr << endl;
+
+    oldHistory[nEntries] = buf.str();
+    cout << "8";
+    nEntries++;
+    cout << "9";
+}
+
+string Animal::printHistory() const {
+
+    ostringstream buf;
+    string response;
+
+    for(int i = 0; i < nEntries; i++){
+        buf << oldHistory[i] << endl;
+    }
+
+    response = buf.str();
+
+    return response;
+
+}
