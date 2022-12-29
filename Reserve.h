@@ -29,6 +29,7 @@
 
 class Reserve {
 private:
+    string r_name;
     int n_columns;
     int n_lines;
     int current_id_animal;
@@ -38,7 +39,7 @@ private:
     char **reserve_posx_posy; //apenas uma representacao visual dos tipos de animal (caracteres)
 public:
     Reserve(int columns = 16, int lines = 16);
-    Reserve(Reserve& aux);
+    Reserve(Reserve& aux, string name);
     ~Reserve(){delete[]reserve_posx_posy;}
 
     //Getters
@@ -47,6 +48,9 @@ public:
     int getCollums() const {return n_columns;}
     int getLines() const {return n_lines;}
     char **getReserve() const {return reserve_posx_posy;}
+    string getReserveName() const {return r_name;}
+    void setReserveName(string _new){this->r_name = _new;}
+
 
     //Global Actions ...
 

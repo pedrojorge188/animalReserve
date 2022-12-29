@@ -18,6 +18,7 @@ Simulator::Simulator(int row,int col) {
     instance[0] = 0; instance[1] = 0;
     window_range_x = max_range_x;
     window_range_y = max_range_y;
+    _resName = "main";
 
     turn_instance = 0;
 
@@ -36,7 +37,11 @@ Simulator::Simulator(int row,int col) {
 
 void Simulator::SimulationProcess(int row,int col){
 
-    Reserve reserve = Reserve(col, row);
+    Reserve *reserve;
+    reserve = new Reserve(col,row);
+    reserve_lib.push_back(reserve);
+
+    int _res_index;
     Terminal &t = Terminal::instance();
 
     for(int i=1; i<20; i++) {
@@ -45,6 +50,13 @@ void Simulator::SimulationProcess(int row,int col){
 
     {
         do{
+
+            for(int i=0;i<reserve_lib.size();i++){
+                if(reserve_lib[i]->getReserveName() == _resName)
+                    _res_index = i;
+            }
+
+            cout << _res_index;
             random_device rd;
             mt19937 mt(rd());
 
@@ -65,13 +77,13 @@ void Simulator::SimulationProcess(int row,int col){
 
             title << set_color(COLOR_YELLOW) << "ANIMAL RESERVE" ;
 
-            showReserve(wReserve,reserve);
-            showSimulatorMenu(wMenu,col,row,reserve);
+            showReserve(wReserve,*reserve_lib[_res_index]);
+            showSimulatorMenu(wMenu,col,row,*reserve_lib[_res_index]);
 
             sleep(instance[1]);
 
             if(instance[0] > 0) {
-                reserve._newTurn();
+                reserve->_newTurn();
                 turn_instance++;
                 instance[0]--;
                 if(instance[0] == 0)
@@ -85,7 +97,7 @@ void Simulator::SimulationProcess(int row,int col){
                     wMenu << set_color(COLOR_BLUE)<< '\n' << "COMMAND:" ;
                     wMenu >> command;
 
-                    readCommand(wMenu,reserve);
+                    readCommand(wMenu,*reserve_lib[_res_index]);
                 }
 
             }
@@ -725,16 +737,37 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     }
     else if(command_start.compare("store") == 0){
 
-        cmd >> c2;
+        cmd >> c2; //name
+
+        Reserve *copy;
+        copy = new Reserve(r,c2);
+        reserve_lib.push_back(copy);
+
         log_color = COLOR_GREEN;
-        notification_str = "SAVE RESERVE IN FILE ("+c2+")";
+        notification_str = "SAVE RESERVE WITH NAME("+c2+")";
 
     }
     else if(command_start.compare("restore") == 0){
 
         cmd >> c2;
-        log_color = COLOR_GREEN;
-        notification_str = "RESTORE RESERVE IN FILE ("+c2+")";
+        bool _cc = false;
+
+        for( int m = 0; m < reserve_lib.size();m++){
+
+            if(reserve_lib[m]->getReserveName() == c2){
+                _resName = reserve_lib[m]->getReserveName();
+                _cc = true;
+            }
+
+        }
+
+        if(_cc){
+            log_color = COLOR_GREEN;
+            notification_str = "RESTORE RESERVE WITH NAME ("+c2+")";
+        }else{
+            log_color = COLOR_RED;
+            notification_str = "RESERVE WITH NAME ("+c2+") NOT FOUND!";
+        }
 
     }
     else if(command_start.compare("load") == 0){
@@ -887,4 +920,3 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
     log_color = COLOR_GREEN;
     return true;
 }
-

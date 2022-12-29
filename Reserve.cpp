@@ -1,9 +1,9 @@
-
 #include "Reserve.h"
 
 
 Reserve::Reserve(int columns, int lines) {
 
+    r_name = "main";
     n_columns = columns;
     n_lines = lines;
     current_id_animal = 1;
@@ -33,20 +33,25 @@ Reserve::Reserve(int columns, int lines) {
 
 }
 
-Reserve::Reserve(Reserve &aux) {
+Reserve::Reserve(Reserve &aux, string name) {
 
-    n_columns = aux.n_columns;
-    n_lines = aux.n_lines;
-    copy(aux.animals.begin(), aux.animals.end(), back_inserter(animals));
+    this->r_name = name;
+    this->n_columns = aux.getCollums();
+    this->n_lines = aux.getLines();
+    this->current_id_animal = aux.current_id_food;
+    this->current_id_food = aux.current_id_animal;
 
-    reserve_posx_posy = new char *[n_lines];
 
-    for (int i = 0; i < n_lines; i++) {
-        for (int k = 0; k < n_columns; k++)
-            reserve_posx_posy[i][k] = aux.reserve_posx_posy[i][k];
+    this->reserve_posx_posy = new char*[n_lines];
+
+    for(int i=0;i<n_lines;i++){
+        this->reserve_posx_posy[i] = new char[n_columns];
+        for(int k=0;k<n_columns;k++)
+            this->reserve_posx_posy[i][k] = aux.reserve_posx_posy[i][k];
     }
 
-
+    copy(aux.animals.begin(), aux.animals.end(), back_inserter(this->animals));
+    copy(aux.foods.begin(), aux.foods.end(), back_inserter(this->foods));
 }
 
 pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
@@ -638,3 +643,4 @@ string Reserve::_feedAnimals(int id, int nut_points, int tox_points) {
     return response;
 
 }
+

@@ -10,6 +10,7 @@ class Simulator {
 private:
     int randCol, randRow;
     int max_range_x;
+    vector <Reserve *> reserve_lib;
     int min_range_x;
     int min_range_y;
     int col_Maxlimit;
@@ -20,6 +21,7 @@ private:
     int turn_instance;
     int log_color;
     int instance[2];
+    string _resName;
     string command;
     string notification_str;
     string object_str;
