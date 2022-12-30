@@ -8,6 +8,8 @@ Animal::Animal(int m_id,int m_row, int m_col)
     this->col = m_col;          this->hunger = 0;
     this->preferedSmell = "ANY"; this->species = "ANY";
     this->perception = 0;
+    this->oldHistory = nullptr;
+    this->newHistory = nullptr;
 
     this->nEntries = 0;
 }
@@ -61,6 +63,10 @@ pair <bool,bool> Animal::die() {
     return output;
 
 ;}
+void Animal::removeHistory() {
+    oldHistory = nullptr;
+    newHistory = nullptr;
+}
 
 void Animal::setHistory(string food, int tox, int nutr) {
     ostringstream buf;

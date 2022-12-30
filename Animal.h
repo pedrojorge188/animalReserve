@@ -70,6 +70,8 @@ public:
 
     string printHistory() const;
 
+    void removeHistory();
+
 };
 
 

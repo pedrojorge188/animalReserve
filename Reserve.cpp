@@ -1,6 +1,5 @@
 #include "Reserve.h"
 
-
 Reserve::Reserve(int columns, int lines) {
 
     r_name = "main";
@@ -47,7 +46,7 @@ Reserve::Reserve(Reserve &aux, string name) {
     for(int i=0;i<n_lines;i++){
         this->reserve_posx_posy[i] = new char[n_columns];
         for(int k=0;k<n_columns;k++)
-            this->reserve_posx_posy[i][k] = aux.reserve_posx_posy[i][k];
+            this->reserve_posx_posy[i][k] = ' ';
     }
 
     copy(aux.animals.begin(), aux.animals.end(), back_inserter(this->animals));
@@ -207,6 +206,7 @@ int Reserve::killAnimal(int row, int col) {
                     ++current_id_food;
                 }
 
+                (*i)->removeHistory();
                 delete *i;
                 animals.erase(i);
                 return 1;
@@ -271,6 +271,7 @@ int Reserve::killAnimal(int id) {
                 ++current_id_food;
             }
 
+            (*i)->removeHistory();
             delete *i;
             animals.erase(i);
             reserve_posx_posy[current_row][current_col] = ' ';
@@ -516,6 +517,7 @@ void Reserve::_newTurn() {
                 ++current_id_food;
             }
 
+            (*i)->removeHistory();
             delete *i;
             animals.erase(i);
 
