@@ -778,8 +778,17 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
         fstream commandFile;
         commandFile.open("../"+c2);
 
+        random_device rd1;
+        mt19937 mt1(rd1());
+
+        uniform_int_distribution<int> randomCol2(0, col_Maxlimit - 1);
+        uniform_int_distribution<int> randomRow2(0, row_Maxlimit - 1);
+
         if(commandFile.is_open()){
             while(getline(commandFile,command)){
+                randRow = randomCol2(mt1);
+                randCol = randomRow2(mt1);
+
                 readCommand(window,r);
                 log_color  = COLOR_GREEN;
             }

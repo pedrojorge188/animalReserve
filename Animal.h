@@ -25,7 +25,7 @@ protected:
 public:
     Animal(int m_id, int m_row, int m_col);
 
-    virtual ~Animal(){delete[]oldHistory;};
+    virtual ~Animal(){delete [] oldHistory; delete [] newHistory; cout << "Animal: "<< getSpecies() << " id: " << getId() << endl;};
 
     //Getters
 

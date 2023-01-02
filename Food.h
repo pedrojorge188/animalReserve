@@ -16,7 +16,7 @@ protected:
     string smell_1, smell_2;
 public:
     Food(int i, int row=0, int col=0);
-    virtual ~Food() = default;
+    virtual ~Food() {cout << "Food id: " << getId() << endl;};
 
     //GET'ERS
     string getName() const {return name;}

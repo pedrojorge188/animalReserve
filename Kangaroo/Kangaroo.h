@@ -1,7 +1,3 @@
-//
-// Created by pedro on 25/12/2022.
-//
-
 #ifndef ANIMALRESERVE_KANGAROO_H
 #define ANIMALRESERVE_KANGAROO_H
 

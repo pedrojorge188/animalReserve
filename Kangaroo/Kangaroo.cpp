@@ -1,6 +1,4 @@
-
 #include "Kangaroo.h"
-
 
 //Kangaroo initializing defaults
 
@@ -81,11 +79,11 @@ int Kangaroo::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>
     for(int i = 0 ; i < _animals.size(); i++){
         if(_animals[i]->getPosX() < LimitMax.first && _animals[i]->getPosX() > LimitMin.first) {
             if (_animals[i]->getPosY() < LimitMax.second && _animals[i]->getPosY() > LimitMin.second) {
-                animalsToRun++;
 
                 if(this->age < 10) {
-                    if(this->parentsId != 0){
+                    animalsToRun++;
 
+                    if(this->parentsId != 0){
                         if(_parentPosition.first == this->row && _parentPosition.second == this->col){
 
                             if(bornPause == 0){
@@ -126,17 +124,16 @@ int Kangaroo::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>
                                 row += 2;
 
                         }
-
                     }else{
-                        animalsToRun = 0;
+                        animalsToRun=0;
                     }
-
                 }else if(age > 20){
                     this->weight = 20;
-                    animalsToRun = 0;
                 }
 
             }
+
+
         }
 
     }
@@ -155,12 +152,12 @@ int Kangaroo::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>
         row = maxY-1;
     }else if(row <= 0){
         row = 0;
-    }else if(col <= 0){
+    }else if(col <= 0) {
         col = 0;
     }
+    return 1;
 
 }
-
 
 void Kangaroo::setHealth() { this->age += 1; }
 
@@ -177,7 +174,6 @@ pair <bool,bool> Kangaroo::die(){
     return _output;
 
 }
-
 
 pair <int,int> Kangaroo::sonSpawnLocation(pair<int,int> input) {
 

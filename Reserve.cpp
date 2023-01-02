@@ -41,16 +41,19 @@ Reserve::Reserve(Reserve &aux, string name) {
     this->current_id_food = aux.current_id_animal;
 
 
-    this->reserve_posx_posy = new char*[n_lines];
+    this->reserve_posx_posy = new char *[n_lines];
 
-    for(int i=0;i<n_lines;i++){
+    for (int i = 0; i < n_lines; i++) {
         this->reserve_posx_posy[i] = new char[n_columns];
-        for(int k=0;k<n_columns;k++)
+        for (int k = 0; k < n_columns; k++)
             this->reserve_posx_posy[i][k] = ' ';
     }
 
     copy(aux.animals.begin(), aux.animals.end(), back_inserter(this->animals));
     copy(aux.foods.begin(), aux.foods.end(), back_inserter(this->foods));
+
+    //this->animals.assign(aux.animals.begin(), aux.animals.end());
+    //this->foods.assign(aux.foods.begin(), aux.foods.end());
 }
 
 pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {
@@ -660,3 +663,4 @@ string Reserve::animalHistory(int id) const {
 
     return toReturn;
 }
+
