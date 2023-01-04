@@ -18,6 +18,8 @@ public:
     virtual void setNutriValue() override;
     virtual void setToxicity() override;
 
+    virtual Body * const clone() const noexcept override;
+
 };
 
 

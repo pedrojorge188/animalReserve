@@ -14,6 +14,7 @@ public:
     //virtual int eatFood() override;
     virtual pair <bool,bool> die() override;
 
+    virtual Rabbit * const clone() const noexcept override;
 private:
     int random;
     int reproduceTime;

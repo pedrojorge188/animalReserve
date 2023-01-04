@@ -25,3 +25,7 @@ void Carrot::setToxicity() {
         this->toxicity += 1;
     }
 }
+
+Carrot *const Carrot::clone() const noexcept {
+    return new (std::nothrow) Carrot(*this);
+}

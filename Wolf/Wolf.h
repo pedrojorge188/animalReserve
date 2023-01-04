@@ -16,6 +16,8 @@ public:
     virtual pair <int,int>  sonSpawnLocation(pair<int,int> input) override;
     virtual pair <bool,bool> die() override;
 
+    virtual Wolf * const clone() const noexcept override;
+
 private:
     int random;
     int reproduceRange;

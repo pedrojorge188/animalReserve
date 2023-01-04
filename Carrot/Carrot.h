@@ -17,6 +17,8 @@ public:
     virtual void setDuration() override {this->duration=this->duration;};
     virtual void setToxicity() override;
 
+    virtual Carrot * const clone() const noexcept override;
+
 };
 
 

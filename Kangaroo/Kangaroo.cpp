@@ -210,3 +210,7 @@ bool Kangaroo::reproduce() {
     return false;
 
 }
+
+Kangaroo *const Kangaroo::clone() const noexcept {
+    return new (std::nothrow) Kangaroo(*this);
+}

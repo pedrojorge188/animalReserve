@@ -57,3 +57,7 @@ bool Grass::die() {
 
     return false;
 }
+
+Grass *const Grass::clone() const noexcept {
+    return new (std::nothrow) Grass(*this);
+}

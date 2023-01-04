@@ -14,6 +14,8 @@ public:
 
     virtual void setNutriValue() override;
 
+    virtual Meat * const clone() const noexcept override;
+
 };
 
 

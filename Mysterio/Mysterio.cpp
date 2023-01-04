@@ -139,3 +139,7 @@ pair <bool,bool> Mysterio::die(){
 
 }
 
+Mysterio *const Mysterio::clone() const noexcept {
+    return new (std::nothrow) Mysterio(*this);
+}
+

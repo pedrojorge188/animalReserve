@@ -13,6 +13,8 @@ public:
     virtual pair <int,int>  sonSpawnLocation(pair<int,int> input) override;
     //virtual int eatFood() override;
     virtual pair <bool,bool> die() override;
+
+    virtual Sheep * const clone() const noexcept override;
 private:
     int reproduceTime;
     int random;

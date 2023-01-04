@@ -39,8 +39,9 @@ ostringstream  Animal::informations() const {
     ostringstream buf;
 
     buf << "{ID:" << this->getId() << " | " ;
+    buf << "COL:" << this->getPosX()+1 << "| ROW: " << this->getPosY()+1 << endl;
     buf << "SPECIES:" << this->getSpecies() << " | ";
-    buf << "HUNGER:" << this->getHunger() << " | ";
+    //buf << "HUNGER:" << this->getHunger() << " | ";
     buf << "HEALTH:" << this->getIniHealth() << "}" <<endl;
 
     return buf;
@@ -71,7 +72,7 @@ void Animal::removeHistory() {
 void Animal::setHistory(string food, int tox, int nutr) {
     ostringstream buf;
     if(nEntries == 0){
-        oldHistory = new string;
+        oldHistory = new string;//[nEntries];
     }else if(nEntries > 0){
         newHistory = new string[nEntries];
         for (int i = 0; i < nEntries; ++i) {

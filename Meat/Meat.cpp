@@ -23,3 +23,7 @@ void Meat::setNutriValue() {
         this->nutriValue-=1;
     }
 }
+
+Meat *const Meat::clone() const noexcept {
+    return new (std::nothrow) Meat(*this);
+}

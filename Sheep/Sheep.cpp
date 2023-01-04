@@ -202,3 +202,7 @@ int Sheep::move(int maxX, int maxY, vector<Animal *> &_animals, vector<Food*>&_f
     }
     return 1;
 }
+
+Sheep *const Sheep::clone() const noexcept {
+    return new (std::nothrow) Sheep(*this);
+}

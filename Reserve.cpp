@@ -7,6 +7,7 @@ Reserve::Reserve(int columns, int lines) {
     n_lines = lines;
     current_id_animal = 1;
     current_id_food = 1;
+    this->turn=0;
 
     try{
         reserve_posx_posy = new char*[n_lines];
@@ -39,6 +40,7 @@ Reserve::Reserve(Reserve &aux, string name) {
     this->n_lines = aux.getLines();
     this->current_id_animal = aux.current_id_food;
     this->current_id_food = aux.current_id_animal;
+    this->turn=aux.turn;
 
 
     this->reserve_posx_posy = new char *[n_lines];
@@ -49,11 +51,17 @@ Reserve::Reserve(Reserve &aux, string name) {
             this->reserve_posx_posy[i][k] = ' ';
     }
 
-    copy(aux.animals.begin(), aux.animals.end(), back_inserter(this->animals));
-    copy(aux.foods.begin(), aux.foods.end(), back_inserter(this->foods));
 
-    //this->animals.assign(aux.animals.begin(), aux.animals.end());
-    //this->foods.assign(aux.foods.begin(), aux.foods.end());
+    for (const auto &i: aux.animals) {
+        Animal *n = (*i).clone();
+        animals.push_back(n);
+    }
+
+    for (const auto &i: aux.foods) {
+        Food *n = (*i).clone();
+        foods.push_back(n);
+    }
+
 }
 
 pair<string,string> Reserve::spawnAnimal(int col, int row, char animalType) {

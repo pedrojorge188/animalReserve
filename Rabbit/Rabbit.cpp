@@ -236,5 +236,9 @@ bool Rabbit::reproduce() {
 
 }
 
+Rabbit *const Rabbit::clone() const noexcept {
+    return new (std::nothrow) Rabbit(*this);
+}
+
 
 

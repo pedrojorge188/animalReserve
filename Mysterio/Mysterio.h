@@ -15,6 +15,8 @@ public:
     virtual void setHunger() override;
     virtual void setHealth() override;
     virtual pair <bool,bool> die() override;
+
+    virtual Mysterio * const clone() const noexcept override;
 };
 
 

@@ -20,8 +20,6 @@ Simulator::Simulator(int row,int col) {
     window_range_y = max_range_y;
     _resName = "main";
 
-    turn_instance = 0;
-
     notification_str = " ";
     object_str  = " ";
     log_color = COLOR_GREEN;
@@ -84,7 +82,7 @@ void Simulator::SimulationProcess(int row,int col){
 
             if(instance[0] > 0) {
                 reserve->_newTurn();
-                turn_instance++;
+                reserve_lib[_res_index]->setTurn();
                 instance[0]--;
                 if(instance[0] == 0)
                     notification_str = "Simulation completed!";
@@ -210,7 +208,7 @@ void Simulator::showSimulatorMenu(Window &window,int col,int row,Reserve &r) con
 
     window << set_color(COLOR_YELLOW);
     window << "SIMULATION DETAILS \n\n" << set_color(COLOR_GREEN);
-    window << "TURN - " << turn_instance << "\n\n";
+    window << "TURN - " << r.getTurn() << "\n\n";
     window << "ROW VIEW AREA (" << min_range_y-2 << "->" << max_range_y-2 << ") pixels" << '\n';
     window << "COLUMN VIEW AREA (" << min_range_x-2 << "->" << max_range_x-2 << ") pixels" << "\n\n";
     window << "RESERVE_SIZE (" << row << ',' << col << ")\n";
@@ -701,7 +699,7 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
 
             log_color = COLOR_GREEN;
             notification_str = "ADVANCE'"+c2+"'TURNS";
-            turn_instance+=d3;
+            r.setMaisTurn(d3);
 
         }else if (words == 0){
 
@@ -709,13 +707,13 @@ bool Simulator::readCommand(Window &window, Reserve &r) {
             notification_str = "ADVANCE TURN";
 
             r._newTurn();
-            turn_instance++;
+            r.setTurn();
 
         }else{
 
             log_color = COLOR_RED;
             notification_str = "N COMMAND INVALID";
-            turn_instance++;
+            r.setTurn();
 
             return false;
         }

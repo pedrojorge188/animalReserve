@@ -43,6 +43,8 @@ public:
 
     ostringstream printInfo() const;
     ostringstream informations() const;
+
+    virtual Food * const clone() const noexcept = 0;
 };
 
 #endif //TERMINAL_CPP_FOOD_H

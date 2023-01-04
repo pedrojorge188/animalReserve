@@ -18,7 +18,6 @@ private:
     int max_range_y;
     int window_range_x;
     int window_range_y;
-    int turn_instance;
     int log_color;
     int instance[2];
     string _resName;

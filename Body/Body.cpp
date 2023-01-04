@@ -32,3 +32,7 @@ void Body::setToxicity() {
         this->toxicity += 1;
     }
 }
+
+Body *const Body::clone() const noexcept {
+    return new (std::nothrow) Body(*this);
+}

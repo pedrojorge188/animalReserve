@@ -236,3 +236,7 @@ bool Wolf::reproduce() {
     return false;
 
 }
+
+Wolf *const Wolf::clone() const noexcept {
+    return new (std::nothrow) Wolf(*this);
+}

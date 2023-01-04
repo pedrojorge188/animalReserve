@@ -34,6 +34,7 @@ private:
     int n_lines;
     int current_id_animal;
     int current_id_food;
+    int turn;
     vector <Animal *> animals;
     vector <Food *> foods;
     char **reserve_posx_posy; //apenas uma representacao visual dos tipos de animal (caracteres)
@@ -50,9 +51,13 @@ public:
     char **getReserve() const {return reserve_posx_posy;}
     string getReserveName() const {return r_name;}
     void setReserveName(string _new){this->r_name = _new;}
+    int getTurn(){return this->turn;};
 
 
     //Global Actions ...
+    void setTurn(){this->turn++;};
+    void setTurn(int i){this->turn = i;};
+    void setMaisTurn(int i){this->turn += i;};
 
     bool cleanPositions(int row,int col);
     string watchPositionsInfo(int row, int col);

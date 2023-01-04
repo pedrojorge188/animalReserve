@@ -11,6 +11,8 @@ public:
 
     virtual bool die() override;
 
+    virtual misteryFood * const clone() const noexcept override;
+
 };
 
 

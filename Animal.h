@@ -72,6 +72,8 @@ public:
 
     void removeHistory();
 
+    virtual Animal * const clone() const noexcept = 0;
+
 };
 
 

@@ -16,6 +16,8 @@ public:
     void setParentsId(int value) {this->parentsId = value;};
     int getAge() const {return age;}
 
+    virtual Kangaroo * const clone() const noexcept override;
+
 private:
     int reproduceTime;
     int reproduceRange;

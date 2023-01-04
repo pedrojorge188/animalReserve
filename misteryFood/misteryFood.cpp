@@ -18,3 +18,7 @@ bool misteryFood::die() {
 
     return false;
 }
+
+misteryFood *const misteryFood::clone() const noexcept {
+    return new (std::nothrow) misteryFood(*this);
+}

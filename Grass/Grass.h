@@ -20,6 +20,8 @@ public:
     void setTried(){tried==true;}
 
     virtual bool die() override;
+
+    virtual Grass * const clone() const noexcept override;
 };
 
 
